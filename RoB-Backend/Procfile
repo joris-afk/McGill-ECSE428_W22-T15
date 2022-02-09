@@ -1,0 +1,1 @@
+web: java -jar RoB-Backend/build/libs/RoB-Backend-0.0.1-SNAPSHOT.jar
