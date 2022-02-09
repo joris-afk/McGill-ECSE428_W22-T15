@@ -1,1 +1,2 @@
-include ':RoB-Backend'
+rootProject.name = 'MCGILL-ECSE428_W22-T15'
+include 'RoB-Backend'
