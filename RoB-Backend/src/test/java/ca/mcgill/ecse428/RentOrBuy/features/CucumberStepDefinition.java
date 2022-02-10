@@ -1,4 +1,4 @@
-package ca.mcgill.ecse428.RentOrBut.features;
+package ca.mcgill.ecse428.RentOrBuy.features;
 
 //import io.cucumber.java.en.Given;
 //import io.cucumber.java.en.When;
