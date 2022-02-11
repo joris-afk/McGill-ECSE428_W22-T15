@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.RentOrBuy;
+package ca.mcgill.ecse428.RentOrBuy;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.SpringApplication;

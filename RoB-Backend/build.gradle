@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id 'jacoco' // test reporting plugin
+	id 'java-library'
 }
 
 group = 'com.example'
@@ -10,10 +11,13 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
+	jcenter()
 	mavenCentral()
 }
 
 dependencies {
+
+	implementation 'com.google.guava:guava:29.0-jre'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'org.postgresql:postgresql'
@@ -27,7 +31,28 @@ dependencies {
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
 	testImplementation 'org.junit.platform:junit-platform-launcher:1.4.1'
 
+	testImplementation 'io.cucumber:cucumber-java:6.6.1'
+    testImplementation 'io.cucumber:cucumber-junit:6.6.1'
+
 }
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+task cucumber() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'ca.mcgill.ecse428.RentOrBuy.features', 'src/test/resources']
+        }
+    }
+}
+
 
 test {
 	useJUnitPlatform()

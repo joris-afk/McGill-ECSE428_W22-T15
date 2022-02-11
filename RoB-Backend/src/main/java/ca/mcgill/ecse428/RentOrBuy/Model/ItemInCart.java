@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.RentOrBuy.Model;
+package ca.mcgill.ecse428.RentOrBuy.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
