@@ -8,6 +8,6 @@
 
 ### Backlog
 
-![Screen Shot 2022-02-12 at 11 36 39 AM](https://user-images.githubusercontent.com/77701656/153719831-203b0e22-d510-47f0-a7e5-fca75d551c57.png)
+![Screen Shot 2022-02-12 at 11 38 34 AM](https://user-images.githubusercontent.com/77701656/153719908-9a9d0a95-461a-4dca-99ea-c67dd62fd0aa.png)
 
 ### Week 1 Task List
