@@ -1,12 +1,18 @@
 package ca.mcgill.ecse428.RentOrBuy.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
 	private List<ItemInCart> cartItems;
 	
-	public Cart() {}
+	public Cart() {
+		if (this.cartItems.equals(null)) {
+			this.cartItems = new ArrayList<ItemInCart>();
+		}
+	}
 
 	public List<ItemInCart> getCartItems() {
 		return cartItems;
