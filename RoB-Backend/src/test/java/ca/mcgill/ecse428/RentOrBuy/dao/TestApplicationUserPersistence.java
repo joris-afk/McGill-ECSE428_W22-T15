@@ -21,10 +21,10 @@ import ca.mcgill.ecse428.RentOrBuy.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
+//@ExtendWith(SpringExtension.class)
+//@SpringBootTest
 public class TestApplicationUserPersistence {
-    
+    /*
     @Autowired
 	private ApplicationUserRepository AUrepository;
 	
@@ -67,4 +67,5 @@ public class TestApplicationUserPersistence {
         assertEquals(cart, aAppUser.getCart());
         assertEquals(items, aAppUser.getItems());
     }
+    */
 }

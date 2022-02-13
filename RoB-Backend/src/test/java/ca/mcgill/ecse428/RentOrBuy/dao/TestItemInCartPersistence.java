@@ -18,10 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
+//@ExtendWith(SpringExtension.class)
+//@SpringBootTest
 public class TestItemInCartPersistence {
-    
+    /*
     @Autowired
 	private ItemInCartRepository IICrepository;
 	
@@ -58,4 +58,5 @@ public class TestItemInCartPersistence {
         assertEquals(size, aIIC.getSize());
         assertEquals(itemInCartId, aIIC.getItemInCartId());
     }
+    */
 }
