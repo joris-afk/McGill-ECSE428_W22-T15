@@ -9,7 +9,7 @@ public class ItemInCart {
 	private Item item;
 	private int quantity;
 	private String size;
-	private int itemInCartId;
+	private Integer itemInCartId;
 	
 	public ItemInCart() {}
 	
@@ -34,7 +34,7 @@ public class ItemInCart {
 	}
 
 	@Id
-	public int getItemInCartId() {
+	public Integer getItemInCartId() {
 		return itemInCartId;
 	}
 

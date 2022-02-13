@@ -11,7 +11,7 @@ import java.util.Set;
 public class Cart {
 	
 	private List<ItemInCart> cartItems;
-	private int cartId;
+	private Integer cartId;
 	
 	public Cart() {
 		if (this.cartItems.equals(null)) {
@@ -20,7 +20,7 @@ public class Cart {
 	}
 	
 	@Id
-	public int getCartId() {
+	public Integer getCartId() {
 		return cartId;
 	}
 
