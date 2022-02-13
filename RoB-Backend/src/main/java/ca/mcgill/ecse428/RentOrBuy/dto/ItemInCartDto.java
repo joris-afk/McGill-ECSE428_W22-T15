@@ -7,6 +7,13 @@ public class ItemInCartDto {
 
     public ItemInCartDto(){
     }
+    
+    public ItemInCartDto(ItemDto item, int quantity, String size){
+    	
+    	this.item = item;
+    	this.quantity = quantity;
+    	this.size = size;
+    }
 
     public ItemDto getItem(){
         return item;
