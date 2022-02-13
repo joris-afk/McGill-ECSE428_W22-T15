@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import ca.mcgill.ecse428.RentOrBuy.model.Item;
 import ca.mcgill.ecse428.RentOrBuy.model.ItemInCart;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,26 @@ public class TestItemInCartPersistence {
 
         ItemInCart aIIC = new ItemInCart();
 
-        
+        Item item = new Item();
+	    int quantity = 420;
+	    String size = "Small";
+	    Integer itemInCartId = 12345;
 
+        aIIC.setItem(item);
+        aIIC.setQuantity(quantity);
+        aIIC.setSize(size);
+        aIIC.setItemInCartId(itemInCartId);
+
+        IICrepository.save(aIIC);
+
+        aIIC = null;
+
+        aIIC = IICrepository.findItemInCartByItemInCartId(itemInCartId);
+
+        assertNotNull(aIIC);
+        assertEquals(item, aIIC.getItem());
+        assertEquals(quantity, aIIC.getQuantity());
+        assertEquals(size, aIIC.getSize());
+        assertEquals(itemInCartId, aIIC.getItemInCartId());
     }
 }
