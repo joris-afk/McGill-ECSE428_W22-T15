@@ -115,9 +115,12 @@ public class ApplicationUserController {
 		if (cart == null) {
             throw new IllegalArgumentException("There is no such cart");
         }
+		if (cart.getCartId()<0) {
+			throw new IllegalArgumentException("This cart has an invalid id");
+		}
 		
 		List<ItemInCartDto> itemDto = createItemInCartDtosForCart(cart.getCartItems());
-		CartDto cartDto = new CartDto(itemDto);
+		CartDto cartDto = new CartDto(itemDto, cart.getCartId());
 		return cartDto;
 	}
 
@@ -136,9 +139,12 @@ public class ApplicationUserController {
 		if (itemInCart == null) {
             throw new IllegalArgumentException("There is no such item in cart");
         }
+		if (itemInCart.getItemInCartId()<0) {
+			throw new IllegalArgumentException("This cart item has an invalid id");
+		}
 		
 		ItemDto itemDto = convertToDto(itemInCart.getItem());
-		ItemInCartDto itemInCartDto = new ItemInCartDto(itemDto, itemInCart.getQuantity(), itemInCart.getSize());
+		ItemInCartDto itemInCartDto = new ItemInCartDto(itemDto, itemInCart.getQuantity(), itemInCart.getSize(), itemInCart.getItemInCartId());
 		return itemInCartDto;
 	}
 	
