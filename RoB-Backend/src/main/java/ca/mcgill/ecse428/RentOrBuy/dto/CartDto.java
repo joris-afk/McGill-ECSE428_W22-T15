@@ -5,18 +5,24 @@ import java.util.List;
 
 public class CartDto {
     private List<ItemInCartDto> cartItems;
+    private Integer cartId;
 
     public CartDto(){
-        if (this.cartItems.equals(null)) {
-			this.cartItems = new ArrayList<ItemInCartDto>();
-		}
+      if (this.cartItems.equals(null)) {
+			  this.cartItems = new ArrayList<ItemInCartDto>();
+		  }
     }
 
-    public CartDto(List<ItemInCartDto> cartItems){
-        this.cartItems=cartItems;
+    public CartDto(List<ItemInCartDto> cartItems,Integer cartId){
+      this.cartItems=cartItems;
+      this.cartId=cartId;
     }
 
     public List<ItemInCartDto> getCartItems() {
-		return cartItems;
-	}
+		  return cartItems;
+	  }
+
+    public Integer getcartId(){
+      return cartId;
+    }
 }
