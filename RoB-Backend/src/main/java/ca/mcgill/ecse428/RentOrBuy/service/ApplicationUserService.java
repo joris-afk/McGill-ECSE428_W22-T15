@@ -60,10 +60,6 @@ public class ApplicationUserService {
 	}
 	
 	
-	
-	
-	
-
 	@Transactional
 	public List<ApplicationUser> getAllApplicationUsers(){
 		return (List<ApplicationUser>) applicationUserRepository.findAll();

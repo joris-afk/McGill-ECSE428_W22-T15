@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse428.RentOrBuy.model.*;
 import ca.mcgill.ecse428.RentOrBuy.service.*;
+import ca.mcgill.ecse428.RentOrBuy.InvalidInputException;
+import ca.mcgill.ecse428.RentOrBuy.RobApplication;
 import ca.mcgill.ecse428.RentOrBuy.dto.*;
 
 @CrossOrigin(origins = "*")
@@ -79,6 +81,68 @@ public class ApplicationUserController {
 			throws IllegalArgumentException {
 			return convertToDto(applicationUserService.getApplicationUserByUsername(username));
 	}
+	
+			
+	public static ApplicationUser createUser(String username, String password) throws InvalidInputException{
+		
+		Rob rob = RobApplication.getRob(); 
+		ApplicationUser u = null;
+		
+		for (ApplicationUser user : rob.getExistingUsers()) {
+			if (user.getUsername().equals(username)) {
+				throw new InvalidInputException("Username is taken");
+			}
+		}
+		
+		u = new ApplicationUser(username, password);
+		
+		rob.addCurrentExistingUser(u);
+		
+		return u;
+
+	}
+	
+	
+	public static ApplicationUser logInUser(String username, String password) throws InvalidInputException{
+
+		Rob rob = RobApplication.getRob(); 
+		ApplicationUser u = null;
+
+		
+		for (ApplicationUser user : rob.getExistingUsers()) {
+			if (user.getPassword().equals(password) && user.getUsername().equals(username)) {
+				u = user;
+				rob.addCurrentLoggedInUser(user);
+			}
+		}
+		
+		if (u == null) {
+			throw new InvalidInputException("Username and password do not match");
+		}
+		return u;
+
+	}
+	
+
+	public static ApplicationUser logOutUser(String username) throws InvalidInputException{
+
+		Rob rob = RobApplication.getRob(); 
+		ApplicationUser u = null;
+
+		
+		for (ApplicationUser user : rob.getCurrentLoggedInUsers()) {
+			if (user.getUsername().equals(username)) {
+				u = user;
+				rob.removeCurrentLoggedInUser(user);
+			}
+		}
+		
+		if (u == null) {
+			throw new InvalidInputException("This user is not logged in");
+		}
+		return u;
+	}
+	
 	
 	/*
 	 * convert to dtos

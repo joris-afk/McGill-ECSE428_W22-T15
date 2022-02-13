@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 @Entity
 public class ApplicationUser {
 
+	private Rob rob;
 	private String username;
 	private String password;
 	private String fullname;
@@ -23,8 +24,32 @@ public class ApplicationUser {
 		if (this.items == null) {
 			this.items = new ArrayList<Item>();
 		}
+		rob.addCurrentExistingUser(this);
 	}
-
+	
+	
+	public ApplicationUser(String username, String password) {
+		this.username = username;
+		this.password = password;
+		
+		if (this.items == null) {
+			this.items = new ArrayList<Item>();
+		}
+		rob.addCurrentExistingUser(this);
+	}
+	
+	public ApplicationUser(String username, String password, String fullname, String address) {
+		this.username = username;
+		this.address = address; 
+		this.password = password;
+		this.fullname = fullname;
+		
+		if (this.items == null) {
+			this.items = new ArrayList<Item>();
+		}
+		rob.addCurrentExistingUser(this);
+	}
+	
 	@Id
 	public String getUsername() {
 		return this.username;
@@ -82,6 +107,14 @@ public class ApplicationUser {
 
 	public void setCart(Cart cart) {
 		this.cart = cart;
+	}
+
+	public Rob getRob() {
+		return rob;
+	}
+
+	public void setRob(Rob rob) {
+		this.rob = rob;
 	}
 
 

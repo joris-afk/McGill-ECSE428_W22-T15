@@ -18,32 +18,56 @@ public class Rob {
     		this.existingUsers = new ArrayList<ApplicationUser>();
     	}
     }
+    
+    public Rob getRob() {
+    	return this;
+    }
 
-//	public List<ApplicationUser> getCurrentLoggedInUsers() {
-//		return currentLoggedInUsers;
-//	}
-//	
-//	public void addCurrentLoggedInUser(ApplicationUser applicationUser) {
-//		this.currentLoggedInUsers.add(applicationUser);
-//	}
-//	
-//	public void removeCurrentLoggedInUser(ApplicationUser applicationUser) {
-//		this.currentLoggedInUsers.remove(applicationUser);
-//	}
-//	
-//	public void setCurrentLoggedInUsers(List<ApplicationUser> currentLoggedInUsers) {
-//		this.currentLoggedInUsers = currentLoggedInUsers;
-//	}
-//
-//	public List<ApplicationUser> getExistingUsers() {
-//		return existingUsers;
-//	}
-//
-//	public void setExistingUsers(List<ApplicationUser> existingUsers) {
-//		this.existingUsers = existingUsers;
-//	}
-//	
-//	public void addCurrentExistingUser(ApplicationUser applicationUser) {
-//		this.existingUsers.add(applicationUser);
-//	}
+	public List<ApplicationUser> getCurrentLoggedInUsers() {
+		return currentLoggedInUsers;
+	}
+	
+	public void addCurrentLoggedInUser(ApplicationUser applicationUser) {
+		this.currentLoggedInUsers.add(applicationUser);
+	}
+	
+	public void removeCurrentLoggedInUser(ApplicationUser applicationUser) {
+		this.currentLoggedInUsers.remove(applicationUser);
+	}
+	
+	public void setCurrentLoggedInUsers(List<ApplicationUser> currentLoggedInUsers) {
+		this.currentLoggedInUsers = currentLoggedInUsers;
+	}
+
+	public List<ApplicationUser> getExistingUsers() {
+		return existingUsers;
+	}
+
+	public void setExistingUsers(List<ApplicationUser> existingUsers) {
+		this.existingUsers = existingUsers;
+	}
+	
+	public void addCurrentExistingUser(ApplicationUser applicationUser) {
+		this.existingUsers.add(applicationUser);
+	}
+	
+	public ApplicationUser logInUser(String user, String pass) {
+		for (ApplicationUser u : existingUsers) {
+			if (u.getPassword().equals(pass) && u.getUsername().equals(user)) {
+				currentLoggedInUsers.add(u);
+				return u;
+			}
+		}
+		return null;
+	}
+	
+	
+	public void delete() {
+		for (ApplicationUser a : existingUsers) {
+			a = null;
+		}
+		existingUsers = null;
+		currentLoggedInUsers = null;
+	}
+	
 }
