@@ -1,5 +1,6 @@
 package ca.mcgill.ecse428.RentOrBuy.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Id;
 import javax.persistence.Entity;
@@ -14,7 +15,11 @@ public class ApplicationUser {
 	private Cart cart;
 	private List<Item> items;
 
-	public ApplicationUser() {}
+	public ApplicationUser() {
+		if (this.items == null) {
+			this.items = new ArrayList<Item>();
+		}
+	}
 
 	@Id
 	public String getUserame() {

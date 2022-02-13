@@ -9,7 +9,7 @@ public class Cart {
 	private List<ItemInCart> cartItems;
 	
 	public Cart() {
-		if (this.cartItems.equals(null)) {
+		if (this.cartItems == null) {
 			this.cartItems = new ArrayList<ItemInCart>();
 		}
 	}
@@ -19,7 +19,7 @@ public class Cart {
 	}
 
 	public void setCartItems(List<ItemInCart> cartItems) {
-		this.cartItems = cartItems;
+		if (cartItems != null) this.cartItems = cartItems;
 	}
 	
 	public void addItemToCart(ItemInCart itemInCart) {

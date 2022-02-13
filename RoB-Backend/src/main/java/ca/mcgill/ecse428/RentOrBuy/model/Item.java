@@ -27,4 +27,16 @@ public class Item {
 	public void setAvailableSizes(List<String> availableSizes) {
 		this.availableSizes = availableSizes;
 	}
+	public void addAvailableSizes(List<String> availableSizes) {
+		this.availableSizes.addAll(availableSizes);
+	}
+	public void addAvailableSize(String availableSize) {
+		this.availableSizes.add(availableSize);
+	}
+	public void removeAvailableSize(String unavailableSize) {
+		this.availableSizes.remove(unavailableSize);
+	}
+	public void removeAvailableSizes(List<String> unavailableSizes) {
+		this.availableSizes.removeAll(unavailableSizes);
+	}	
 }
