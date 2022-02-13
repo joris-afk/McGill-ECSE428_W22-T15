@@ -2,7 +2,11 @@ package ca.mcgill.ecse428.RentOrBuy.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Entity;
 
 @Entity
@@ -22,12 +26,12 @@ public class ApplicationUser {
 	}
 
 	@Id
-	public String getUserame() {
+	public String getUsername() {
 		return this.username;
 	}
 
-	public void setUsername(String newUsername) {
-		this.username = newUsername;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -54,6 +58,7 @@ public class ApplicationUser {
 		this.address = address;
 	}
 
+	@OneToMany
 	public List<Item> getItems() {
 		return items;
 	}
@@ -70,6 +75,7 @@ public class ApplicationUser {
 		this.items.remove(item);
 	}
 
+	@OneToOne
 	public Cart getCart() {
 		return cart;
 	}

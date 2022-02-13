@@ -1,16 +1,19 @@
 package ca.mcgill.ecse428.RentOrBuy.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ItemInCart {
+	
 	private Item item;
 	private int quantity;
 	private String size;
+	private Integer itemInCartId;
 	
 	public ItemInCart() {}
 	
-	@Id
+	@OneToOne
 	public Item getItem() {
 		return item;
 	}
@@ -28,5 +31,14 @@ public class ItemInCart {
 	}
 	public void setSize(String size) {
 		this.size = size;
+	}
+
+	@Id
+	public Integer getItemInCartId() {
+		return itemInCartId;
+	}
+
+	public void setItemInCartId(int itemInCartId) {
+		this.itemInCartId = itemInCartId;
 	}
 }
