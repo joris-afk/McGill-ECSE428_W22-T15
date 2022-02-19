@@ -122,4 +122,21 @@ public class ItemService {
 		return item;
 	}
 	
+	@Transactional
+	public Item getItemByName(String name) {
+		Item aItem = itemRepository.findItemByName(name);
+		return aItem;
+	}
+
+	@Transactional
+	public List<Item> getAllItems(){
+		return (List<Item>) itemRepository.findAll();
+	}
+
+	@Transactional
+	public Item deleteItem(Item aItem){
+		itemRepository.delete(aItem);
+		aItem = null;
+		return aItem;
+	}
 }
