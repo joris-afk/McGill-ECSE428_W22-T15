@@ -24,7 +24,7 @@ public class RobApplication {
 	}
 
 	public static Rob getRob() {
-		if (thisRob == null) {
+		if (thisRob == null || (thisRob.getCurrentLoggedInUsers() == null &&thisRob.getExistingUsers() == null)) {
 			thisRob = new Rob();
 		}
 		return thisRob;

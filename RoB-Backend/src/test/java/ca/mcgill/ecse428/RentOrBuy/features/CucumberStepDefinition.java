@@ -38,10 +38,13 @@ public class CucumberStepDefinition {
 	}
 
 	@Given("the following application users exist in the system:")
-	public void the_following_application_users_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
+	public void the_following_application_users_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) throws InvalidInputException {
 		
 		if(users == null) {
 			users = new ArrayList<ApplicationUser>();
+		}
+		if(loginUsers == null) {
+			loginUsers = new ArrayList<ApplicationUser>();
 		}
 		List<Map<String,String>> existingUsers = dataTable.asMaps(String.class,String.class);
 		for (Map<String,String> aUser : existingUsers){
@@ -60,7 +63,7 @@ public class CucumberStepDefinition {
 	public void the_user_tries_to_log_in_with_username_and_password(String string, String string2) {
 		// Write code here that turns the phrase above into concrete actions
 		try {
-			ApplicationUser currentLoginUser = ApplicationUserController.logInUser(string, string2); //use controller login method
+			currentLoginUser = ApplicationUserController.logInUser(string, string2); //use controller login method
 			loginUsers.add(currentLoginUser);
 		} catch (InvalidInputException e) { //catch the error if does not work
 			errorMsg += e.getMessage();
@@ -87,7 +90,7 @@ public class CucumberStepDefinition {
 // logout.feature
 
 	@Given("the following application users login in the system:")
-	public void the_following_application_users_login_in_the_system(io.cucumber.datatable.DataTable dataTable) {
+	public void the_following_application_users_login_in_the_system(io.cucumber.datatable.DataTable dataTable) throws InvalidInputException {
 		// Write code here that turns the phrase above into concrete actions
 		// For automatic transformation, change DataTable to one of
 		// E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
@@ -96,14 +99,18 @@ public class CucumberStepDefinition {
 		//
 		// For other transformations you can register a DataTableType.
 		
+		if (this.users == null) this.users = new ArrayList<ApplicationUser>();
+ 		if (this.loginUsers == null) this.loginUsers = new ArrayList<ApplicationUser>();
 
 		List<Map<String,String>> existingUsers = dataTable.asMaps(String.class,String.class);
 		for (Map<String,String> aUser : existingUsers){
 		 	//if(Rob.existWithUsername(aUser.get("username")) == false){ ..add this method
 		 		// create a new user with the provided info if such an user does not already exist in the system
 		 		ApplicationUser newUser = new ApplicationUser(aUser.get("username"), aUser.get("password"), aUser.get("fullname"), aUser.get("address"));
-		 		users.add(newUser);
-		 		loginUsers.add(newUser);
+		 		rob.addCurrentExistingUser(newUser); //this should be controller.createUser !!!
+		 		ApplicationUserController.logInUser(aUser.get("username"), aUser.get("password"));
+		 		this.users.add(newUser);
+		 		this.loginUsers.add(newUser);
 		 }
 		
 	}
@@ -111,20 +118,27 @@ public class CucumberStepDefinition {
 	@When("the user with username {string} tries to log out")
 	public void the_user_with_username_tries_to_log_out(String string) {
 		// Write code here that turns the phrase above into concrete actions
+
 		try {
 			ApplicationUser user = ApplicationUserController.logOutUser(string); //use controller login method
+			System.out.println("hello");
+
 			if (loginUsers.contains(user)) {
+				System.out.println("containts");
 				loginUsers.remove(user);
 			}
+			else System.out.println("doesnt contain..");
 		} catch (InvalidInputException e) { //catch the error if does not work
 			errorMsg += e.getMessage();
+			System.out.println(errorMsg);
+
 		}	
 	}
 
 	@Then("the user should be successfully logged out")
 	public void the_user_should_be_successfully_logged_out() {
 		// Write code here that turns the phrase above into concrete actions
-		assertEquals(loginUsers.size(), 0);
+		assertEquals(loginUsers.size(), 1);
 	}
 
 
