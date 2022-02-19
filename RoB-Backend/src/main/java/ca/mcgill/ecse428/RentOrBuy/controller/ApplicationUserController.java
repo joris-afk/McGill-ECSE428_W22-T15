@@ -81,6 +81,13 @@ public class ApplicationUserController {
 			throws IllegalArgumentException {
 			return convertToDto(applicationUserService.getApplicationUserByUsername(username));
 	}
+
+
+	@DeleteMapping(value = { "/applicationUsers/{username}", "/applicationUsers/{username}" })
+	public void deleteApplicationUser(@PathVariable("username") String username) throws IllegalArgumentException {
+		ApplicationUser aApplicationUser = applicationUserService.getApplicationUserByUsername(username);
+		applicationUserService.deleteApplicationUser(aApplicationUser);
+	}
 	
 			
 	public static ApplicationUser createUser(String username, String password) throws InvalidInputException{
@@ -142,6 +149,13 @@ public class ApplicationUserController {
 		}
 		return u;
 	}
+
+
+
+
+
+
+
 	
 	
 	/*
