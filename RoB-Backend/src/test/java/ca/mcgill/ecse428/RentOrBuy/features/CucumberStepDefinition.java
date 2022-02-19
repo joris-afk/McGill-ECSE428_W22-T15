@@ -165,6 +165,38 @@ public class CucumberStepDefinition {
 	}
 
 
+// Delete Account
+@When("the user tries to delete with username {string} and password {string}")
+public void the_user_tries_to_delete_with_username_and_password(String string, String string2) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+@Then("the user should be successfully deleted")
+public void the_user_should_be_successfully_deleted() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+@When("the user tries to delete with an exisiting username {string}")
+public void the_user_tries_to_delete_with_an_exisiting_username(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+@Then("none of the users should be deleted")
+public void none_of_the_users_should_be_deleted() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+@When("the user tries to delte with username {string} and wrong password {string}")
+public void the_user_tries_to_delte_with_username_and_wrong_password(String string, String string2) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
 // Final
 	@After
 	 public void tearDown() {
