@@ -93,13 +93,13 @@ public class ApplicationUserController {
 	public static void deleteAccount(String username, String password) throws InvalidInputException{
 		ApplicationUserController appUserController = new ApplicationUserController();
 		ApplicationUserDto aApplicationUser = appUserController.getApplicationUserByUsername(username);
-		if(password==null || password.length()==0){
-			throw new InvalidInputException("Correct password must be entered to delete account.");
+		if(aApplicationUser == null){
+			throw new InvalidInputException("Cannot delete unexisting account.");
 		}
-		if(password.equals(aApplicationUser.getPassword())){
-			appUserController.deleteApplicationUser(username);
+		if(password==null || password.length()==0 || !password.equals(aApplicationUser.getPassword())){
+			throw new InvalidInputException("Correct password must be entered to delete account.");
 		}else{
-			throw new InvalidInputException("Wrong password! Cannot delete account.");
+			appUserController.deleteApplicationUser(username);
 		}
 	}
 	
