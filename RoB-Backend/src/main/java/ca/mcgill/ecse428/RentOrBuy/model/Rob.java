@@ -9,7 +9,7 @@ public class Rob {
 	private List<ApplicationUser> existingUsers;
 	
     public Rob() {
-    	
+    
     	if (this.currentLoggedInUsers == null) {
     		this.currentLoggedInUsers = new ArrayList<ApplicationUser>();
     	}
@@ -18,7 +18,7 @@ public class Rob {
     		this.existingUsers = new ArrayList<ApplicationUser>();
     	}
     }
-    
+    	
 //    public Rob getRob() {
 //    	if (this.currentLoggedInUsers == null) {
 //    		this.currentLoggedInUsers = new ArrayList<ApplicationUser>();
