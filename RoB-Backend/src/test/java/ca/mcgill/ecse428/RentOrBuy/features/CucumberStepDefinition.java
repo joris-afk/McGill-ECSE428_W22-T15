@@ -19,7 +19,7 @@ public class CucumberStepDefinition {
 	private List<ApplicationUser> loginUsers;
 	private List<ApplicationUser> users;
 	private String errorMsg;
-	private int errorCount;
+	private int totalUsers;
 
 
 // Background
@@ -29,7 +29,6 @@ public class CucumberStepDefinition {
 		
 		rob = RobApplication.getRob();
 		errorMsg = "";
-		errorCount = 0;
 		
 	}
 
@@ -168,8 +167,7 @@ public class CucumberStepDefinition {
 // Delete Account
 @Given("the total number of users is {string}")
 public void the_total_number_of_users_is(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    totalUsers = Integer.parseInt(string);
 }
 
 @When("the user tries to delete with username {string} and password {string}")
