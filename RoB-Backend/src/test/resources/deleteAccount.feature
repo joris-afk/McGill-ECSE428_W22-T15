@@ -8,12 +8,13 @@ Background:
     | User1    | abcd     | Alice    | Montreal |
     | User2    | apple    | Bob      | Quebec   |
     | User3    | vscode   | Cathy    | Toronto  |
+  Given the total number of users is '3'
 
 ##########################################################################
 
 Scenario Outline: Delete successfully
   When the user tries to delete with username "<username>" and password "<password>"
-  Then the user should be successfully deleted
+  Then the user with username "<username>" should be successfully deleted
 
   Examples: 
   | username | password |
@@ -24,8 +25,8 @@ Scenario Outline: Delete successfully
 ##########################################################################
 
 Scenario Outline: Delete with unexisting account
-  When the user tries to delete with an exisiting username "<username>"
-  Then none of the users should be deleted
+  When the user tries to delete with an unexisiting username "<username>"
+  Then number of useres shall be "3"
   Then an error message "Cannot delete unexisting account." shall be raised
 
   Examples: 
@@ -38,7 +39,7 @@ Scenario Outline: Delete with unexisting account
 
 Scenario Outline: Delete with wrong password
   When the user tries to delte with username "<username>" and wrong password "<password>"
-  Then the user should still exist
+  Then the number of users shall be "3"
   Then an error message "Correct password must be entered to delete account." shall be raised
 
   Examples: 
