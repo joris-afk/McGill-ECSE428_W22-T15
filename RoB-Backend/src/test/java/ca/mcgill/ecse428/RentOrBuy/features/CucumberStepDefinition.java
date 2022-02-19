@@ -172,38 +172,47 @@ public void the_total_number_of_users_is(String string) {
 
 @When("the user tries to delete with username {string} and password {string}")
 public void the_user_tries_to_delete_with_username_and_password(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+	try {
+		ApplicationUserController.deleteAccount(string, string2);
+	} catch (InvalidInputException e) { //catch the error if does not work
+		errorMsg += e.getMessage();
+	}	
 }
 
 @Then("the user with username {string} should be successfully deleted")
 public void the_user_with_username_should_be_successfully_deleted(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    ApplicationUserController appc=new ApplicationUserController();
+	int i=appc.getAllApplicationUsers().size();
+	assertEquals(i, totalUsers-1);
 }
 
 @When("the user tries to delete with an unexisiting username {string}")
 public void the_user_tries_to_delete_with_an_unexisiting_username(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+	try {
+		ApplicationUserController.deleteAccount(string, "");
+	} catch (InvalidInputException e) { //catch the error if does not work
+		errorMsg += e.getMessage();
+	}	
 }
 
 @Then("number of useres shall be {string}")
 public void number_of_useres_shall_be(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+	
+    assertEquals(totalUsers,Integer.parseInt(string) );
 }
 
 @When("the user tries to delte with username {string} and wrong password {string}")
 public void the_user_tries_to_delte_with_username_and_wrong_password(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    try {
+		ApplicationUserController.deleteAccount(string, string2);
+	} catch (InvalidInputException e) { //catch the error if does not work
+		errorMsg += e.getMessage();
+	}	
 }
 
 @Then("the number of users shall be {string}")
 public void the_number_of_users_shall_be(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    assertEquals(totalUsers,Integer.parseInt(string) );
 }
 
 // Final
