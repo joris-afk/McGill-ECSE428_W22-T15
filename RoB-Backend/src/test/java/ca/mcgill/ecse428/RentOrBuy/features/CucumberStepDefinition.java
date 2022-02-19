@@ -49,6 +49,7 @@ public class CucumberStepDefinition {
 		 		// create a new user with the provided info if such an user does not already exist in the system
 		 		ApplicationUser newUser = new ApplicationUser(aUser.get("username"), aUser.get("password"), aUser.get("fullname"), aUser.get("address"));
 		 		users.add(newUser);
+				rob.addCurrentExistingUser(newUser);
 		 }
 	}
 
@@ -189,8 +190,8 @@ public void the_user_tries_to_delete_with_username_and_password(String string, S
 
 @Then("the user with username {string} should be successfully deleted")
 public void the_user_with_username_should_be_successfully_deleted(String string) {
-    ApplicationUserController appc=new ApplicationUserController();
-	int i=appc.getAllApplicationUsers().size();
+    Rob rob= RobApplication.getRob();
+	int i= rob.getExistingUsers().size();
 	assertEquals(i, totalUsers-1);
 }
 

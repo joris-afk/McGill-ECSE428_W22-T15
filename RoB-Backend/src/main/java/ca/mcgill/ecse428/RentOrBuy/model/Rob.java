@@ -40,6 +40,9 @@ public class Rob {
 	}
 
 	public List<ApplicationUser> getExistingUsers() {
+		if (existingUsers==null){
+			existingUsers=new ArrayList<ApplicationUser>();
+		}
 		return existingUsers;
 	}
 
@@ -48,6 +51,9 @@ public class Rob {
 	}
 	
 	public void addCurrentExistingUser(ApplicationUser applicationUser) {
+		if (existingUsers==null){
+			existingUsers=new ArrayList<ApplicationUser>();
+		}
 		this.existingUsers.add(applicationUser);
 	}
 	
