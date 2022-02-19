@@ -91,15 +91,21 @@ public class ApplicationUserController {
 
 	/* This is the method to call to delete account */
 	public static void deleteAccount(String username, String password) throws InvalidInputException{
-		ApplicationUserController appUserController = new ApplicationUserController();
-		ApplicationUserDto aApplicationUser = appUserController.getApplicationUserByUsername(username);
+		ApplicationUser aApplicationUser = null;
+		Rob rob = RobApplication.getRob(); 
+		for(ApplicationUser aUser: rob.getExistingUsers()){
+			if(aUser.getUsername().equals(username)){
+				aApplicationUser = aUser;
+				break;
+			}
+		}
 		if(aApplicationUser == null){
 			throw new InvalidInputException("Cannot delete unexisting account.");
 		}
 		if(password==null || password.length()==0 || !password.equals(aApplicationUser.getPassword())){
 			throw new InvalidInputException("Correct password must be entered to delete account.");
 		}else{
-			appUserController.deleteApplicationUser(username);
+			rob.getExistingUsers().remove(aApplicationUser);
 		}
 	}
 	

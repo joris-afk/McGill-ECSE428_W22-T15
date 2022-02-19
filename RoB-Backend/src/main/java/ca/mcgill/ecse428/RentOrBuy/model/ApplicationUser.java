@@ -47,6 +47,9 @@ public class ApplicationUser {
 		if (this.items == null) {
 			this.items = new ArrayList<Item>();
 		}
+		if(rob == null){
+			rob = new Rob();
+		}
 		rob.addCurrentExistingUser(this);
 	}
 	

@@ -27,7 +27,12 @@ public class CucumberStepDefinition {
 	@Given("a Rob applicarion exists")
 	public void a_rob_application_exists() {
 		
-		rob = RobApplication.getRob();
+		if(RobApplication.getRob() == null){
+			rob = new Rob();
+		}else{
+			rob = RobApplication.getRob();
+		}
+		
 		errorMsg = "";
 		
 	}
@@ -35,6 +40,9 @@ public class CucumberStepDefinition {
 	@Given("the following application users exist in the system:")
 	public void the_following_application_users_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
 		
+		if(users == null) {
+			users = new ArrayList<ApplicationUser>();
+		}
 		List<Map<String,String>> existingUsers = dataTable.asMaps(String.class,String.class);
 		for (Map<String,String> aUser : existingUsers){
 		 	//if(Rob.existWithUsername(aUser.get("username")) == false){ ..add this method
