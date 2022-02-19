@@ -156,11 +156,15 @@ public class ApplicationUserController {
 		Rob rob = RobApplication.getRob(); 
 		ApplicationUser u = null;
 
+		if (rob.getCurrentLoggedInUsers().isEmpty()) {
+			throw new InvalidInputException("There are no users logged in");
+		}
 		
 		for (ApplicationUser user : rob.getCurrentLoggedInUsers()) {
 			if (user.getUsername().equals(username)) {
 				u = user;
 				rob.removeCurrentLoggedInUser(user);
+				return user;
 			}
 		}
 		
@@ -169,10 +173,6 @@ public class ApplicationUserController {
 		}
 		return u;
 	}
-
-
-
-
 
 
 

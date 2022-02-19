@@ -19,15 +19,28 @@ public class Rob {
     	}
     }
     
-    public Rob getRob() {
-    	return this;
-    }
+//    public Rob getRob() {
+//    	if (this.currentLoggedInUsers == null) {
+//    		this.currentLoggedInUsers = new ArrayList<ApplicationUser>();
+//    	}
+//    	
+//    	if (this.existingUsers == null) {
+//    		this.existingUsers = new ArrayList<ApplicationUser>();
+//    	}
+//    	return this;
+//    }
 
 	public List<ApplicationUser> getCurrentLoggedInUsers() {
+		if (currentLoggedInUsers==null){
+			currentLoggedInUsers=new ArrayList<ApplicationUser>();
+		}
 		return currentLoggedInUsers;
 	}
 	
 	public void addCurrentLoggedInUser(ApplicationUser applicationUser) {
+		if (currentLoggedInUsers==null){
+			currentLoggedInUsers=new ArrayList<ApplicationUser>();
+		}
 		this.currentLoggedInUsers.add(applicationUser);
 	}
 	
@@ -69,9 +82,6 @@ public class Rob {
 	
 	
 	public void delete() {
-		for (ApplicationUser a : existingUsers) {
-			a = null;
-		}
 		existingUsers = null;
 		currentLoggedInUsers = null;
 	}
