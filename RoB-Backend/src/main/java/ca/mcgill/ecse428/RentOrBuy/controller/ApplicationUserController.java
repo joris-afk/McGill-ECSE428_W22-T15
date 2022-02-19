@@ -88,6 +88,20 @@ public class ApplicationUserController {
 		ApplicationUser aApplicationUser = applicationUserService.getApplicationUserByUsername(username);
 		applicationUserService.deleteApplicationUser(aApplicationUser);
 	}
+
+	/* This is the method to call to delete account */
+	public static void deleteAccount(String username, String password) throws InvalidInputException{
+		ApplicationUserController appUserController = new ApplicationUserController();
+		ApplicationUserDto aApplicationUser = appUserController.getApplicationUserByUsername(username);
+		if(password==null || password.length()==0){
+			throw new InvalidInputException("Correct password must be entered to delete account.");
+		}
+		if(password.equals(aApplicationUser.getPassword())){
+			appUserController.deleteApplicationUser(username);
+		}else{
+			throw new InvalidInputException("Wrong password! Cannot delete account.");
+		}
+	}
 	
 			
 	public static ApplicationUser createUser(String username, String password) throws InvalidInputException{
