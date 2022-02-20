@@ -1,5 +1,7 @@
 package ca.mcgill.ecse428.RentOrBuy.controller;
 
+public class ItemInCartController {
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

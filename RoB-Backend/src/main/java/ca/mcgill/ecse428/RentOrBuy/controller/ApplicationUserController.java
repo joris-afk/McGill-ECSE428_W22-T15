@@ -88,6 +88,58 @@ public class ApplicationUserController {
 		ApplicationUser aApplicationUser = applicationUserService.getApplicationUserByUsername(username);
 		applicationUserService.deleteApplicationUser(aApplicationUser);
 	}
+	
+	/*
+	 * Calling RESTful service endpoints
+	 *
+	 * http://localhost:8080/applicationUsers/{username}?new_username={String}&new_password={String}
+	 * http://localhost:8080/applicationUsers/{username}?new_address={String}
+	 * http://localhost:8080/applicationUsers/{username}?new_name={String}&new_username={String}&new_adress={String}
+	 * etc...
+	 * 
+	 * Using put methods, we can edit an application user's account with a new username, or password, 
+	 * or full name, or address.
+	 * We can find the application user by their current username and edit from there.
+	 *
+	 * @param String username, to find the given application user object
+	 * @param String new_username, new username for the user
+	 * @param String new_name, new name for the user
+	 * @param Strign new_password, new password for the user
+	 * @param Strign new_address, new address for the user
+	 */
+
+	@PutMapping(value = { "/applicationUsers/{username}", "/applicationUsers/{username}/" })
+	public void editApplicationUsers(@PathVariable("username") String username,
+			@RequestParam(required = false, name = "new_username") String new_username,
+			@RequestParam(required = false, name = "new_name") String new_name,
+			@RequestParam(required = false, name = "new_password") String new_password,
+			@RequestParam(required = false, name = "new_address") String new_address)
+	
+		throws IllegalArgumentException {
+		
+		ApplicationUser aApplicationUser = applicationUserService.getApplicationUserByUsername(username);
+
+		if (new_username != null) {
+
+			applicationUserService.editApplicationUserUsername(aApplicationUser, new_username);
+		}
+
+		if (new_name != null) {
+
+			applicationUserService.editApplicationUserUsername(aApplicationUser, new_name);
+		}
+		
+		if (new_password != null) {
+
+			applicationUserService.editApplicationUserUsername(aApplicationUser, new_password);
+		}
+		
+		if (new_address != null) {
+
+			applicationUserService.editApplicationUserUsername(aApplicationUser, new_address);
+		}
+
+	}
 
 	/* This is the method to call to delete account */
 	public static void deleteAccount(String username, String password) throws InvalidInputException{
@@ -107,6 +159,92 @@ public class ApplicationUserController {
 		}else{
 			rob.getExistingUsers().remove(aApplicationUser);
 		}
+	}
+	
+	/* This is the method to call to edit account username */
+	public static void editAccountUsername(String username, String newUsername) throws InvalidInputException{
+		
+		ApplicationUser aApplicationUser = null;
+		Rob rob = RobApplication.getRob(); 
+		
+		for(ApplicationUser aUser: rob.getExistingUsers()){
+			if(aUser.getUsername().equals(username)){
+				aApplicationUser = aUser;
+				break;
+			}
+		}
+		
+		if(newUsername.length() == 0){
+			throw new InvalidInputException("username cant be empty");
+		}
+		
+		for(ApplicationUser aUser: rob.getExistingUsers()){
+			if(aUser.getUsername().equals(newUsername)){
+				throw new InvalidInputException("Username not available");
+			}
+		}
+		
+		aApplicationUser.setUsername(newUsername);
+	}
+	
+	/* This is the method to call to edit account password */
+	public static void editAccountPassword(String username, String newPassword) throws InvalidInputException{
+		
+		ApplicationUser aApplicationUser = null;
+		Rob rob = RobApplication.getRob(); 
+		
+		for(ApplicationUser aUser: rob.getExistingUsers()){
+			if(aUser.getUsername().equals(username)){
+				aApplicationUser = aUser;
+				break;
+			}
+		}
+		
+		if(newPassword.length() == 0){
+			throw new InvalidInputException("password cant be empty");
+		}
+		
+		aApplicationUser.setPassword(newPassword);
+	}
+	
+	/* This is the method to call to edit account address */
+	public static void editAccountAddress(String username, String newAddress) throws InvalidInputException{
+		
+		ApplicationUser aApplicationUser = null;
+		Rob rob = RobApplication.getRob(); 
+		
+		for(ApplicationUser aUser: rob.getExistingUsers()){
+			if(aUser.getUsername().equals(username)){
+				aApplicationUser = aUser;
+				break;
+			}
+		}
+		
+		if(newAddress.length() == 0){
+			throw new InvalidInputException("address cant be empty");
+		}
+		
+		aApplicationUser.setAddress(newAddress);
+	}
+	
+	/* This is the method to call to edit account */
+	public static void editAccountName(String username, String newName) throws InvalidInputException{
+		
+		ApplicationUser aApplicationUser = null;
+		Rob rob = RobApplication.getRob(); 
+		
+		for(ApplicationUser aUser: rob.getExistingUsers()){
+			if(aUser.getUsername().equals(username)){
+				aApplicationUser = aUser;
+				break;
+			}
+		}
+		
+		if(newName.length() == 0){
+			throw new InvalidInputException("Full name cant be empty");
+		}
+		
+		aApplicationUser.setFullname(newName);
 	}
 	
 			

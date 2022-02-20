@@ -238,6 +238,89 @@ public void the_number_of_users_shall_be(String string) {
     assertEquals(totalUsers,Integer.parseInt(string) );
 }
 
+// Edit Account
+
+	@Given("the user is logged in to an account with username {string}")
+	public void the_user_is_logged_in_to_an_account_with_username(String string) {
+		
+		for(ApplicationUser u : users) {
+			if (u.getUsername().equals(string)) {
+				rob.addCurrentLoggedInUser(u);
+				loginUsers.add(u);
+				currentLoginUser = u;
+				break;
+			}
+		}
+	}
+	
+	@When("the user tries to update account with a new username {string}")
+	public void the_user_tries_to_update_account_with_a_new_username(String username) {
+
+		try {
+			
+			ApplicationUserController.editAccountUsername(currentLoginUser.getUsername(), username);
+
+		} catch (InvalidInputException e) {
+			errorMsg += e.getMessage();
+		}
+	}
+	
+	@When("the user tries to update account with a new password {string}")
+	public void the_user_tries_to_update_account_with_a_new_password(String password) {
+
+		try {
+			
+			ApplicationUserController.editAccountPassword(currentLoginUser.getUsername(), password);
+
+		} catch (InvalidInputException e) {
+			errorMsg += e.getMessage();
+		}
+	}
+	
+	@When("the user tries to update account with a new address {string}")
+	public void the_user_tries_to_update_account_with_a_new_address(String address) {
+
+		try {
+			
+			ApplicationUserController.editAccountAddress(currentLoginUser.getUsername(), address);
+
+		} catch (InvalidInputException e) {
+			errorMsg += e.getMessage();
+		}
+	}
+
+	@When("the user tries to update account with a new full name {string}")
+	public void the_user_tries_to_update_account_with_a_new_full_name(String name) {
+
+		try {
+			
+			ApplicationUserController.editAccountName(currentLoginUser.getUsername(), name);
+
+		} catch (InvalidInputException e) {
+			errorMsg += e.getMessage();
+		}
+	}
+	
+	@Then("the account shall have username {string}")
+	public void the_account_shall_have_username(String string) {
+	    assertEquals(currentLoginUser.getUsername(), string);
+	}
+	
+	@Then("the account shall have password {string}")
+	public void the_account_shall_have_password(String string) {
+	    assertEquals(currentLoginUser.getPassword(), string);
+	}
+	
+	@Then("the account shall have address {string}")
+	public void the_account_shall_have_address(String string) {
+	    assertEquals(currentLoginUser.getAddress(), string);
+	}
+	
+	@Then("the account shall have full name {string}")
+	public void the_account_shall_have_full_name(String string) {
+	    assertEquals(currentLoginUser.getFullname(), string);
+	}
+
 // Final
 	@After
 	 public void tearDown() {
