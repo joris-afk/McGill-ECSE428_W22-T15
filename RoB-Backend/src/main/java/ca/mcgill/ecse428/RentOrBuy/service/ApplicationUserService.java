@@ -81,7 +81,7 @@ public class ApplicationUserService {
 	@Transactional
 	public ApplicationUser editApplicationUserFullname(ApplicationUser aApplicationUser, String fullName) {
 		if(fullName == null || fullName.equals("") || fullName.equals("undefined")) {
-			throw new IllegalArgumentException("Full name can't be empty");
+			throw new IllegalArgumentException("Full name cant be empty");
 		}
 		aApplicationUser.setFullname(fullName);
 		applicationUserRepository.save(aApplicationUser);
@@ -91,7 +91,10 @@ public class ApplicationUserService {
 	@Transactional
 	public ApplicationUser editApplicationUserUsername(ApplicationUser aApplicationUser, String username) {
 		if(username == null || username.equals("") || username.equals("undefined")) {
-			throw new IllegalArgumentException("username can't be empty");
+			throw new IllegalArgumentException("username cant be empty");
+		}
+		if (applicationUserRepository.findApplicationUserByUsername(username) != null) {
+			throw new IllegalArgumentException("Username not available");
 		}
 		aApplicationUser.setUsername(username);
 		applicationUserRepository.save(aApplicationUser);
@@ -101,7 +104,7 @@ public class ApplicationUserService {
 	@Transactional
 	public ApplicationUser editApplicationUserPassword(ApplicationUser aApplicationUser, String password) {
 		if(password == null || password.equals("") || password.equals("undefined")) {
-			throw new IllegalArgumentException("password can't be empty");
+			throw new IllegalArgumentException("password cant be empty");
 		}
 		aApplicationUser.setPassword(password);
 		applicationUserRepository.save(aApplicationUser);
@@ -111,7 +114,7 @@ public class ApplicationUserService {
 	@Transactional
 	public ApplicationUser editApplicationUserAddress(ApplicationUser aApplicationUser, String address) {
 		if(address == null || address.equals("") || address.equals("undefined")) {
-			throw new IllegalArgumentException("address can't be empty");
+			throw new IllegalArgumentException("address cant be empty");
 		}
 		aApplicationUser.setAddress(address);
 		applicationUserRepository.save(aApplicationUser);
