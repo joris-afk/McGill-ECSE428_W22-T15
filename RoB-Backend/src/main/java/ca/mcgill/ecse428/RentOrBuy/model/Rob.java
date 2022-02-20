@@ -7,6 +7,7 @@ public class Rob {
 	
 	private List<ApplicationUser> currentLoggedInUsers;
 	private List<ApplicationUser> existingUsers;
+	private List<Item> products;
 	
     public Rob() {
     
@@ -17,6 +18,10 @@ public class Rob {
     	if (this.existingUsers == null) {
     		this.existingUsers = new ArrayList<ApplicationUser>();
     	}
+
+		if (this.products == null) {
+			this.products = new ArrayList<Item>();
+		}
     }
     	
 //    public Rob getRob() {
@@ -78,6 +83,19 @@ public class Rob {
 			}
 		}
 		return null;
+	}
+
+	public Item addProduct(Item aProduct){
+		this.products.add(aProduct);
+		return aProduct;
+	}
+
+	public void deleteExistingProduct(Item aProduct){
+		this.products.remove(aProduct);
+	}
+
+	public List<Item> getProducts(){
+		return products;
 	}
 	
 	

@@ -76,7 +76,39 @@ public class ItemController {
         itemService.deleteItem(aItem);
 	}
 
-    
+    //method for testing the code
+    public static Item postItem(String username, String itemName, double price) throws InvalidInputException{
+		
+		Rob rob = RobApplication.getRob(); 
+        ApplicationUser u = null;
+
+		for (ApplicationUser user:rob.getExistingUsers()){
+            if (username.equals(user.getUsername())){
+                u=user;
+            }
+        }
+        
+        if (u == null){
+            throw new InvalidInputException("must be logged in to add a product");
+        }
+        
+        Item newProduct = new Item();
+        newProduct.setName(itemName);
+        newProduct.setPrice(price);
+        newProduct.setAvailableSizes(null);
+		
+        for (Item produce: rob.getProducts()){
+            if (itemName.equals(produce.getName())){
+                throw new InvalidInputException("You've already added this item");
+            }
+        }
+        u.addItem(newProduct);
+
+		rob.addProduct(newProduct);
+		
+		return newProduct;
+
+	}
 
     private ItemDto convertToDto(Item item) {
 		
