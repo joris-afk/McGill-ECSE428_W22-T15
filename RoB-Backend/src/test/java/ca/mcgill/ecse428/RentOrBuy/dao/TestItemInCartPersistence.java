@@ -18,16 +18,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
-//@ExtendWith(SpringExtension.class)
-//@SpringBootTest
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 public class TestItemInCartPersistence {
-    /*
+    
     @Autowired
 	private ItemInCartRepository IICrepository;
 	
+    @Autowired
+    private ItemRepository itemRepository;
+
 	@AfterEach
 	public void clearDataBase() {
 		IICrepository.deleteAll();
+        itemRepository.deleteAll();
 	}
 
     @Test
@@ -37,6 +41,9 @@ public class TestItemInCartPersistence {
         ItemInCart aIIC = new ItemInCart();
 
         Item item = new Item();
+        item.setName("American flag");
+        itemRepository.save(item);
+        
 	    int quantity = 420;
 	    String size = "Small";
 	    Integer itemInCartId = 12345;
@@ -53,10 +60,10 @@ public class TestItemInCartPersistence {
         aIIC = IICrepository.findItemInCartByItemInCartId(itemInCartId);
 
         assertNotNull(aIIC);
-        assertEquals(item, aIIC.getItem());
+        assertEquals(item.getName(), aIIC.getItem().getName());
         assertEquals(quantity, aIIC.getQuantity());
         assertEquals(size, aIIC.getSize());
         assertEquals(itemInCartId, aIIC.getItemInCartId());
     }
-    */
+
 }
