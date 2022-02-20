@@ -41,4 +41,22 @@ public class ItemInCartService {
 		itemInCartRepository.save(itemInCart);
 		return itemInCart;
 	}
+
+	@Transactional
+	public ItemInCart getItemInCart(Integer itemInCartId){
+		ItemInCart aIIC = itemInCartRepository.findItemInCartByItemInCartId(itemInCartId);
+		return aIIC;
+	}
+
+	@Transactional
+	public List<ItemInCart> getAllItemsInCart(){
+		return (List<ItemInCart>) itemInCartRepository.findAll();
+	}
+
+	@Transactional
+	public ItemInCart deleteItem(ItemInCart aIIC){
+		itemInCartRepository.delete(aIIC);
+		aIIC = null;
+		return aIIC;
+	}
 }
