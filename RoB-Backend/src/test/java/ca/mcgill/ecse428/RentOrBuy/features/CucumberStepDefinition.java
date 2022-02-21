@@ -2,6 +2,8 @@ package ca.mcgill.ecse428.RentOrBuy.features;
 
 import java.util.*;
 
+import org.mockito.internal.stubbing.answers.ThrowsException;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
@@ -321,6 +323,58 @@ public void the_number_of_users_shall_be(String string) {
 	    assertEquals(currentLoginUser.getFullname(), string);
 	}
 
+@When("the user with username {string} tries to add {string} with price {string}")
+public void the_user_with_username_tries_to_add_with_price(String string, String string2, String string3) {
+    // Write code here that turns the phrase above into concrete actions
+	try{
+		String username = string;
+		String name = string2;
+		Integer price = Integer.parseInt(string3);
+
+		Item newItem = new Item(username, name, (double) price); //use parameters to create new item
+
+		currentLoginUser.addItem(newItem); //add new item to list of items
+
+	} catch (Exception e){
+		errorMsg += e.getMessage();
+		System.out.println(errorMsg);
+	}
+}
+
+@Then("the {string} will be added successfully to the database")
+public void the_will_be_added_successfully_to_the_database(String string) {
+    // Write code here that turns the phrase above into concrete actions
+	ArrayList<String> itemNames = new ArrayList<String>();
+	for(Item item: currentLoginUser.getItems()){
+		itemNames.add(item.getName()); //adds each name to name list
+	}
+	assertTrue(itemNames.contains(string)); //checks whether itemList has new name
+}
+
+@When("the user with username {string} tries to add a duplicate {string} with price {string}")
+public void the_user_with_username_tries_to_add_a_duplicate_with_price(String string, String string2, String string3) {
+	try{
+		String username = string;
+		String name = string2;
+		Integer price = Integer.parseInt(string3);
+
+		Item newItem = new Item(username, name, (double) price);
+
+		for(Item item: currentLoginUser.getItems()){
+			if(name.equals(item.getName()) && price == (item.getPrice())){ //if identical name and price are there dont add item
+				throw new Exception();
+			}
+		}
+		currentLoginUser.addItem(newItem);
+
+
+	} catch (Exception e){
+		errorMsg += e.getMessage();
+		System.out.println(errorMsg);
+	}
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
 // Final
 	@After
 	 public void tearDown() {
