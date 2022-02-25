@@ -50,9 +50,15 @@ public class Item {
 		this.availableSizes = availableSizes;
 	}
 	public void addAvailableSizes(List<String> availableSizes) {
+		if (this.availableSizes == null) {
+			availableSizes = new ArrayList<String>();
+		}
 		this.availableSizes.addAll(availableSizes);
 	}
 	public void addAvailableSize(String availableSize) {
+		if (this.availableSizes == null) {
+			this.availableSizes = new ArrayList<String>();
+		}
 		this.availableSizes.add(availableSize);
 	}
 	public void removeAvailableSize(String unavailableSize) {

@@ -10,30 +10,10 @@ public class Rob {
 	private List<Item> products;
 	
     public Rob() {
-    
-    	if (this.currentLoggedInUsers == null) {
-    		this.currentLoggedInUsers = new ArrayList<ApplicationUser>();
-    	}
-    	
-    	if (this.existingUsers == null) {
-    		this.existingUsers = new ArrayList<ApplicationUser>();
-    	}
-
-		if (this.products == null) {
-			this.products = new ArrayList<Item>();
-		}
+    	this.currentLoggedInUsers = new ArrayList<ApplicationUser>();
+    	this.existingUsers = new ArrayList<ApplicationUser>();
+    	this.products = new ArrayList<Item>();
     }
-    	
-//    public Rob getRob() {
-//    	if (this.currentLoggedInUsers == null) {
-//    		this.currentLoggedInUsers = new ArrayList<ApplicationUser>();
-//    	}
-//    	
-//    	if (this.existingUsers == null) {
-//    		this.existingUsers = new ArrayList<ApplicationUser>();
-//    	}
-//    	return this;
-//    }
 
 	public List<ApplicationUser> getCurrentLoggedInUsers() {
 		if (currentLoggedInUsers==null){
@@ -86,6 +66,7 @@ public class Rob {
 	}
 
 	public Item addProduct(Item aProduct){
+		if (this.products == null) this.products = new ArrayList<Item>();
 		this.products.add(aProduct);
 		return aProduct;
 	}
@@ -95,6 +76,7 @@ public class Rob {
 	}
 
 	public List<Item> getProducts(){
+		if (this.products == null) this.products = new ArrayList<Item>();
 		return products;
 	}
 	
@@ -102,6 +84,7 @@ public class Rob {
 	public void delete() {
 		existingUsers = null;
 		currentLoggedInUsers = null;
+		products=null;
 	}
 	
 }

@@ -11,7 +11,7 @@ Given the following application users login in the system:
 ##########################################################################
 
 Scenario: Add Item successfully
-  When the user with username "User1" tries to add "couch" with price "price"
+  When the user with username "User1" tries to add "couch" with price "100.00"
   Then the "couch" will be added successfully to the database
 
 Example:
@@ -22,7 +22,7 @@ Example:
 ##########################################################################
 
 Scenario: Add Item when the user is not login
-  When the user with username "User3" tries to add "couch" with price "price"
+  When the user with username "User3" tries to add "couch" with price "100.00"
   Then an error message "You must log in first" shall be raised
 
 Example:

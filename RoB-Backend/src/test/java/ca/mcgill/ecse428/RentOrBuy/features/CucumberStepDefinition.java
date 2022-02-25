@@ -110,13 +110,13 @@ public class CucumberStepDefinition {
 		for (Map<String,String> aUser : existingUsers){
 		 	//if(Rob.existWithUsername(aUser.get("username")) == false){ ..add this method
 		 		// create a new user with the provided info if such an user does not already exist in the system
-		 		ApplicationUser newUser = new ApplicationUser(aUser.get("username"), aUser.get("password"), aUser.get("fullname"), aUser.get("address"));
-		 		rob.addCurrentExistingUser(newUser); //this should be controller.createUser !!!
-		 		ApplicationUserController.logInUser(aUser.get("username"), aUser.get("password"));
-		 		this.users.add(newUser);
-		 		this.loginUsers.add(newUser);
+			ApplicationUser newUser = new ApplicationUser(aUser.get("username"), aUser.get("password"), aUser.get("fullname"), aUser.get("address"));
+		 		//rob.addCurrentExistingUser(newUser); //this should be controller.createUser !!!
+			ApplicationUserController.createUser(aUser.get("username"), aUser.get("password"));
+			this.users.add(newUser);
+			ApplicationUserController.logInUser(aUser.get("username"), aUser.get("password"));
+			this.loginUsers.add(newUser);
 		 }
-		
 	}
 
 	@When("the user with username {string} tries to log out")
@@ -331,23 +331,24 @@ public void the_user_with_username_tries_to_add_with_price(String string, String
 	try{
 		String username = string;
 		String name = string2;
-		Integer price = Integer.parseInt(string3);
+		double priced = Double.parseDouble(string3);
+		int price = (int) priced;
 
-		Item newItem = new Item(); //use parameters to create new item
-		newItem.setName(name);
-		newItem.setPrice(price);
-		ApplicationUser user = null;
-		for (ApplicationUser usersinsystem: loginUsers){
-			if (usersinsystem.getUsername().equals(username)){
-				user = usersinsystem;
+		Item newItem = ItemController.createItem(username, name, price); //use parameters to create new item
+
+		for (ApplicationUser userinsystem: loginUsers){
+			if (userinsystem.getUsername().equals(username)){
+				this.currentLoginUser = userinsystem;
 				break;
 			}
 		}
-		if (user != null){
-			user.addItem(newItem);
-		}
 
-		currentLoginUser.addItem(newItem); //add new item to list of items
+		if (currentLoginUser == null) {
+			errorMsg = "You must log in first";
+		}
+		else if (currentLoginUser.getUsername().equals(username)) {
+			currentLoginUser.addItem(newItem); //add new item to list of items
+		}
 
 	} catch (Exception e){
 		errorMsg += e.getMessage();
@@ -401,7 +402,7 @@ public void the_user_with_username_tries_to_add_a_duplicate_with_price(String st
 }
 
 ////////////////////////////////////////////////////////////////////
-///////////////////////////  EDIT ITMES  ///////////////////////////
+///////////////////////////  EDIT ITEMS  ///////////////////////////
 ////////////////////////////////////////////////////////////////////
 @Given("the following application items exist in the system:")
 public void the_following_application_items_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
@@ -411,21 +412,25 @@ public void the_following_application_items_exist_in_the_system(io.cucumber.data
 	List<Map<String,String>> existingItems = dataTable.asMaps(String.class,String.class);
 	for (Map<String,String> aItem : existingItems){
 		// create a new user with the provided info if such an user does not already exist in the system
-		String[] sizeArray=  aItem.get("availableSizes").split(",");
+		String[] sizeArray = aItem.get("availableSizes").split(",");
 		ArrayList<String> sizes = new ArrayList<>();
-		for (String size:sizeArray){
-			sizes.add(size);
+		for (String size:sizeArray) sizes.add(size);
+		double price = Double.parseDouble(aItem.get("price"));
+
+		Item newItem = null;
+		try {
+			newItem = ItemController.addItem(aItem.get("name"), price, sizes);
+		} catch (Exception e){
+			errorMsg += e.getMessage();
+			System.out.println(errorMsg);
 		}
-		double price = Double.parseDouble( aItem.get("price"));
-		Item newItem = new Item(aItem.get("name"), price, sizes);
 		allItems.add(newItem);
-		rob.addProduct(newItem);
 	 }
 }
 
 @Given("the user is looking at {string}")
 public void the_user_is_looking_at(String string) {
-    for (Item i:allItems){
+    for (Item i: allItems){
 		if (string.equals(i.getName())){
 			currentItem = i;
 		}
@@ -448,13 +453,17 @@ public void the_user_tries_to_update_price_to_a_new_price_of(String string) {
 
 @Then("the current item shall have price {string}")
 public void the_current_item_shall_have_price(String string) {
-    assertEquals(Double.parseDouble(string),currentItem.getPrice());
+    assertEquals(Double.parseDouble(string),currentItem.getPrice(), 0.00001);
 }
 
 
 @Then("the current item shall have size {string}")
 public void the_current_item_shall_have_size(String string) {
-    assertTrue(currentItem.getAvailableSizes().contains(string));
+
+	if (errorMsg.contains("Can't edit null item")) {
+		assertNull(currentItem);
+	}
+    else assertTrue(currentItem.getAvailableSizes().contains(string) || string.isEmpty());
 }
 
 @When("the user tries to remove size of {string} from the current item")
@@ -470,16 +479,14 @@ public void the_user_tries_to_remove_size_of_from_the_current_item(String string
 	}
 }
 
-@Then("the current item shall not have size {string}")
-public void the_current_item_shall_not_have_size(String string) {
-    assertFalse(currentItem.getAvailableSizes().contains(string));
-}
-
 @When("the user tries to add size of {string} to the current item")
 public void the_user_tries_to_add_size_of_to_the_current_item(String string) {
 	try{
+		System.out.println("items in sys: " + allItems);
+		System.out.println("curr item: "+ currentItem);
 		Item i = ItemController.addItemSize(currentItem, string);
-		currentItem = i;	//update pointer
+		if (i != null) currentItem = i;	//update pointer
+		System.out.println("curr item after update: "+ currentItem);
 		allItems = rob.getProducts();//update list
 	}
 	catch (Exception e){
@@ -488,9 +495,22 @@ public void the_user_tries_to_add_size_of_to_the_current_item(String string) {
 	}
 }
 
+	@Then("the current item shall not have size {string}")
+	public void the_current_item_shall_not_have_size(String string) {
+		if (errorMsg.contains("Can't edit null item")) {
+			assertNull(currentItem);
+		}
+		else if (errorMsg.contains("Cannot add duplicate size")) {
+			//one instance
+			assertTrue(currentItem.getAvailableSizes().indexOf(string) == currentItem.getAvailableSizes().lastIndexOf(string));
+		}
+		else assertFalse(currentItem.getAvailableSizes().contains(string));
+	}
+
 // Final
 	@After
 	 public void tearDown() {
+		errorMsg = "";
 		rob.delete();
 	}
 }

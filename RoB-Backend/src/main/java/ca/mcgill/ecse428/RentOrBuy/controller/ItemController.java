@@ -97,7 +97,6 @@ public class ItemController {
                 u=user;
             }
         }
-        
         if (u == null){
             throw new InvalidInputException("must be logged in to add a product");
         }
@@ -112,35 +111,66 @@ public class ItemController {
                 throw new InvalidInputException("You've already added this item");
             }
         }
-        u.addItem(newProduct);
-
 		rob.addProduct(newProduct);
-		
 		return newProduct;
 	}
 
-    public static Item addItemSize(Item currItem, String newSize) throws InvalidInputException{
-		Rob rob = RobApplication.getRob(); 
+    public static Item addItem(String name, double price, List<String> sizes) throws InvalidInputException{
+            Rob rob = RobApplication.getRob();
 
+            System.out.println("Adding: "+name);
+            if (name == null){
+                throw new InvalidInputException("product needs a name");
+            }
+            if (price<0) {
+                throw new InvalidInputException("product can't have a negative price");
+            }
+            if (sizes==null || sizes.isEmpty()) {
+                throw new InvalidInputException("product needs a size");
+            }
+            for (Item product: rob.getProducts()){
+                if (name.equals(product.getName())){
+                throw new InvalidInputException("You've already added this item");
+                }
+            }
+
+            Item newProduct = new Item();
+            newProduct.setName(name);
+            newProduct.setPrice(price);
+            newProduct.setAvailableSizes(sizes);
+
+            rob.addProduct(newProduct);
+            return newProduct;
+    }
+
+    public static Item addItemSize(Item currItem, String newSize) throws InvalidInputException{
+		Rob rob = RobApplication.getRob();
+        System.out.println(rob.getProducts().size());
+        for (Item it: rob.getProducts()) {
+            System.out.println("item in rob:" + it.getName());
+        }
         //check for valid inputs 
-        if (currItem == null) {
+        if (currItem == null || currItem.getName() == null || currItem.getName().equals("")) {
 			throw new IllegalArgumentException("Can't edit null item");
 		}
-		if (newSize == null) {
+		if (newSize == null || newSize.equals("")) {
 			throw new IllegalArgumentException("Must specify one available size");
 		}
 		if (currItem.getAvailableSizes().contains(newSize)){
 			throw new IllegalArgumentException("Cannot add duplicate size");
 		}
-        
+        System.out.println("size to add: " + newSize + " for " + currItem.getName());
+
         //replace the item in 
         for (Item it: rob.getProducts()){
+            System.out.println(it.getName());
             if (currItem.getName().equals(it.getName())){
                 rob.deleteExistingProduct(it);
             }
         }
-        currItem.addAvailableSize(newSize); //assuming the item is treated as new entity
 
+        currItem.addAvailableSize(newSize); //assuming the item is treated as new entity
+        System.out.println("Added");
         rob.addProduct(currItem);
 
         return currItem;
@@ -153,13 +183,14 @@ public class ItemController {
         if (currItem == null) {
 			throw new IllegalArgumentException("Can't edit null item");
 		}
-		if (oldSize == null ) {
+		if (oldSize == null || oldSize.isEmpty()) {
 			throw new IllegalArgumentException("Must specify one unavailable size");
 		}
 
         //replace the item in 
         for (Item it: rob.getProducts()){
             if (currItem.getName().equals(it.getName())){
+                System.out.println("Deleteing " + currItem.getName());
                 rob.deleteExistingProduct(it);
             }
         }
