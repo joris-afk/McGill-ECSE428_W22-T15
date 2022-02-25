@@ -89,6 +89,26 @@ public class ApplicationUserController {
 		applicationUserService.deleteApplicationUser(aApplicationUser);
 	}
 	
+	/* This is the method to call to delete account */
+	public static void deleteAccount(String username, String password) throws InvalidInputException{
+		ApplicationUser aApplicationUser = null;
+		Rob rob = RobApplication.getRob(); 
+		for(ApplicationUser aUser: rob.getExistingUsers()){
+			if(aUser.getUsername().equals(username)){
+				aApplicationUser = aUser;
+				break;
+			}
+		}
+		if(aApplicationUser == null){
+			throw new InvalidInputException("Cannot delete unexisting account.");
+		}
+		if(password==null || password.length()==0 || !password.equals(aApplicationUser.getPassword())){
+			throw new InvalidInputException("Correct password must be entered to delete account.");
+		}else{
+			rob.getExistingUsers().remove(aApplicationUser);
+		}
+	}
+
 	/*
 	 * Calling RESTful service endpoints
 	 *
@@ -141,25 +161,7 @@ public class ApplicationUserController {
 
 	}
 
-	/* This is the method to call to delete account */
-	public static void deleteAccount(String username, String password) throws InvalidInputException{
-		ApplicationUser aApplicationUser = null;
-		Rob rob = RobApplication.getRob(); 
-		for(ApplicationUser aUser: rob.getExistingUsers()){
-			if(aUser.getUsername().equals(username)){
-				aApplicationUser = aUser;
-				break;
-			}
-		}
-		if(aApplicationUser == null){
-			throw new InvalidInputException("Cannot delete unexisting account.");
-		}
-		if(password==null || password.length()==0 || !password.equals(aApplicationUser.getPassword())){
-			throw new InvalidInputException("Correct password must be entered to delete account.");
-		}else{
-			rob.getExistingUsers().remove(aApplicationUser);
-		}
-	}
+
 	
 	/* This is the method to call to edit account username */
 	public static void editAccountUsername(String username, String newUsername) throws InvalidInputException{

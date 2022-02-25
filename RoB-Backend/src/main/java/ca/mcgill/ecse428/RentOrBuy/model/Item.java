@@ -4,6 +4,9 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import org.checkerframework.checker.units.qual.A;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +17,15 @@ public class Item {
 	private double price;
 	private List<String> availableSizes;
 	
-	public Item() {}
+	public Item() {
+		availableSizes = new ArrayList<String>();
+	}
+
+	public Item(String name, double price, List<String> availableSizes){
+		this.name=name;
+		this.price=price;
+		this.availableSizes=availableSizes;
+	}
 	
 	public double getPrice() {
 		return price;
