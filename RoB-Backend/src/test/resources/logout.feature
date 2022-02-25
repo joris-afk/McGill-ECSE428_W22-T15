@@ -2,7 +2,7 @@ Feature: Logout as an applicarion user
   As an application user, I want to log out of my account so that my session will be closed.
 
 Background:  
-  Given a Rob applicarion exists
+  Given a Rob application exists
   Given the following application users login in the system:
     | username | password | fullname | address  |
     | User1    | abcd     | Alice    | Montreal |

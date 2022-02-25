@@ -74,6 +74,24 @@ public class ItemService {
 		itemRepository.save(item);
 		return item;
 	}
+
+	@Transactional
+	public Item addItemSize(Item item, String availableSize) {
+		
+		if (item == null) {
+			throw new IllegalArgumentException("Can't edit null item");
+		}
+		if (availableSize == null) {
+			throw new IllegalArgumentException("Must specify one sizes");
+		}
+		if (item.getAvailableSizes().contains(availableSize)){
+			throw new IllegalArgumentException("Cannot add duplicate size");
+		}
+		
+		item.addAvailableSize(availableSize);
+		itemRepository.save(item);
+		return item;
+	}
 	
 	@Transactional
 	public Item removeItemSizes(Item item, List<String> unavailableSizes) {
@@ -89,7 +107,22 @@ public class ItemService {
 		itemRepository.save(item);
 		return item;
 	}
-	
+
+	@Transactional
+	public Item removeItemSize(Item item, String unavailableSize) {
+		
+		if (item == null) {
+			throw new IllegalArgumentException("Can't edit null item");
+		}
+		if (unavailableSize == null ) {
+			throw new IllegalArgumentException("Must specify one size");
+		}
+		
+		item.removeAvailableSize(unavailableSize);
+		itemRepository.save(item);
+		return item;
+	}
+
 	@Transactional
 	public Item editItemName(Item item, String name) {
 		

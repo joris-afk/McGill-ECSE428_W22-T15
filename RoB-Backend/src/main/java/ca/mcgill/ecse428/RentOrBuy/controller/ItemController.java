@@ -37,7 +37,7 @@ public class ItemController {
      */
     
     @PostMapping(value = { "/items/{name}", "/items/{name}/" })
-	public ItemDto createItem(@PathVariable("name") String name,
+	public ItemDto createItemDto(@PathVariable("name") String name,
 			@RequestParam(name = "price") double price, 
 			@RequestParam(name = "availableSizes") List<String> availableSizes)
 		throws IllegalArgumentException {
@@ -76,9 +76,19 @@ public class ItemController {
         itemService.deleteItem(aItem);
 	}
 
-    //method for testing the code
-    public static Item postItem(String username, String itemName, double price) throws InvalidInputException{
+    //Utility method
+    private ItemDto convertToDto(Item item) {
 		
+		if (item == null) {
+            throw new IllegalArgumentException("There is no such item");
+        }
+		
+		ItemDto itemDto = new ItemDto(item.getName(), item.getPrice(), item.getAvailableSizes());
+		return itemDto;
+	}
+
+    //Testing methods
+    public static Item createItem(String username, String itemName, double price) throws InvalidInputException{
 		Rob rob = RobApplication.getRob(); 
         ApplicationUser u = null;
 
@@ -107,18 +117,80 @@ public class ItemController {
 		rob.addProduct(newProduct);
 		
 		return newProduct;
-
 	}
 
-    private ItemDto convertToDto(Item item) {
-		
-		if (item == null) {
-            throw new IllegalArgumentException("There is no such item");
+    public static Item addItemSize(Item currItem, String newSize) throws InvalidInputException{
+		Rob rob = RobApplication.getRob(); 
+
+        //check for valid inputs 
+        if (currItem == null) {
+			throw new IllegalArgumentException("Can't edit null item");
+		}
+		if (newSize == null) {
+			throw new IllegalArgumentException("Must specify one available size");
+		}
+		if (currItem.getAvailableSizes().contains(newSize)){
+			throw new IllegalArgumentException("Cannot add duplicate size");
+		}
+        
+        //replace the item in 
+        for (Item it: rob.getProducts()){
+            if (currItem.getName().equals(it.getName())){
+                rob.deleteExistingProduct(it);
+            }
         }
-		
-		ItemDto itemDto = new ItemDto(item.getName(), item.getPrice(), item.getAvailableSizes());
-		return itemDto;
+        currItem.addAvailableSize(newSize); //assuming the item is treated as new entity
+
+        rob.addProduct(currItem);
+
+        return currItem;
 	}
 
+    public static Item removeItemSize(Item currItem, String oldSize) throws InvalidInputException{
+		Rob rob = RobApplication.getRob(); 
 
+        //check for valid inputs 
+        if (currItem == null) {
+			throw new IllegalArgumentException("Can't edit null item");
+		}
+		if (oldSize == null ) {
+			throw new IllegalArgumentException("Must specify one unavailable size");
+		}
+
+        //replace the item in 
+        for (Item it: rob.getProducts()){
+            if (currItem.getName().equals(it.getName())){
+                rob.deleteExistingProduct(it);
+            }
+        }
+        currItem.removeAvailableSize(oldSize); //assuming the item is treated as new entity
+
+        rob.addProduct(currItem);
+
+        return currItem;
+	}
+
+    public static Item updatePrice(Item currItem, double newPrice) throws InvalidInputException{
+		Rob rob = RobApplication.getRob(); 
+
+        //check for valid inputs 
+        if (currItem == null) {
+			throw new IllegalArgumentException("Can't edit null item");
+		}
+		if (newPrice < 0 ) {
+			throw new IllegalArgumentException("Item price can't be negative");
+		}
+
+        //replace the item in 
+        for (Item it: rob.getProducts()){
+            if (currItem.getName().equals(it.getName())){
+                rob.deleteExistingProduct(it);
+            }
+        }
+        currItem.setPrice(newPrice); //assuming the item is treated as new entity
+
+        rob.addProduct(currItem);
+
+        return currItem;
+	}
 }

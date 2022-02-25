@@ -11,7 +11,7 @@ import io.cucumber.java.After;
 import static org.junit.Assert.*;
 
 import ca.mcgill.ecse428.RentOrBuy.*;
-import ca.mcgill.ecse428.RentOrBuy.controller.ApplicationUserController;
+import ca.mcgill.ecse428.RentOrBuy.controller.*;
 import ca.mcgill.ecse428.RentOrBuy.model.*;
 
 public class CucumberStepDefinition {
@@ -20,13 +20,15 @@ public class CucumberStepDefinition {
 	private ApplicationUser currentLoginUser;
 	private List<ApplicationUser> loginUsers;
 	private List<ApplicationUser> users;
+	private List<Item> allItems;
+	private Item currentItem;
 	private String errorMsg;
 	private int totalUsers;
 
 
 // Background
 
-	@Given("a Rob applicarion exists")
+	@Given("a Rob application exists")
 	public void a_rob_application_exists() {
 		
 		if(RobApplication.getRob() == null){
@@ -331,7 +333,19 @@ public void the_user_with_username_tries_to_add_with_price(String string, String
 		String name = string2;
 		Integer price = Integer.parseInt(string3);
 
-		Item newItem = new Item(username, name, (double) price); //use parameters to create new item
+		Item newItem = new Item(); //use parameters to create new item
+		newItem.setName(name);
+		newItem.setPrice(price);
+		ApplicationUser user = null;
+		for (ApplicationUser usersinsystem: loginUsers){
+			if (usersinsystem.getUsername().equals(username)){
+				user = usersinsystem;
+				break;
+			}
+		}
+		if (user != null){
+			user.addItem(newItem);
+		}
 
 		currentLoginUser.addItem(newItem); //add new item to list of items
 
@@ -358,7 +372,19 @@ public void the_user_with_username_tries_to_add_a_duplicate_with_price(String st
 		String name = string2;
 		Integer price = Integer.parseInt(string3);
 
-		Item newItem = new Item(username, name, (double) price);
+		Item newItem = new Item(); //use parameters to create new item
+		newItem.setName(name);
+		newItem.setPrice(price);
+		ApplicationUser user = null;
+		for (ApplicationUser usersinsystem: loginUsers){
+			if (usersinsystem.getUsername().equals(username)){
+				user = usersinsystem;
+				break;
+			}
+		}
+		if (user != null){
+			user.addItem(newItem);
+		}
 
 		for(Item item: currentLoginUser.getItems()){
 			if(name.equals(item.getName()) && price == (item.getPrice())){ //if identical name and price are there dont add item
@@ -372,9 +398,96 @@ public void the_user_with_username_tries_to_add_a_duplicate_with_price(String st
 		errorMsg += e.getMessage();
 		System.out.println(errorMsg);
 	}
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
 }
+
+////////////////////////////////////////////////////////////////////
+///////////////////////////  EDIT ITMES  ///////////////////////////
+////////////////////////////////////////////////////////////////////
+@Given("the following application items exist in the system:")
+public void the_following_application_items_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
+	if(allItems == null) {
+		allItems = new ArrayList<Item>();
+	}
+	List<Map<String,String>> existingItems = dataTable.asMaps(String.class,String.class);
+	for (Map<String,String> aItem : existingItems){
+		// create a new user with the provided info if such an user does not already exist in the system
+		String[] sizeArray=  aItem.get("availableSizes").split(",");
+		ArrayList<String> sizes = new ArrayList<>();
+		for (String size:sizeArray){
+			sizes.add(size);
+		}
+		double price = Double.parseDouble( aItem.get("price"));
+		Item newItem = new Item(aItem.get("name"), price, sizes);
+		allItems.add(newItem);
+		rob.addProduct(newItem);
+	 }
+}
+
+@Given("the user is looking at {string}")
+public void the_user_is_looking_at(String string) {
+    for (Item i:allItems){
+		if (string.equals(i.getName())){
+			currentItem = i;
+		}
+	}
+}
+
+@When("the user tries to update price to a new price of {string}")
+public void the_user_tries_to_update_price_to_a_new_price_of(String string) {
+	try{
+		Item i = ItemController.updatePrice(currentItem, Double.parseDouble(string));
+		currentItem = i;	//update pointer
+		allItems = rob.getProducts();//update list
+	}
+	catch (Exception e){
+		errorMsg += e.getMessage();
+		System.out.println(errorMsg);
+	}
+    
+}
+
+@Then("the current item shall have price {string}")
+public void the_current_item_shall_have_price(String string) {
+    assertEquals(Double.parseDouble(string),currentItem.getPrice());
+}
+
+
+@Then("the current item shall have size {string}")
+public void the_current_item_shall_have_size(String string) {
+    assertTrue(currentItem.getAvailableSizes().contains(string));
+}
+
+@When("the user tries to remove size of {string} from the current item")
+public void the_user_tries_to_remove_size_of_from_the_current_item(String string) {
+    try{
+		Item i = ItemController.removeItemSize(currentItem, string);
+		currentItem = i;	//update pointer
+		allItems = rob.getProducts();//update list
+	}
+	catch (Exception e){
+		errorMsg += e.getMessage();
+		System.out.println(errorMsg);
+	}
+}
+
+@Then("the current item shall not have size {string}")
+public void the_current_item_shall_not_have_size(String string) {
+    assertFalse(currentItem.getAvailableSizes().contains(string));
+}
+
+@When("the user tries to add size of {string} to the current item")
+public void the_user_tries_to_add_size_of_to_the_current_item(String string) {
+	try{
+		Item i = ItemController.addItemSize(currentItem, string);
+		currentItem = i;	//update pointer
+		allItems = rob.getProducts();//update list
+	}
+	catch (Exception e){
+		errorMsg += e.getMessage();
+		System.out.println(errorMsg);
+	}
+}
+
 // Final
 	@After
 	 public void tearDown() {

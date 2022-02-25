@@ -2,7 +2,7 @@ Feature: Edit accout as an applicarion user
   As an application user, I want to edit to my account so that I can update my personal information.
 
 Background:  
-  Given a Rob applicarion exists
+  Given a Rob application exists
   Given the following application users exist in the system:
     | username | password | fullname | address  |
     | User1    | abcd     | Alice    | Montreal |

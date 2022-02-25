@@ -2,7 +2,7 @@ Feature: Add Item
 As an application user, I want to add items so that I can sell them
 
 Background:
-Given a Rob applicarion exists
+Given a Rob application exists
 Given the following application users login in the system:
     | username | password | fullname | address  |
     | User1    | abcd     | Alice    | Montreal |
