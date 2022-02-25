@@ -10,14 +10,20 @@
             </div>
         </div>
         <div class="input-box">
-            <input type="text" v-model="account" placeholder="Account">
+            <input type="text" v-model="account" placeholder="Username/Account">
+            <input type="text" v-model="fullname" placeholder="Fullname">
+            <input type="text" v-model="address" placeholder="Address">
             <input type="password" v-model="password" placeholder="Password" id="password">
+            
+            
 
-            <button v-bind:disabled="(!account||!password)"
-            @click="login(account,password)">Log In</button>
 
             <router-link to ="/signUp">
                 <button>Sign Up</button>
+            </router-link>
+
+            <router-link to ="/">
+                <button>Back </button>
             </router-link>
 
         </div>
@@ -28,7 +34,7 @@
 
 </template>
 
-<script src="./LoginBehaviour.js">
+<script src="./SignUpBehaviour.js">
 </script>
-<style src="./LoginStyle.css">
+<style src="./SignUpStyle.css">
 </style>
