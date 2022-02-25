@@ -507,6 +507,97 @@ public void the_user_tries_to_add_size_of_to_the_current_item(String string) {
 		else assertFalse(currentItem.getAvailableSizes().contains(string));
 	}
 
+	@When("the user with username {string} tries to delete {string} with price {string}")
+	public void the_user_with_username_tries_to_delete_with_price(String string, String string2, String string3) {
+		// Write code here that turns the phrase above into concrete actions
+		try{
+			String username = string;
+			String name = string2;
+			double priced = Double.parseDouble(string3);
+			int price = (int) priced;
+	
+			Item newItem = ItemController.createItem(username, name, price); //use parameters to create new item
+	
+			for (ApplicationUser userinsystem: loginUsers){
+				if (userinsystem.getUsername().equals(username)){
+					this.currentLoginUser = userinsystem;
+					break;
+				}
+			}
+			
+			boolean wasFound = false;
+
+			if (currentLoginUser == null) {
+				errorMsg = "You must log in first";
+			}
+			else if (currentLoginUser.getUsername().equals(username)) {
+				for(Item items: currentLoginUser.getItems()){
+					if(newItem.getName().equals(items.getName()) && newItem.getPrice() == items.getPrice()){
+						wasFound = true;
+						currentLoginUser.removeItem(newItem);; //remove new item to list of items
+					}
+				}
+				
+			}
+	
+		} catch (Exception e){
+			errorMsg += e.getMessage();
+			System.out.println(errorMsg);
+		}
+	}
+
+@Then("the {string} will be deleted successfully to the database")
+public void the_will_be_deleted_successfully_to_the_database(String string) {
+    // Write code here that turns the phrase above into concrete actions
+	ArrayList<String> itemNames = new ArrayList<String>();
+	for(Item item: currentLoginUser.getItems()){
+		itemNames.add(item.getName()); //adds each name to name list
+	}
+	assertTrue(!itemNames.contains(string)); //checks whether itemList has new name
+}
+
+@When("the user with username {string} tries to delete a non existent {string} with price {string}")
+	public void the_user_with_username_tries_to_delete_a_non_existent_with_price(String string, String string2, String string3) {
+		// Write code here that turns the phrase above into concrete actions
+		try{
+			String username = string;
+			String name = string2;
+			double priced = Double.parseDouble(string3);
+			int price = (int) priced;
+	
+			Item newItem = ItemController.createItem(username, name, price); //use parameters to create new item
+	
+			for (ApplicationUser userinsystem: loginUsers){
+				if (userinsystem.getUsername().equals(username)){
+					this.currentLoginUser = userinsystem;
+					break;
+				}
+			}
+			
+			boolean wasFound = false;
+
+			if (currentLoginUser == null) {
+				errorMsg = "You must log in first";
+			}
+			else if (currentLoginUser.getUsername().equals(username)) {
+				for(Item items: currentLoginUser.getItems()){
+					if(newItem.getName().equals(items.getName()) && newItem.getPrice() == items.getPrice()){
+						wasFound = true;
+						currentLoginUser.removeItem(newItem);; //remove new item to list of items
+					}
+				}
+				if(!wasFound){
+					errorMsg = "This Item does not exist";
+				}
+			}
+	
+		} catch (Exception e){
+			errorMsg += e.getMessage();
+			System.out.println(errorMsg);
+		}
+	}
+
+
 // Final
 	@After
 	 public void tearDown() {
