@@ -2,8 +2,26 @@ import axios from 'axios'
 
 var config = require('../../config')
 
-var frontendUrl= 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+var backendConfigurer = function () {
+    switch (process.env.NODE_ENV) {
+      case 'development':
+        return 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+      case 'production':
+        return 'https://' + config.build.backendHost + ':' + config.build.backendPort
+    }
+  }
+  
+  var frontendConfigurer = function () {
+    switch (process.env.NODE_ENV) {
+      case 'development':
+        return 'http://' + config.dev.host + ':' + config.dev.port
+      case 'production':
+        return 'https://' + config.build.host + ':' + config.build.port
+    }
+  }
+  
+  var backendUrl = backendConfigurer()
+  var frontendUrl = frontendConfigurer()
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
@@ -19,7 +37,7 @@ export default {
         // get data from login page or edit account info page
         loginUsername: sessionStorage.getItem('loginUsername'),
         appUser:{
-            username: 'user123',
+            username: sessionStorage.getItem('loginUsername'),
             fullname:'david',
             address:'rue 100',
         },      
@@ -32,16 +50,11 @@ export default {
     },
 
     created: function() {
-
-        // move to the end when backend is connected
-        // pass data to edit account page
-        sessionStorage.setItem("Username", this.appUser.username); 
-
-        
         // retrieve user list from backend
         AXIOS.get('/applicationUsers/'.concat(loginUsername))
         .then(response => {
             this.appUser = response.data
+            // not sure
             this.appUser.username = response.data.username
             this.appUser.fullname = response.data.fullname
             this.appUser.address = response.data.address
@@ -49,8 +62,9 @@ export default {
         .catch(e => {
             this.errorProfile = e
         })
-
-        
+        // move to the end when backend is connected
+        // pass data to edit account page
+        sessionStorage.setItem("Username", this.appUser.username); 
     },
 
 }

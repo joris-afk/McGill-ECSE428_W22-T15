@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="profile">
         <!-- welcome section -->
         <section class="welcome">
             <div class="left">
@@ -15,7 +15,7 @@
         <!-- account info section -->
         <section class="account">
             <h2 class="title">Account Information</h2>
-            <table class = "tablestyle" align="center">
+            <table class = "tablestyle" align="left">
                 <tr class="trstyle">
                     <th class="thstyle">Username</th>
                     <td class="tdstyle">{{appUser.username}}</td>

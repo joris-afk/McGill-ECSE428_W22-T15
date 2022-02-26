@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2> Edit Account Information </h2>
+        <p> Edit Account Information </p>
 
         <table class = "tablestyle" align="center">
             <tr class="trstyle">
@@ -23,7 +23,9 @@
         </table>
 
         <router-link to ="/profile">
-            <button class="buttonStyle" v-bind:disabled="(!Username||!appUser.fullname||!appUser.address||!appUser.password)">Save Account Info</button>
+            <button class="buttonStyle" 
+            v-bind:disabled="(!Username||!appUser.fullname||!appUser.address||!appUser.password)"
+            @click="updateInfo(Username, appUser.fullname, appUser.password, appUser.address)">Save Account Info</button>
         </router-link>
 
     </div>
