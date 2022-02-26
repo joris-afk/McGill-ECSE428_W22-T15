@@ -1,3 +1,82 @@
-p {
-    font-size: 100px;
+/* background*/
+body{   
+    height:100vh;
+    justify-content: left;
+    background: linear-gradient(200deg,#72afd3,#96fbc4);
+}
+
+.profile {
+    margin: 5% 5%;
+    padding: 30px 50px;
+    width: 90%;
+    justify-content: left;
+}
+
+.profile .welcome {
+    display: flex;
+}
+
+.profile .welcome .left {
+    background-color: blue;
+    padding: 10px 5px;
+    width: 80%;   
+    background: linear-gradient(
+    to right,  
+    #28ce73,
+    #3d8cb9
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* -webkit-text-stroke-width: 3px;
+    -webkit-text-stroke-color: white; */
+    text-align: left;
+}
+
+.profile .welcome .left h2 {
+    font-size: 60px;
+    font-weight: 800;
+}
+
+.profile .buttonStyle {
+    padding: 10px 5px;
+    margin: 23px 15px;
+    margin-left: 80px;
+    width: 100px;
+    border:none;
+    height:45px;
+    background-color: rgb(32, 168, 178);
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;   
+}
+
+.profile .account {
+    background-color: rgba(245, 243, 243, 0.425);
+    border-radius: 15px;
+    margin: 15px 0;
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.profile .account .title {
+    padding: 15px 0;
+    color: white;
+}
+
+.profile .account table, tr, th, td {
+    width: 350px;
+    border: white;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 15px;
+    padding: 8px;
+    color: rgb(32, 168, 178);
+    font-size: 17px;
+}
+
+.profile .account button{
+    margin: 15px 0;
+    width: 200px;
 }
