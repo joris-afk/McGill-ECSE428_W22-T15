@@ -44,14 +44,14 @@ body{
     width: 100px;
     border:none;
     height:45px;
-    background-color: rgb(32, 168, 178);
+    background-color: rgba(32, 168, 178, 0.568);
     color: #fff;
     border-radius: 3px;
     cursor: pointer;   
 }
 
 .profile .account {
-    background-color: rgba(245, 243, 243, 0.425);
+    background-color: rgba(245, 243, 243, 0.151);
     border-radius: 15px;
     margin: 15px 0;
     padding: 20px 50px;
@@ -62,21 +62,21 @@ body{
 
 .profile .account .title {
     padding: 15px 0;
-    color: white;
+    font-size: 35px;
+    font-weight: 600;
 }
 
 .profile .account table, tr, th, td {
     width: 350px;
-    border: white;
+    border: rgba(255, 255, 255, 0.356);
+    background-color: rgba(255, 255, 255, 0.103);
     border-style: solid;
     border-width: 3px;
-    border-radius: 15px;
     padding: 8px;
-    color: rgb(32, 168, 178);
     font-size: 17px;
 }
 
 .profile .account button{
-    margin: 15px 0;
+    margin: 20px 0;
     width: 200px;
 }

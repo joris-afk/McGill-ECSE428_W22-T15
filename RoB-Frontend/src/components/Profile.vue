@@ -14,7 +14,7 @@
 
         <!-- account info section -->
         <section class="account">
-            <h2 class="title">Account Information</h2>
+            <p class="title">Account Information</p>
             <table class = "tablestyle" align="left">
                 <tr class="trstyle">
                     <th class="thstyle">Username</th>
