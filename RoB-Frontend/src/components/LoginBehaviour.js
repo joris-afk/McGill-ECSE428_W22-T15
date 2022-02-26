@@ -29,14 +29,7 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl}
 })
 
-$(function(){
-    $('#password').focus(function(){
-        $('#owl').addClass('password');
-    }).blur(function(){
-        $('#owl').removeClass('password');
-    })
-    
-})
+
 
 export default{
     name: 'login',
@@ -48,6 +41,16 @@ export default{
             errorUser: '',
             errorLogin:'',
         }
+    },
+    created: function(){
+        $(function(){
+            $('#password').focus(function(){
+                $('#owl').addClass('password');
+            }).blur(function(){
+                $('#owl').removeClass('password');
+            })
+            
+        })
     },
     methods: {
         login: function(account,password){
