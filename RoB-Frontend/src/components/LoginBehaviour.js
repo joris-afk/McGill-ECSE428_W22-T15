@@ -51,6 +51,7 @@ export default{
     },
     methods: {
         login: function(account,password){
+
             this.errorLogin='';
             AXIOS.get('/applicationUsers').then(response => {
                 this.users=response.data
@@ -63,6 +64,8 @@ export default{
                 //to be tested, if api does not work this would not work
                 for (const user of this.users){
                     if (account.localeCompare(user.username)==0 && password.localeCompare(user.password)==0){
+                        // pass data to profile page
+                        sessionStorage.setItem("loginUsername", account);
                         this.$router.push('/profile')
                     }else{
                         this.errorLogin="Account and Password does not match"
