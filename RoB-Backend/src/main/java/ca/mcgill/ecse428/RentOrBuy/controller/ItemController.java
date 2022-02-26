@@ -190,7 +190,6 @@ public class ItemController {
         //replace the item in 
         for (Item it: rob.getProducts()){
             if (currItem.getName().equals(it.getName())){
-                System.out.println("Deleteing " + currItem.getName());
                 rob.deleteExistingProduct(it);
             }
         }

@@ -254,7 +254,14 @@ public class ApplicationUserController {
 		
 		Rob rob = RobApplication.getRob(); 
 		ApplicationUser u = null;
-		
+
+		if (username==null || username.isEmpty()) {
+			throw new InvalidInputException("The username cannot be empty");
+		}
+		if (password==null || password.isEmpty()) {
+			throw new InvalidInputException("The password cannot be empty");
+		}
+
 		for (ApplicationUser user : rob.getExistingUsers()) {
 			if (user.getUsername().equals(username)) {
 				throw new InvalidInputException("Username is taken");

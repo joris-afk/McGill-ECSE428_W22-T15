@@ -110,9 +110,8 @@ public class CucumberStepDefinition {
 		for (Map<String,String> aUser : existingUsers){
 		 	//if(Rob.existWithUsername(aUser.get("username")) == false){ ..add this method
 		 		// create a new user with the provided info if such an user does not already exist in the system
-			ApplicationUser newUser = new ApplicationUser(aUser.get("username"), aUser.get("password"), aUser.get("fullname"), aUser.get("address"));
 		 		//rob.addCurrentExistingUser(newUser); //this should be controller.createUser !!!
-			ApplicationUserController.createUser(aUser.get("username"), aUser.get("password"));
+			ApplicationUser newUser = ApplicationUserController.createUser(aUser.get("username"), aUser.get("password"));
 			this.users.add(newUser);
 			ApplicationUserController.logInUser(aUser.get("username"), aUser.get("password"));
 			this.loginUsers.add(newUser);
@@ -125,13 +124,9 @@ public class CucumberStepDefinition {
 
 		try {
 			ApplicationUser user = ApplicationUserController.logOutUser(string); //use controller login method
-			System.out.println("hello");
-
 			if (loginUsers.contains(user)) {
-				System.out.println("containts");
 				loginUsers.remove(user);
 			}
-			else System.out.println("doesnt contain..");
 		} catch (InvalidInputException e) { //catch the error if does not work
 			errorMsg += e.getMessage();
 			System.out.println(errorMsg);
@@ -175,19 +170,20 @@ public class CucumberStepDefinition {
 
 	@Then("a new customer account shall be created")
 	public void a_new_customer_account_shall_be_created() {
-		assertEquals(users.size(), 1);
+		//1 initially, new one added -> 2
+		assertEquals(users.size(), 2);
 	}
 
 	@Then("the account shall have username {string} and password {string}")
 	public void the_account_shall_have_username_and_password(String string, String string2) {
-		assertEquals(users.get(0).getUsername(), string);
-		assertEquals(users.get(0).getPassword(), string2);
+		assertEquals(users.get(1).getUsername(), string);
+		assertEquals(users.get(1).getPassword(), string2);
 	}
 
 	@Then("no new account shall be created")
 	public void no_new_account_shall_be_created() {
 		// Write code here that turns the phrase above into concrete actions
-		assertEquals(users.size(), 0);
+		assertEquals(1, users.size());
 	}
 
 
