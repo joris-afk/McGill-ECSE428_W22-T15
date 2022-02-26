@@ -1,14 +1,6 @@
 import $ from "jquery"
 import axios from 'axios'
 
-$(function(){
-    $('#password').focus(function(){
-        $('#owl').addClass('password');
-    }).blur(function(){
-        $('#owl').removeClass('password');
-    })
-    
-})
 
 var config = require('../../config')
 
@@ -65,6 +57,15 @@ export default{
             this.citizens=response.data
         }).catch(e => {
             this.errorUser=e
+        })
+        
+        $(function(){
+            $('#password').focus(function(){
+                $('#owl').addClass('password');
+            }).blur(function(){
+                $('#owl').removeClass('password');
+            })
+            
         })
     },
     methods: {
