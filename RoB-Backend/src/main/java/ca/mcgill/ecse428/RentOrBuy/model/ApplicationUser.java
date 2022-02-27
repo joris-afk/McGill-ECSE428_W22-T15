@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 
 @Entity
@@ -103,8 +104,12 @@ public class ApplicationUser {
 		this.items.remove(item);
 	}
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
+
 	public Cart getCart() {
+		if (cart==null){
+			cart=new Cart();
+		}
 		return cart;
 	}
 

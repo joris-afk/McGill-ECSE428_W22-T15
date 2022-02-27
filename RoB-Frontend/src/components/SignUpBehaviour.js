@@ -53,7 +53,7 @@ export default{
         }
     },
     created: function(){
-        AXIOS.get('/applicationUsers').then(response => {
+        AXIOS.get('/applicationUsers/').then(response => {
             this.citizens=response.data
         }).catch(e => {
             this.errorUser=e
@@ -71,7 +71,7 @@ export default{
     methods: {
         createUser: function(account,fullname,address,password){
             this.errorUser='';
-            AXIOS.get('/applicationUsers').then(response => {
+            AXIOS.get('/applicationUsers/').then(response => {
                 this.citizens=response.data
             }).catch(e => {
                 this.errorUser=e
@@ -83,7 +83,7 @@ export default{
                 }
             }
             if(this.errorUser.localeCompare("")==0){
-                AXIOS.post('/applicationUsers'.concat(account),{},
+                AXIOS.post('/applicationUsers/'.concat(account),{},
                 {params:{
                     fullname:fullname,
                     address:address,
