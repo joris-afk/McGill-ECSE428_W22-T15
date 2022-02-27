@@ -76,7 +76,7 @@ public class ItemController {
 		Item aItem = itemService.getItemByName(name);
         itemService.deleteItem(aItem);
 	}
-
+    /*
     @PatchMapping(value = { "/items/{name}", "/items/{name}/" })
     public void addItemSize(@PathVariable("name") String name, 
                 @RequestParam(name = "size") String availableSize) throws IllegalArgumentException {
@@ -97,6 +97,7 @@ public class ItemController {
                     Item aItem = itemService.getItemByName(name);
                     itemService.editItemPrice(aItem, price);
     }
+    */
     
 
     //Utility method
