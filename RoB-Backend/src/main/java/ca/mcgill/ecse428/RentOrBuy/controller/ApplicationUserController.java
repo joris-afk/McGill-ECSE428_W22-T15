@@ -130,33 +130,27 @@ public class ApplicationUserController {
 
 	@PutMapping(value = { "/applicationUsers/{username}", "/applicationUsers/{username}/" })
 	public void editApplicationUsers(@PathVariable("username") String username,
-			@RequestParam(required = false, name = "new_username") String new_username,
-			@RequestParam(required = false, name = "new_name") String new_name,
-			@RequestParam(required = false, name = "new_password") String new_password,
-			@RequestParam(required = false, name = "new_address") String new_address)
+			@RequestParam(required = false, name = "name") String new_name,
+			@RequestParam(required = false, name = "password") String new_password,
+			@RequestParam(required = false, name = "address") String new_address)
 	
 		throws IllegalArgumentException {
 		
 		ApplicationUser aApplicationUser = applicationUserService.getApplicationUserByUsername(username);
 
-		if (new_username != null) {
-
-			applicationUserService.editApplicationUserUsername(aApplicationUser, new_username);
-		}
-
 		if (new_name != null) {
 
-			applicationUserService.editApplicationUserUsername(aApplicationUser, new_name);
+			applicationUserService.editApplicationUserFullname(aApplicationUser, new_name);
 		}
 		
 		if (new_password != null) {
 
-			applicationUserService.editApplicationUserUsername(aApplicationUser, new_password);
+			applicationUserService.editApplicationUserPassword(aApplicationUser, new_password);
 		}
 		
 		if (new_address != null) {
 
-			applicationUserService.editApplicationUserUsername(aApplicationUser, new_address);
+			applicationUserService.editApplicationUserAddress(aApplicationUser, new_address);
 		}
 
 	}

@@ -28,18 +28,18 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl}
 })
 
+// get data from login page or edit account info page
+var loginUsername= sessionStorage.getItem('loginUsername');
 
 export default {
     name: 'profile',
     
     data(){
-      return{
-        // get data from login page or edit account info page
-        loginUsername: sessionStorage.getItem('loginUsername'),
+      return{ 
         appUser:{
-            username: sessionStorage.getItem('loginUsername'),
-            fullname:'david',
-            address:'rue 100',
+            username: '',
+            fullname:'',
+            address:'',
         },      
         testMessage: 'test',
         appUsers: [],
@@ -50,21 +50,16 @@ export default {
     },
 
     created: function() {
-        // retrieve user list from backend
         AXIOS.get('/applicationUsers/'.concat(loginUsername))
         .then(response => {
             this.appUser = response.data
-            // not sure
-            this.appUser.username = response.data.username
-            this.appUser.fullname = response.data.fullname
-            this.appUser.address = response.data.address
         })
         .catch(e => {
             this.errorProfile = e
         })
         // move to the end when backend is connected
         // pass data to edit account page
-        sessionStorage.setItem("Username", this.appUser.username); 
+        sessionStorage.setItem("currentUsername", this.appUser.username); 
     },
 
 }

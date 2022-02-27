@@ -29,20 +29,19 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl}
 })
 
-
+// retrieve user list from backend
+var Username = sessionStorage.getItem('currentUsername');
 
 export default {
-    name: 'profile',
+    name: 'editAccount',
     data(){
       return{
-        Username: sessionStorage.getItem('Username'),
         appUser:{
             username: '',
             fullname: '',
             address: '',
             password: '',
-        }, 
-        
+        },         
         appUsers: [],
         errorEditAccount: '',
       }
@@ -57,25 +56,27 @@ export default {
             $('#owl').removeClass('password');
         })
       })
-
-        // retrieve user list from backend
-        AXIOS.get('/applicationUsers/')
+        
+        AXIOS.get('/applicationUsers/'.concat(Username))
         .then(response => {
             this.appUsers = response.data
+            this.appUsers.username = response.data.username
+            this.appUsers.fullname = response.data.fullname
+            this.appUsers.address = response.data.address
         })
         .catch(e => {
             this.errorProfile = e
         })
-        // find the login user
-        const retrieveUser = (loginUsername) => {
-            for(const aUser of this.appUsers){
-                if(loginUsername.localeCompare(aUser.username) == 0){
-                    this.appUser = aUser
-                }
-            }
-        }
-        // function call
-        retrieveUser(Username) 
+        // // find the login user
+        // const retrieveUser = (loginUsername) => {
+        //     for(const aUser of this.appUsers){
+        //         if(loginUsername.localeCompare(aUser.username) == 0){
+        //             this.appUser = aUser
+        //         }
+        //     }
+        // }
+        // // function call
+        // retrieveUser(Username) 
     },
 
     methods:{
