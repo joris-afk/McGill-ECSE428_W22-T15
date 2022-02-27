@@ -135,7 +135,7 @@ public class ApplicationUserController {
 			@RequestParam(required = false, name = "address") String new_address)
 	
 		throws IllegalArgumentException {
-		
+		// deleted modification for username
 		ApplicationUser aApplicationUser = applicationUserService.getApplicationUserByUsername(username);
 
 		if (new_name != null) {
