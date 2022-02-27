@@ -18,8 +18,9 @@
             
 
 
-            <router-link to ="/signUp">
-                <button>Sign Up</button>
+            <router-link to ="/">
+                <button v-bind:disabled="(!account||!fullname||!address||!password)"
+                @click="createUser(account, fullname, address, password)">Sign Up</button>
             </router-link>
 
             <router-link to ="/">

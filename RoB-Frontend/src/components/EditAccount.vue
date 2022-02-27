@@ -1,35 +1,28 @@
 <template>
-    <div>
-        <p> Edit Account Information </p>
+    <div class="login-box">
+        <div class="owl" id="owl">
+            <div class="hand"></div>
+            <div class="hand hand-r"></div>
+            <div class="arms">
+                <div class="arm"></div>
+                <div class="arm arm-r"></div>
+            </div>
+        </div>
 
-        <table class = "tablestyle" align="center">
-            <tr class="trstyle">
-                <th class="thstyle">Username</th>
-                <td class="tdstyle"><input type="text" v-model="Username" placeholder="username"></td>               
-            </tr>
-            <tr class="trstyle">
-                <th class="thstyle">Fullname</th>
-                <td class="tdstyle"><input type="text" v-model="appUser.fullname" placeholder="fullname"></td>               
-            </tr>
-            <tr class="trstyle">
-                <th class="thstyle">Address</th>
-                <td class="tdstyle"><input type="text" v-model="appUser.address" placeholder="address"></td>               
-            </tr>
-            <tr class="trstyle">
-                <th class="thstyle">Password</th>
-                <td class="tdstyle"><input type="text" v-model="appUser.password" placeholder="password"></td>               
-            </tr>
+        <div class="input-box">
+            <input type="text" v-model="Username" placeholder="username">              
+            <input type="text" v-model="appUser.fullname" placeholder="fullname">              
+            <input type="text" v-model="appUser.address" placeholder="address">            
+            <input type="password" v-model="appUser.password" placeholder="password" id="password">             
+            
 
-        </table>
-
-        <router-link to ="/profile">
-            <button class="buttonStyle" 
-            v-bind:disabled="(!Username||!appUser.fullname||!appUser.address||!appUser.password)"
-            @click="updateInfo(Username, appUser.fullname, appUser.password, appUser.address)">Save Account Info</button>
-        </router-link>
-
+            <router-link to ="/profile">
+                <button v-bind:disabled="(!Username||!appUser.fullname||!appUser.address||!appUser.password)"
+                @click="updateInfo(Username, appUser.fullname, appUser.password, appUser.address)">Save Account Info</button>
+            </router-link>
+        </div>
     </div>
 </template>
 
 <script src="./EditAccountBehaviour.js"></script>
-<style src="./EditAccountStyle.css"></style>
+<style src="./SignUpStyle.css"></style>

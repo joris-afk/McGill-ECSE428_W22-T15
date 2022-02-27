@@ -1,4 +1,5 @@
 import axios from 'axios'
+import $ from "jquery"
 
 var config = require('../../config')
 
@@ -41,12 +42,22 @@ export default {
             address: '',
             password: '',
         }, 
+        
         appUsers: [],
         errorEditAccount: '',
       }
     },
 
     created: function() {
+      // owl
+      $(function(){
+        $('#password').focus(function(){
+            $('#owl').addClass('password');
+        }).blur(function(){
+            $('#owl').removeClass('password');
+        })
+      })
+
         // retrieve user list from backend
         AXIOS.get('/applicationUsers/')
         .then(response => {
