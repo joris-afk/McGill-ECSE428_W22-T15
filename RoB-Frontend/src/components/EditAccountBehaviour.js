@@ -29,15 +29,14 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl}
 })
 
-// retrieve user list from backend
-var Username = sessionStorage.getItem('currentUsername');
+
 
 export default {
     name: 'editAccount',
     data(){
       return{
         appUser:{
-            username: '',
+            username: sessionStorage.getItem('currentUsername'),
             fullname: '',
             address: '',
             password: '',
@@ -57,45 +56,48 @@ export default {
         })
       })
         
-        AXIOS.get('/applicationUsers/'.concat(Username))
-        .then(response => {
-            this.appUsers = response.data
-            this.appUsers.username = response.data.username
-            this.appUsers.fullname = response.data.fullname
-            this.appUsers.address = response.data.address
-        })
-        .catch(e => {
-            this.errorProfile = e
-        })
-        // // find the login user
-        // const retrieveUser = (loginUsername) => {
-        //     for(const aUser of this.appUsers){
-        //         if(loginUsername.localeCompare(aUser.username) == 0){
-        //             this.appUser = aUser
-        //         }
-        //     }
-        // }
-        // // function call
-        // retrieveUser(Username) 
+      // retrieve user list from backend
+      var Username = sessionStorage.getItem('currentUsername');
+
+      AXIOS.get('/applicationUsers/'.concat(Username))
+      .then(response => {
+          this.appUsers = response.data
+          this.appUsers.username = response.data.username
+          this.appUsers.fullname = response.data.fullname
+          this.appUsers.address = response.data.address
+      })
+      .catch(e => {
+          this.errorProfile = e
+      })
+      // // find the login user
+      // const retrieveUser = (loginUsername) => {
+      //     for(const aUser of this.appUsers){
+      //         if(loginUsername.localeCompare(aUser.username) == 0){
+      //             this.appUser = aUser
+      //         }
+      //     }
+      // }
+      // // function call
+      // retrieveUser(Username) 
     },
 
     methods:{
         updateInfo: function (username, fullname, password, address){
-            AXIOS.put('/applicationUsers/'.concat(Username),{},
+            AXIOS.put('/applicationUsers/'.concat(username),{},
             {params:{
-                new_username: username,
-                new_name: fullname,
-                new_password: password,
-                new_address: address
+                name: fullname,
+                password: password,
+                address: address
             }})
             .then(response => {
-                sessionStorage.setItem("loginUsername", username);
+                sessionStorage.setItem("loginUsername", username)
+                window.location.assign("#/profile")
             })
             .catch(e => {
                 var errorMsg = e.response.data.message
                 console.log(errorMsg)
                 this.errorEditAccount = errorMsg
-            })         
+            })    
         }
     }
 

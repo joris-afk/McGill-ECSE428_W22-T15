@@ -59,24 +59,21 @@ export default{
             AXIOS.get('/applicationUsers').then(response => {
                 this.users=response.data
             })
-            .catch(e => {
-                this.errorUser=e
-            })
-
-            const loginVerification = (account, password) => {
-                //to be tested, if api does not work this would not work
+            .then(response => {
                 for (const user of this.users){
                     if (account.localeCompare(user.username)==0 && password.localeCompare(user.password)==0){
                         // pass data to profile page
                         sessionStorage.setItem("loginUsername", account);
-                        this.$router.push('/profile')
+                        // this.$router.push('/profile')
+                        window.location.assign("#/profile")
                     }else{
                         this.errorLogin="Account and Password does not match"
                     }
                 }
-            
-            }
-            loginVerification(account,password)
+            })
+            .catch(e => {
+                this.errorUser=e
+            })
         }
     }
 }
