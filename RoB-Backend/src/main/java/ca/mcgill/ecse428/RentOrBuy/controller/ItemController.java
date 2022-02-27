@@ -76,30 +76,25 @@ public class ItemController {
 		Item aItem = itemService.getItemByName(name);
         itemService.deleteItem(aItem);
 	}
-    /*
-    @PatchMapping(value = { "/items/{name}", "/items/{name}/" })
-    public void addItemSize(@PathVariable("name") String name, 
-                @RequestParam(name = "size") String availableSize) throws IllegalArgumentException {
-                    Item aItem = itemService.getItemByName(name);
-                    itemService.addItemSize(aItem, availableSize);
-    }
-
-    @PatchMapping(value = { "/items/{name}", "/items/{name}/" })
-    public void removeItemSize(@PathVariable("name") String name, 
-                @RequestParam(name = "size") String availableSize) throws IllegalArgumentException {
-                    Item aItem = itemService.getItemByName(name);
-                    itemService.removeItemSize(aItem, availableSize);
-    }
-
-    @PatchMapping(value = { "/items/{name}", "/items/{name}/" })
-    public void editItemPrice(@PathVariable("name") String name, 
-                @RequestParam(name = "price") double price) throws IllegalArgumentException {
-                    Item aItem = itemService.getItemByName(name);
-                    itemService.editItemPrice(aItem, price);
-    }
-    */
     
-
+    @PatchMapping(value = { "/items/{name}", "/items/{name}/" })
+    public ItemDto editItem(@PathVariable("name") String name, 
+                @RequestParam(required = false, name = "price") String new_price,
+			    @RequestParam(required = false, name = "AddedSize") String new_size,
+			    @RequestParam(required = false, name = "RemovedSize") String old_size) throws IllegalArgumentException {
+                    Item aItem = itemService.getItemByName(name);
+                    if (new_price != null){
+                        itemService.editItemPrice(aItem, Double.parseDouble(new_price));
+                    }
+                    if (new_size != null){
+                        itemService.addItemSize(aItem, new_size);
+                    }
+                    if (old_size != null){
+                        itemService.removeItemSize(aItem, old_size);
+                    }
+                    return convertToDto(aItem);
+    }
+        
     //Utility method
     private ItemDto convertToDto(Item item) {
 		
