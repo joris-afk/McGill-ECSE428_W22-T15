@@ -89,6 +89,9 @@ public class ApplicationUser {
 
 	@OneToMany
 	public List<Item> getItems() {
+		if (items==null) {
+			items= new ArrayList<Item>();
+		}
 		return items;
 	}
 

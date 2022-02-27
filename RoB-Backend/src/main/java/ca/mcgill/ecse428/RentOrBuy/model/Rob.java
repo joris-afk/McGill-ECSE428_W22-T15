@@ -8,13 +8,26 @@ public class Rob {
 	private List<ApplicationUser> currentLoggedInUsers;
 	private List<ApplicationUser> existingUsers;
 	private List<Item> products;
+	private List<Cart> carts;
 	
     public Rob() {
     	this.currentLoggedInUsers = new ArrayList<ApplicationUser>();
     	this.existingUsers = new ArrayList<ApplicationUser>();
     	this.products = new ArrayList<Item>();
+    	this.carts = new ArrayList<Cart>();
     }
 
+    public List<Cart> getCarts(){
+    	if (carts==null) {
+    		carts=new ArrayList<Cart>();
+    	}
+    	return carts;
+    }
+    
+    public void addCart(Cart cart) {
+    	carts.add(cart);
+    }
+    
 	public List<ApplicationUser> getCurrentLoggedInUsers() {
 		if (currentLoggedInUsers==null){
 			currentLoggedInUsers=new ArrayList<ApplicationUser>();

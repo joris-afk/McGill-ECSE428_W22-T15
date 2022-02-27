@@ -1,11 +1,16 @@
 package ca.mcgill.ecse428.RentOrBuy.model;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import ca.mcgill.ecse428.RentOrBuy.RobApplication;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.Random;
 
 @Entity
 public class Cart {
@@ -13,10 +18,27 @@ public class Cart {
 	private List<ItemInCart> cartItems;
 	private Integer cartId;
 	
+
+	
 	public Cart() {
 		if (this.cartItems == null) {
 			this.cartItems = new ArrayList<ItemInCart>();
 		}
+		
+		//assign a random id for item
+		Random rand=new Random();
+		int int_random=rand.nextInt(3000);
+		Rob rob=RobApplication.getRob();
+		List<Integer> cartid=new ArrayList<Integer>();
+		for (Cart cart: rob.getCarts()) {
+			cartid.add(cart.getCartId());
+		}
+		
+		while (cartid.contains(int_random)){
+			int_random=rand.nextInt(3000);
+		}
+		cartId=int_random;
+		rob.addCart(this);
 	}
 	
 	@Id
