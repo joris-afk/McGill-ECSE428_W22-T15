@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -75,6 +76,28 @@ public class ItemController {
 		Item aItem = itemService.getItemByName(name);
         itemService.deleteItem(aItem);
 	}
+
+    @PatchMapping(value = { "/items/{name}", "/items/{name}/" })
+    public void addItemSize(@PathVariable("name") String name, 
+                @RequestParam(name = "size") String availableSize) throws IllegalArgumentException {
+                    Item aItem = itemService.getItemByName(name);
+                    itemService.addItemSize(aItem, availableSize);
+    }
+
+    @PatchMapping(value = { "/items/{name}", "/items/{name}/" })
+    public void removeItemSize(@PathVariable("name") String name, 
+                @RequestParam(name = "size") String availableSize) throws IllegalArgumentException {
+                    Item aItem = itemService.getItemByName(name);
+                    itemService.removeItemSize(aItem, availableSize);
+    }
+
+    @PatchMapping(value = { "/items/{name}", "/items/{name}/" })
+    public void editItemPrice(@PathVariable("name") String name, 
+                @RequestParam(name = "price") double price) throws IllegalArgumentException {
+                    Item aItem = itemService.getItemByName(name);
+                    itemService.editItemPrice(aItem, price);
+    }
+    
 
     //Utility method
     private ItemDto convertToDto(Item item) {
