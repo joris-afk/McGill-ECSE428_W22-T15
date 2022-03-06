@@ -2,14 +2,14 @@
 
 ## Meet the team!
 
-Joris Ah-Kane: U2 Software Engineering student @ McGill
-Amélie Barsoum: U2 Software Engineering student @ McGill
-Samantha Handal: U2 Software Engineering student @ McGill
-Chun Li: U2 Software Engineering student @ McGill
-Yujin Li: U2 Software Engineering student @ McGill
-Rebecca Mizrahi: U2 Software Engineering student @ McGill
-Dania Pennimpede: U2 Software Engineering student @ McGill
-Liamo Pennimpede: U2 Software Engineering student @ McGill
+Joris Ah-Kane: U2 Software Engineering student @ McGill<br />
+Amélie Barsoum: U2 Software Engineering student @ McGill<br />
+Samantha Handal: U2 Software Engineering student @ McGill<br />
+Chun Li: U2 Software Engineering student @ McGill<br />
+Yujin Li: U2 Software Engineering student @ McGill<br />
+Rebecca Mizrahi: U2 Software Engineering student @ McGill<br />
+Dania Pennimpede: U2 Software Engineering student @ McGill<br />
+Liamo Pennimpede: U2 Software Engineering student @ McGill<br />
 
 ## UML Class Diagram
 
