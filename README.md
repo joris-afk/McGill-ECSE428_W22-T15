@@ -2,20 +2,23 @@
 
 ## Meet the team!
 
-Joris Ah-Kane: U2 Software Engineering student @ McGill<br />
-Amélie Barsoum: U2 Software Engineering student @ McGill<br />
-Samantha Handal: U2 Software Engineering student @ McGill<br />
-Chun Li: U2 Software Engineering student @ McGill<br />
-Yujin Li: U2 Software Engineering student @ McGill<br />
-Rebecca Mizrahi: U2 Software Engineering student @ McGill<br />
-Dania Pennimpede: U2 Software Engineering student @ McGill<br />
-Liamo Pennimpede: U2 Software Engineering student @ McGill<br />
+_Joris Ah-Kane_: U2 Software Engineering student @ McGill<br />
+_Amélie Barsoum_: U2 Software Engineering student @ McGill<br />
+_Samantha Handal_: U2 Software Engineering student @ McGill<br />
+_Chun Li_: U2 Software Engineering student @ McGill<br />
+_Yujin Li_: U2 Software Engineering student @ McGill<br />
+_Rebecca Mizrahi_: U2 Software Engineering student @ McGill<br />
+_Dania Pennimpede_: U2 Software Engineering student @ McGill<br />
+_Liamo Pennimpede_: U2 Software Engineering student @ McGill<br />
 
 ## UML Class Diagram
 
 ![Screen Shot 2022-03-06 at 12 15 57 PM](https://user-images.githubusercontent.com/77701656/156934086-a6e5ecea-2a44-4740-bdce-c0885318c476.png)
 
 ## Sprint A 
+
+_Scrum Master_: Dania Pennimpede 
+_Proxy Product Owner_: Amélie Barsoum
 
 ### Backlog
 
