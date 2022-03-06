@@ -1,5 +1,9 @@
 # McGill-ECSE428_W22-T15
 
+## Meet the team!
+
+Yujin Li: 
+
 ## UML Class Diagram
 
 ![Screen Shot 2022-03-06 at 12 15 57 PM](https://user-images.githubusercontent.com/77701656/156934086-a6e5ecea-2a44-4740-bdce-c0885318c476.png)
@@ -7,7 +11,6 @@
 ## Sprint A 
 
 ### Backlog
-![Screen Shot 2022-03-06 at 12 19 30 PM](https://user-images.githubusercontent.com/77701656/156934208-1ee6f16d-6fab-4deb-acaa-80d62b50b9bb.png)
 
 ![Screen Shot 2022-02-12 at 11 38 34 AM](https://user-images.githubusercontent.com/77701656/153719908-9a9d0a95-461a-4dca-99ea-c67dd62fd0aa.png)
 
