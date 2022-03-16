@@ -132,7 +132,8 @@ public class ApplicationUserController {
 	public void editApplicationUsers(@PathVariable("username") String username,
 			@RequestParam(required = false, name = "name") String new_name,
 			@RequestParam(required = false, name = "password") String new_password,
-			@RequestParam(required = false, name = "address") String new_address)
+			@RequestParam(required = false, name = "address") String new_address,
+			@RequestParam(required = false, name = "items") List<String> new_items)
 	
 		throws IllegalArgumentException {
 		// deleted modification for username
@@ -151,6 +152,11 @@ public class ApplicationUserController {
 		if (new_address != null) {
 
 			applicationUserService.editApplicationUserAddress(aApplicationUser, new_address);
+		}
+		
+		if (new_items != null) {
+			
+			applicationUserService.editApplicationUserItems(aApplicationUser, convertToDomainObject(new_items));
 		}
 
 	}
@@ -390,6 +396,21 @@ public class ApplicationUserController {
 	/*
 	 * convert to dto lists
 	 */
+	
+	private List<Item> convertToDomainObject(List<String> iDto) {
+		
+		List<Item> allItems = applicationUserService.getAllItems();
+		List<Item> returnItems = new ArrayList<Item>();
+		
+		for (String itemDto : iDto) {
+			for (Item item : allItems) {
+				if (item.getName().equals(itemDto)) {
+					returnItems.add(item);
+				}
+			}
+		}
+		return returnItems;
+	}
 	
 	private List<ItemInCartDto> createItemInCartDtosForCart(List<ItemInCart> itemsInCart) {
 		

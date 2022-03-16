@@ -29,11 +29,17 @@
                     <td class="tdstyle">{{appUser.address}}</td>
                 </tr>
             </table>
-            <router-link to ="/editAccount">
-                <button class="buttonStyle">Edit Account Info</button>
-            </router-link>
-        </section>
 
+            <div class="account_buttons">
+                <router-link to ="/editAccount">
+                    <button class="buttonStyle">Edit Account Info</button>
+                </router-link>
+                <router-link to ="/item">
+                    <button class="buttonStyle">My Listed Items</button>
+                </router-link>
+           </div>
+
+        </section>
         <!-- logout section -->
 
     </div>

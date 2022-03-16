@@ -4,6 +4,7 @@ import Login from '@/components/Login'
 import Profile from '@/components/Profile'
 import EditAccount from '@/components/EditAccount'
 import SignUp from '@/components/SignUp'
+import Item from '@/components/Item'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/signUp',
       name: 'SignUp',
       component: SignUp
+    },
+    {
+      path: '/item',
+      name: 'Item',
+      component: Item
     }
   ]
 })

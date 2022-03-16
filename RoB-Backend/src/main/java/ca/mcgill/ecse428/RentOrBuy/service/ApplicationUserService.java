@@ -18,6 +18,9 @@ public class ApplicationUserService {
 
 	@Autowired
 	private ApplicationUserRepository applicationUserRepository;
+	
+	@Autowired
+	private ItemRepository itemRepository;
 
 	@Transactional
 	public ApplicationUser createApplicationUser(String username, String password, String fullname, 
@@ -119,6 +122,18 @@ public class ApplicationUserService {
 		aApplicationUser.setAddress(address);
 		applicationUserRepository.save(aApplicationUser);
 		return aApplicationUser;
+	}
+	
+	@Transactional
+	public ApplicationUser editApplicationUserItems(ApplicationUser aApplicationUser, List<Item> items) {
+		aApplicationUser.setItems(items);
+		applicationUserRepository.save(aApplicationUser);
+		return aApplicationUser;
+	}
+	
+	@Transactional
+	public List<Item> getAllItems(){
+		return (List<Item>) itemRepository.findAll();
 	}
 	
 	private <T> List<T> toList(Iterable<T> iterable){
