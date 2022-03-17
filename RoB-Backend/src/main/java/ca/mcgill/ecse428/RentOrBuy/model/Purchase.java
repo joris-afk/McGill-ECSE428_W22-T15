@@ -1,10 +1,13 @@
 package ca.mcgill.ecse428.RentOrBuy.model;
 
 import java.util.ArrayList;
+
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+@Entity
 public class Purchase {
 
     private String orderId;
@@ -27,7 +30,7 @@ public class Purchase {
         this.orderId = newOrderId;
     }
 
-    @OneToMany
+    @OneToOne
     public Cart getCart(){
         return this.cart;    
     }
