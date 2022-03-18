@@ -18,6 +18,9 @@ public class ItemService {
 	@Autowired
 	private ItemRepository itemRepository;
 	
+	@Autowired
+	private ApplicationUserRepository applicationUserRepository;
+	
 	@Transactional
 	public Item createItem(String name, double price, List<String> availableSizes) {
 		
@@ -157,6 +160,9 @@ public class ItemService {
 	
 	@Transactional
 	public Item getItemByName(String name) {
+		if (name.length() == 0) {
+			throw new IllegalArgumentException("Item NAME cannot be NULL");
+		}
 		Item aItem = itemRepository.findItemByName(name);
 		return aItem;
 	}
@@ -168,6 +174,21 @@ public class ItemService {
 
 	@Transactional
 	public Item deleteItem(Item aItem){
+		
+		for (ApplicationUser aUser : applicationUserRepository.findAll()) {
+			if (aUser.getItems() != null) {
+				for (Item userItem : aUser.getItems()) {
+					if (userItem.getName().equals(aItem.getName())) {
+						aUser.getItems().remove(userItem);
+						applicationUserRepository.save(aUser);
+						if (itemRepository.findItemByName(aItem.getName()) == null) {
+							return null;
+						}
+					}
+				}
+			}
+		}
+		
 		itemRepository.delete(aItem);
 		aItem = null;
 		return aItem;

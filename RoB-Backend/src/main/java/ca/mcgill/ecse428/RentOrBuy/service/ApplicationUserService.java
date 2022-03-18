@@ -125,8 +125,11 @@ public class ApplicationUserService {
 	}
 	
 	@Transactional
-	public ApplicationUser editApplicationUserItems(ApplicationUser aApplicationUser, List<Item> items) {
-		aApplicationUser.setItems(items);
+	public ApplicationUser editApplicationUserItems(ApplicationUser aApplicationUser, Item item) {
+		if(item == null) {
+			throw new IllegalArgumentException("item cant be empty");
+		}
+		aApplicationUser.addItem(item);
 		applicationUserRepository.save(aApplicationUser);
 		return aApplicationUser;
 	}

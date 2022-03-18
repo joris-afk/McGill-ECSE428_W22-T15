@@ -7,8 +7,8 @@ body{
 }
 
 .items .title {
-    padding: 5px 0;
-    font-size: 25px;
+    padding: 0px 0;
+    font-size: 20px;
     font-weight: 600;
 }
 
@@ -39,12 +39,12 @@ body{
 }
 
 .items .add_item input{
-    height: 40px;
+    height: 30px;
     border-radius: 3px;
     text-indent: 15px;
     outline: none;
     border:none;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .items .add_item input:focus{
@@ -53,9 +53,9 @@ body{
 
 .items .add_item button{
     margin-bottom: 15px;
-    width: 320px;
+    width: 220px;
     border:none;
-    height:45px;
+    height: 35px;
     background-color: lightseagreen;
     color: #fff;
     border-radius: 3px;
@@ -80,4 +80,45 @@ body{
     border-width: 3px;
     padding: 8px;
     font-size: 17px;
+    margin-bottom: 15px;
+}
+
+.items .current_listed_items input{
+    height: 30px;
+    width: 54%;
+    border-radius: 3px;
+    text-indent: 15px;
+    outline: none;
+    border:none;
+    margin-bottom: 10px;
+}
+
+.items .current_listed_items input:focus{
+    outline: 1px solid lightseagreen;
+}
+
+.items .current_listed_items button{
+    display: block;
+    width: 100%;
+    border: none;
+    height: 100%;
+    background-color: lightseagreen;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.items .current_listed_items .editbuttons{
+    float: right;
+    width: 250px;
+    border: none;
+    height: 100%;
+    background-color: lightseagreen;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.items .current_listed_items .editsection{
+    display: inline-block;
 }
