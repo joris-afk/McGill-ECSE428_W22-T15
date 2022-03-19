@@ -24,4 +24,16 @@ import ca.mcgill.ecse428.RentOrBuy.dto.*;
 @RestController
 public class ReservationController {
     
+    @Autowired
+	private ReservationService reservationService;
+
+
+    /* 
+     * Remove an reservation from database
+     */    
+    @DeleteMapping(value = { "/reservations/{reservationId}", "/reservations/{reservationId}/" })
+	public void deleteItem(@PathVariable("reservationId") int reservationId) throws IllegalArgumentException {
+		Reservation aReservation = reservationService.getReservationByReservationId(reservationId);
+        reservationService.deleteReservation(aReservation);
+	}
 }

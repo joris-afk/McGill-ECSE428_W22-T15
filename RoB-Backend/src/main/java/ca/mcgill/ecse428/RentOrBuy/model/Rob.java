@@ -110,5 +110,12 @@ public class Rob {
 		currentLoggedInUsers = null;
 		products=null;
 	}
+
+	public List<Reservation> getReservations(){
+		if (this.reservations==null){
+			this.reservations=new ArrayList<Reservation>();
+		}
+		return this.reservations;
+	}
 	
 }
