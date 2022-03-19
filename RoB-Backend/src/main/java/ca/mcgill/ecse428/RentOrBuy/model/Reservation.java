@@ -25,5 +25,26 @@ public class Reservation {
         return this.reservationId;
     }
 
+    public void setReservationId(int reservationId){
+        this.reservationId=reservationId;
+    }
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    public Item getItem(){
+        return this.item;
+    }
+
+    public void setItem(Item item){
+        this.item=item;
+    }
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    public ApplicationUser getUser(){
+        return this.user;
+    }
+
+    public void setUser(ApplicationUser user){
+        this.user=user;
+    }
 
 }

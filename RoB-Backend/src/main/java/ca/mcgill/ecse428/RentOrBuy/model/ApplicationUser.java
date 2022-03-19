@@ -129,6 +129,10 @@ public class ApplicationUser {
 		return myReservations;
 	}
 
+	public void setReservations(List<Reservation> reservations){
+		this.myReservations=reservations;
+	}
+
 	public void removeReservation(Reservation reservation){
 		this.myReservations.remove(reservation);
 	}
