@@ -181,4 +181,41 @@ public class ReservationController {
         convertToDto(aReservation.getUser()),convertToDto(aReservation.getItem()),  aReservation.getQuantity());
         return aReservationDto;
     }
+
+
+	//For testing the cucumber stuff
+	public static Reservation createAReservation(Item item, ApplicationUser user, int quantity, long reservationId){
+		Rob rob = RobApplication.getRob();
+
+		if (item == null){
+            throw new IllegalArgumentException("Please specify an item");
+        }
+        if (user == null){  //hypothetically this can't happen unless the user is not logged in
+            throw new IllegalArgumentException("Please specify a buyer");
+        }
+        if (quantity < 0){
+            throw new IllegalArgumentException("Please specify a positive quantity");
+        }
+		if (reservationId<0){	//normally impossible because of autogeneration
+			throw new IllegalArgumentException("Please specify a valid reservation Id");
+		}
+
+		List<Reservation> allRes = rob.getReservations();
+
+		for (Reservation aReservation : allRes){
+			if (item.getName().equals(aReservation.getItem().getName())){
+				throw new IllegalArgumentException("Item is already reserved");
+			}
+		}
+
+		Reservation addedReservation = new Reservation();
+		addedReservation.setItem(item);
+		addedReservation.setQuantity(quantity);
+		addedReservation.setReservationId(reservationId);
+		addedReservation.setUser(user);
+
+		rob.addReservation(addedReservation);
+
+		return addedReservation;
+	}
 }

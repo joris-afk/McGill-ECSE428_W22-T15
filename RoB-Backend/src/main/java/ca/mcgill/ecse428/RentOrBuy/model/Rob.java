@@ -117,5 +117,9 @@ public class Rob {
 		}
 		return this.reservations;
 	}
+
+	public void addReservation(Reservation newReservation){
+		this.reservations.add(newReservation);
+	}
 	
 }
