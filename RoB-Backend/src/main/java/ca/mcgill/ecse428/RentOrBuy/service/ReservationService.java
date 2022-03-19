@@ -29,6 +29,14 @@ public class ReservationService {
         if (quantity < 0){
             throw new IllegalArgumentException("Please specify a positive quantity");
         }
+
+        //confirm that it is unique to the item
+        List<Reservation> allReservations = getAllReservations();
+        for (Reservation aReservation : allReservations){
+			if (item.getName().equals(aReservation.getItem().getName())){
+				throw new IllegalArgumentException("Item is already reserved");
+			}
+		}
         
         Reservation aReservation = new Reservation();
         aReservation.setItem(item);
