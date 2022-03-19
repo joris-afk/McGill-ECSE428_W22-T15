@@ -9,12 +9,14 @@ public class Rob {
 	private List<ApplicationUser> existingUsers;
 	private List<Item> products;
 	private List<Cart> carts;
+	private ArrayList<Reservation> reservations;
 	
     public Rob() {
     	this.currentLoggedInUsers = new ArrayList<ApplicationUser>();
     	this.existingUsers = new ArrayList<ApplicationUser>();
     	this.products = new ArrayList<Item>();
     	this.carts = new ArrayList<Cart>();
+		this.reservations = new ArrayList<Reservation>();
     }
 
     public List<Cart> getCarts(){

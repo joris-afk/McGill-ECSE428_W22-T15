@@ -20,6 +20,7 @@ public class ApplicationUser {
 	private String address;
 	private Cart cart;
 	private List<Item> items;
+	private List<Reservation> myReservations;
 
 	public ApplicationUser() {
 		if (this.items == null) {
@@ -118,6 +119,18 @@ public class ApplicationUser {
 
 	public void setCart(Cart cart) {
 		this.cart = cart;
+	}
+
+	@OneToMany
+	public List<Reservation> getReservations(){
+		if (myReservations==null){
+			myReservations=new ArrayList<Reservation>();
+		}
+		return myReservations;
+	}
+
+	public void removeReservation(Reservation reservation){
+		this.myReservations.remove(reservation);
 	}
 	/*
 	public Rob getRob() {
