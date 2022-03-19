@@ -40,6 +40,11 @@ public class ReservationService {
     }
 
     @Transactional
+	public List<Reservation> getAllReservations(){
+		return (List<Reservation>) reservationRepository.findAll();
+	}
+
+    @Transactional
     public Reservation getReservationByReservationId(long reservationId){
         Reservation aRerservation = reservationRepository.findReservationByReservationId(reservationId);
         return aRerservation;

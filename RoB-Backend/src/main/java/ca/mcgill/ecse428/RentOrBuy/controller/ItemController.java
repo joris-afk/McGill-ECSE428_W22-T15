@@ -60,7 +60,7 @@ public class ItemController {
      * @return all Items
      */    
     @GetMapping(value = { "/items", "/items/" })
-	public List<ItemDto> getAllReservations() {
+	public List<ItemDto> getAllItems() {
 		List<ItemDto> itemDtos = new ArrayList<>();
 		for (Item item : itemService.getAllItems()) {
 			itemDtos.add(convertToDto(item));

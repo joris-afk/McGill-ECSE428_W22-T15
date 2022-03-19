@@ -56,6 +56,20 @@ public class ReservationController {
 
         return convertToDto(aReservation);
     }
+
+	@GetMapping(value = { "/reservations/{reservationId}", "/reservations/{reservationId}/" })
+	public ReservationDto getReservationByID(@PathVariable("reservationId") long reservationId){
+		return convertToDto(reservationService.getReservationByReservationId(reservationId));
+	}
+
+	@GetMapping(value = { "/reservations", "/reservations/" })
+	public List<ReservationDto> getAllReservations(){
+		List<ReservationDto> itemDtos = new ArrayList<>();
+		for (Reservation reservation : reservationService.getAllReservations()) {
+			itemDtos.add(convertToDto(reservation));
+		}
+		return itemDtos;
+	}
     
     /* 
      * Remove an reservation from database
