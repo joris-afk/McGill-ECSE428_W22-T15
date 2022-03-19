@@ -1,5 +1,7 @@
 package ca.mcgill.ecse428.RentOrBuy.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +15,7 @@ import ca.mcgill.ecse428.RentOrBuy.model.Purchase;
 public class PurchaseService {
     
     @Autowired 
-    PurchaseRepository purchaseRepository;
+    private PurchaseRepository purchaseRepository;
 
     @Transactional
     public Purchase createPurchase(ApplicationUser buyer, Cart cart){
@@ -33,9 +35,18 @@ public class PurchaseService {
     }
 
     @Transactional
-    public Purchase deletePurchase(Purchase purchase){
+    public void deletePurchase(Purchase purchase){
         purchaseRepository.delete(purchase);
-        purchase = null;
-        return purchase;
     }
+
+    @Transactional
+    public Purchase getPurchaseByOrderId(String orderId){
+        return purchaseRepository.findPurchaseByOrderId(orderId);
+    }
+
+    @Transactional
+    public List<Purchase> getAllPurchase(){
+        return (List<Purchase>)purchaseRepository.findAll();
+    }
+
 }

@@ -21,6 +21,7 @@ public class ApplicationUser {
 	private Cart cart;
 	private List<Item> items;
 	private List<Reservation> myReservations;
+	private List<Purchase> purchases;
 
 	public ApplicationUser() {
 		if (this.items == null) {
@@ -136,6 +137,25 @@ public class ApplicationUser {
 	public void removeReservation(Reservation reservation){
 		this.myReservations.remove(reservation);
 	}
+
+	@OneToMany
+	public List<Purchase> getPurchases(){
+		return this.purchases;
+	}
+
+	public void addPurchase(Purchase newPurchase){
+		this.purchases.add(newPurchase);
+	}
+
+	public void removePurchase(Purchase purchase){
+		this.purchases.remove(purchase);
+	}
+
+	public void setPurchases(ArrayList<Purchase> newPurchases){
+		this.purchases = newPurchases;
+	}
+
+
 	/*
 	public Rob getRob() {
 		return rob;

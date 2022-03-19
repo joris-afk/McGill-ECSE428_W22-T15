@@ -10,6 +10,7 @@ public class Rob {
 	private List<Item> products;
 	private List<Cart> carts;
 	private ArrayList<Reservation> reservations;
+	private List<Purchase> purchases;
 	
     public Rob() {
     	this.currentLoggedInUsers = new ArrayList<ApplicationUser>();
@@ -17,6 +18,7 @@ public class Rob {
     	this.products = new ArrayList<Item>();
     	this.carts = new ArrayList<Cart>();
 		this.reservations = new ArrayList<Reservation>();
+		this.purchases = new ArrayList<Purchase>();
     }
 
     public List<Cart> getCarts(){
@@ -95,6 +97,13 @@ public class Rob {
 		return products;
 	}
 	
+	public List<Purchase> getPurchases(){
+		return this.purchases;
+	}
+
+	public void addPurchase(Purchase newPurchase){
+		this.purchases.add(newPurchase);
+	}
 	
 	public void delete() {
 		existingUsers = null;

@@ -1,9 +1,12 @@
 package ca.mcgill.ecse428.RentOrBuy.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +40,26 @@ public class PurchaseController {
             return convertToDto(purchase);
     }
 
+    @GetMapping(value = {"/purchase/{orderId}","/purchase/{orderId}/"})
+    public PurchaseDto getPurchaseByOrderId(@PathVariable("orderId") String orderId) throws IllegalArgumentException{
+        return convertToDto(purchaseService.getPurchaseByOrderId(orderId));
+    }
+
+    @GetMapping(value = {"/purchase","/purchase/"})
+    public List<PurchaseDto> getAllPurchase() throws IllegalArgumentException{
+        List<Purchase> ps = purchaseService.getAllPurchase();
+        List<PurchaseDto> psDto = new ArrayList<PurchaseDto>();
+        for(Purchase p : ps){
+            psDto.add(convertToDto(p));
+        }
+        return psDto;
+    }
+
+    @DeleteMapping(value = {"/purchase/{orderId}","/purchase/{orderId}/"})
+    public void deletePurchase(@PathVariable("orderId") String orderId)throws IllegalArgumentException{
+        Purchase p = purchaseService.getPurchaseByOrderId(orderId);
+        purchaseService.deletePurchase(p);
+    }
 
     public PurchaseDto convertToDto(Purchase purchase){
         if(purchase == null){

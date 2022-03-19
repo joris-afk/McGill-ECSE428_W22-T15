@@ -18,6 +18,7 @@ public class Purchase {
     public Purchase() {}
     public Purchase(ApplicationUser buyer, Cart cart){
         this.buyer = buyer;
+        buyer.addPurchase(this);
         this.cart = cart;
     }
 
