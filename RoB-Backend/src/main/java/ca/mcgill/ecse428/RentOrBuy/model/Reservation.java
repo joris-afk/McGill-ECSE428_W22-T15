@@ -30,6 +30,11 @@ public class Reservation {
         this.quantity=quantity;
     }
 
+    public Reservation(Long reservationId, ApplicationUser user){
+        this.reservationId=reservationId;
+        this.user=user;
+    }
+
     @Id
     public long getReservationId(){
         return this.reservationId;

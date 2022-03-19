@@ -1,4 +1,4 @@
-Feature: Login as an applicarion user
+Feature: Delete Account
   As an application user, I want to delete my account so that I can erase my personal information when it is no longer needed.
 
 Background:  

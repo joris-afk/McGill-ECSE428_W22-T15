@@ -2,6 +2,7 @@ package ca.mcgill.ecse428.RentOrBuy.features;
 
 import java.util.*;
 
+import org.apache.catalina.core.ApplicationFilterRegistration;
 import org.mockito.internal.stubbing.answers.ThrowsException;
 
 import io.cucumber.java.en.Given;
@@ -24,6 +25,7 @@ public class CucumberStepDefinition {
 	private Item currentItem;
 	private String errorMsg;
 	private int totalUsers;
+	private List<Reservation> reservations;
 
 
 // Background
@@ -592,6 +594,40 @@ public void the_will_be_deleted_successfully_to_the_database(String string) {
 			System.out.println(errorMsg);
 		}
 	}
+
+	@Given("the following reservation assigned to different user:")
+public void the_following_reservation_assigned_to_different_user(io.cucumber.datatable.DataTable dataTable) {
+	if (reservations == null){
+		reservations= new ArrayList<Reservation>();
+	}
+	List<Map<String,String>> existingReservation=dataTable.asMaps(String.class,String.class);
+	for (Map<String,String> aReservation : existingReservation){
+
+		int i= Integer.parseInt(aReservation.get("reservationId"));
+		Long l=new Long(i);
+		ApplicationUser u=new ApplicationUser();
+		u.setUsername(aReservation.get("username"));
+		Reservation newReservation= new Reservation(l,u);
+		reservations.add(newReservation);
+		rob.addReservation(newReservation);
+	}
+}
+
+@When("the user with username {string} tries to delete the reservation with reservationId {string}")
+public void the_user_with_username_tries_to_delete_the_reservation_with_reservation_id(String string, String string2) {
+    try{
+		Reservation r=ReservationController.deleteReservation(Integer.parseInt(string2), string);
+		//reservations.remove(r);
+	} catch (Exception e){
+		errorMsg += e.getMessage();
+	}
+}
+
+@Then("the reservation with Id {string} should be successfully deleted")
+public void the_reservation_with_id_should_be_successfully_deleted(String string) {
+    ReservationController r = new ReservationController();
+	assertNull(r.obtReservation(Integer.parseInt(string)));
+}
 
 
 // Final

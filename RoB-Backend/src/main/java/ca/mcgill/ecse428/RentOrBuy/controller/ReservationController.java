@@ -218,9 +218,21 @@ public class ReservationController {
 
 		return addedReservation;
 	}
+	public static Reservation obtReservation(long ReservationId){
+		Rob rob=RobApplication.getRob();
+		List<Reservation> reservations=rob.getReservations();
+		Reservation target=null;
+		for (Reservation r:reservations){
+			if (r.getReservationId()==ReservationId){
+				target=r;
+				break;
+			}
+		}
+		return target;
+	}
 
 	//delete by reservation ID
-	public static void deleteReservation(long ReservationId, String username){
+	public static Reservation deleteReservation(long ReservationId, String username){
 		Rob rob = RobApplication.getRob(); 
 		List<Reservation> allRes = rob.getReservations();
 		Reservation deleteTarget = null;
@@ -238,6 +250,8 @@ public class ReservationController {
 			throw new IllegalArgumentException("You can only delete your reservations");
 		}
 		rob.getReservations().remove(deleteTarget);
+
+		return deleteTarget;
 		
 	}
 }
