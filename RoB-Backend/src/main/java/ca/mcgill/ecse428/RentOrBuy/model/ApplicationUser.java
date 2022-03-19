@@ -2,7 +2,6 @@ package ca.mcgill.ecse428.RentOrBuy.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -151,7 +150,7 @@ public class ApplicationUser {
 		this.purchases.remove(purchase);
 	}
 
-	public void setPurchases(ArrayList<Purchase> newPurchases){
+	public void setPurchases(List<Purchase> newPurchases){
 		this.purchases = newPurchases;
 	}
 
