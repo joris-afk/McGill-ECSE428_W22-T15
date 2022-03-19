@@ -218,4 +218,26 @@ public class ReservationController {
 
 		return addedReservation;
 	}
+
+	//delete by reservation ID
+	public static void deleteReservation(long ReservationId, String username){
+		Rob rob = RobApplication.getRob(); 
+		List<Reservation> allRes = rob.getReservations();
+		Reservation deleteTarget = null;
+		for (Reservation aReservation : allRes){
+			if (aReservation.getReservationId()==ReservationId){
+				deleteTarget = aReservation;
+				break;
+			}
+		}
+
+		if (deleteTarget == null){
+			throw new IllegalArgumentException("reservation does not exist");
+		}
+		if (!deleteTarget.getUser().getUsername().equals(username)){
+			throw new IllegalArgumentException("You can only delete your reservations");
+		}
+		rob.getReservations().remove(deleteTarget);
+		
+	}
 }
