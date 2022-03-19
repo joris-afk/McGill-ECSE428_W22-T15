@@ -12,20 +12,30 @@ import javax.persistence.Entity;
 @Entity
 public class Reservation {
     private Item item;
+    private int quantity;
     private ApplicationUser user;
-    private int reservationId;
+    private long reservationId;
+
+    public Reservation(){}
 
     public Reservation(Item item, ApplicationUser user){
         this.item=item;
         this.user=user;
+        this.quantity=1;
+    }
+
+    public Reservation(Item item, ApplicationUser user, int quantity){
+        this.item=item;
+        this.user=user;
+        this.quantity=quantity;
     }
 
     @Id
-    public int getReservationId(){
+    public long getReservationId(){
         return this.reservationId;
     }
 
-    public void setReservationId(int reservationId){
+    public void setReservationId(long reservationId){
         this.reservationId=reservationId;
     }
 
@@ -45,6 +55,14 @@ public class Reservation {
 
     public void setUser(ApplicationUser user){
         this.user=user;
+    }
+
+    public int getQuantity(){
+        return this.quantity;
+    }
+
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
     }
 
 }
