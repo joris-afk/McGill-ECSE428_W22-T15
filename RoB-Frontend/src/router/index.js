@@ -6,6 +6,8 @@ import EditAccount from '@/components/EditAccount'
 import SignUp from '@/components/SignUp'
 import Item from '@/components/Item'
 import Reservation from '@/components/Reservations'
+import ItemList from '@/components/ItemList'
+import Cart from '@/components/Cart'
 
 Vue.use(Router)
 
@@ -40,6 +42,16 @@ export default new Router({
       path: '/reservation',
       name: 'reservation',
       component: Reservation
+    },
+    {
+      path: '/itemlist',
+      name: 'Itemlist',
+      component: ItemList
+    },
+    {
+      path: '/cart',
+      name: 'Cart',
+      component: Cart
     }
   ]
 })

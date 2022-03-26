@@ -40,11 +40,19 @@
                 <router-link to ="/reservation">
                     <button class="buttonStyle">My Reservations</button>
                 </router-link>
+                <router-link to ="/cart">
+                    <button class="buttonStyle">My Cart</button>
+                </router-link>
+                <router-link to ="/itemlist">
+                    <button class="buttonStyle">Shopping</button>
+                </router-link>
            </div>
 
         </section>
         <!-- logout section -->
 
+
+        <!-- link to reserve/add item to cart -->
     </div>
 
 
