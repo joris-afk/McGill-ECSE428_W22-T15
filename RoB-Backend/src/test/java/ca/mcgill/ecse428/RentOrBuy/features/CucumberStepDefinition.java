@@ -28,24 +28,24 @@ public class CucumberStepDefinition {
 	private List<Reservation> reservations;
 
 
-// Background
+	// Background
 
 	@Given("a Rob application exists")
 	public void a_rob_application_exists() {
-		
+
 		if(RobApplication.getRob() == null){
 			rob = new Rob();
 		}else{
 			rob = RobApplication.getRob();
 		}
-		
+
 		errorMsg = "";
-		
+
 	}
 
 	@Given("the following application users exist in the system:")
 	public void the_following_application_users_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) throws InvalidInputException {
-		
+
 		if(users == null) {
 			users = new ArrayList<ApplicationUser>();
 		}
@@ -54,16 +54,16 @@ public class CucumberStepDefinition {
 		}
 		List<Map<String,String>> existingUsers = dataTable.asMaps(String.class,String.class);
 		for (Map<String,String> aUser : existingUsers){
-		 	//if(Rob.existWithUsername(aUser.get("username")) == false){ ..add this method
-		 		// create a new user with the provided info if such an user does not already exist in the system
-		 		ApplicationUser newUser = new ApplicationUser(aUser.get("username"), aUser.get("password"), aUser.get("fullname"), aUser.get("address"));
-		 		users.add(newUser);
-				rob.addCurrentExistingUser(newUser);
-		 }
+			//if(Rob.existWithUsername(aUser.get("username")) == false){ ..add this method
+			// create a new user with the provided info if such an user does not already exist in the system
+			ApplicationUser newUser = new ApplicationUser(aUser.get("username"), aUser.get("password"), aUser.get("fullname"), aUser.get("address"));
+			users.add(newUser);
+			rob.addCurrentExistingUser(newUser);
+		}
 	}
 
 
-// Login.feature
+	// Login.feature
 
 	@When("the user tries to log in with username {string} and password {string}")
 	public void the_user_tries_to_log_in_with_username_and_password(String string, String string2) {
@@ -93,7 +93,7 @@ public class CucumberStepDefinition {
 	}
 
 
-// logout.feature
+	// logout.feature
 
 	@Given("the following application users login in the system:")
 	public void the_following_application_users_login_in_the_system(io.cucumber.datatable.DataTable dataTable) throws InvalidInputException {
@@ -104,20 +104,20 @@ public class CucumberStepDefinition {
 		// Double, Byte, Short, Long, BigInteger or BigDecimal.
 		//
 		// For other transformations you can register a DataTableType.
-		
+
 		if (this.users == null) this.users = new ArrayList<ApplicationUser>();
- 		if (this.loginUsers == null) this.loginUsers = new ArrayList<ApplicationUser>();
+		if (this.loginUsers == null) this.loginUsers = new ArrayList<ApplicationUser>();
 
 		List<Map<String,String>> existingUsers = dataTable.asMaps(String.class,String.class);
 		for (Map<String,String> aUser : existingUsers){
-		 	//if(Rob.existWithUsername(aUser.get("username")) == false){ ..add this method
-		 		// create a new user with the provided info if such an user does not already exist in the system
-		 		//rob.addCurrentExistingUser(newUser); //this should be controller.createUser !!!
+			//if(Rob.existWithUsername(aUser.get("username")) == false){ ..add this method
+			// create a new user with the provided info if such an user does not already exist in the system
+			//rob.addCurrentExistingUser(newUser); //this should be controller.createUser !!!
 			ApplicationUser newUser = ApplicationUserController.createUser(aUser.get("username"), aUser.get("password"));
 			this.users.add(newUser);
 			ApplicationUserController.logInUser(aUser.get("username"), aUser.get("password"));
 			this.loginUsers.add(newUser);
-		 }
+		}
 	}
 
 	@When("the user with username {string} tries to log out")
@@ -143,7 +143,7 @@ public class CucumberStepDefinition {
 	}
 
 
-// SignUp.feature
+	// SignUp.feature
 
 	@Given("there is no existing username {string}")
 	public void there_is_no_existing_username(String string) {
@@ -189,62 +189,62 @@ public class CucumberStepDefinition {
 	}
 
 
-// Delete Account
-@Given("the total number of users is {string}")
-public void the_total_number_of_users_is(String string) {
-    totalUsers = Integer.parseInt(string);
-}
+	// Delete Account
+	@Given("the total number of users is {string}")
+	public void the_total_number_of_users_is(String string) {
+		totalUsers = Integer.parseInt(string);
+	}
 
-@When("the user tries to delete with username {string} and password {string}")
-public void the_user_tries_to_delete_with_username_and_password(String string, String string2) {
-	try {
-		ApplicationUserController.deleteAccount(string, string2);
-	} catch (InvalidInputException e) { //catch the error if does not work
-		errorMsg += e.getMessage();
-	}	
-}
+	@When("the user tries to delete with username {string} and password {string}")
+	public void the_user_tries_to_delete_with_username_and_password(String string, String string2) {
+		try {
+			ApplicationUserController.deleteAccount(string, string2);
+		} catch (InvalidInputException e) { //catch the error if does not work
+			errorMsg += e.getMessage();
+		}	
+	}
 
-@Then("the user with username {string} should be successfully deleted")
-public void the_user_with_username_should_be_successfully_deleted(String string) {
-    Rob rob= RobApplication.getRob();
-	int i= rob.getExistingUsers().size();
-	assertEquals(i, totalUsers-1);
-}
+	@Then("the user with username {string} should be successfully deleted")
+	public void the_user_with_username_should_be_successfully_deleted(String string) {
+		Rob rob= RobApplication.getRob();
+		int i= rob.getExistingUsers().size();
+		assertEquals(i, totalUsers-1);
+	}
 
-@When("the user tries to delete with an unexisiting username {string}")
-public void the_user_tries_to_delete_with_an_unexisiting_username(String string) {
-	try {
-		ApplicationUserController.deleteAccount(string, "");
-	} catch (InvalidInputException e) { //catch the error if does not work
-		errorMsg += e.getMessage();
-	}	
-}
+	@When("the user tries to delete with an unexisiting username {string}")
+	public void the_user_tries_to_delete_with_an_unexisiting_username(String string) {
+		try {
+			ApplicationUserController.deleteAccount(string, "");
+		} catch (InvalidInputException e) { //catch the error if does not work
+			errorMsg += e.getMessage();
+		}	
+	}
 
-@Then("number of useres shall be {string}")
-public void number_of_useres_shall_be(String string) {
-	
-    assertEquals(totalUsers,Integer.parseInt(string) );
-}
+	@Then("number of useres shall be {string}")
+	public void number_of_useres_shall_be(String string) {
 
-@When("the user tries to delte with username {string} and wrong password {string}")
-public void the_user_tries_to_delte_with_username_and_wrong_password(String string, String string2) {
-    try {
-		ApplicationUserController.deleteAccount(string, string2);
-	} catch (InvalidInputException e) { //catch the error if does not work
-		errorMsg += e.getMessage();
-	}	
-}
+		assertEquals(totalUsers,Integer.parseInt(string) );
+	}
 
-@Then("the number of users shall be {string}")
-public void the_number_of_users_shall_be(String string) {
-    assertEquals(totalUsers,Integer.parseInt(string) );
-}
+	@When("the user tries to delte with username {string} and wrong password {string}")
+	public void the_user_tries_to_delte_with_username_and_wrong_password(String string, String string2) {
+		try {
+			ApplicationUserController.deleteAccount(string, string2);
+		} catch (InvalidInputException e) { //catch the error if does not work
+			errorMsg += e.getMessage();
+		}	
+	}
 
-// Edit Account
+	@Then("the number of users shall be {string}")
+	public void the_number_of_users_shall_be(String string) {
+		assertEquals(totalUsers,Integer.parseInt(string) );
+	}
+
+	// Edit Account
 
 	@Given("the user is logged in to an account with username {string}")
 	public void the_user_is_logged_in_to_an_account_with_username(String string) {
-		
+
 		for(ApplicationUser u : users) {
 			if (u.getUsername().equals(string)) {
 				rob.addCurrentLoggedInUser(u);
@@ -254,36 +254,36 @@ public void the_number_of_users_shall_be(String string) {
 			}
 		}
 	}
-	
+
 	@When("the user tries to update account with a new username {string}")
 	public void the_user_tries_to_update_account_with_a_new_username(String username) {
 
 		try {
-			
+
 			ApplicationUserController.editAccountUsername(currentLoginUser.getUsername(), username);
 
 		} catch (InvalidInputException e) {
 			errorMsg += e.getMessage();
 		}
 	}
-	
+
 	@When("the user tries to update account with a new password {string}")
 	public void the_user_tries_to_update_account_with_a_new_password(String password) {
 
 		try {
-			
+
 			ApplicationUserController.editAccountPassword(currentLoginUser.getUsername(), password);
 
 		} catch (InvalidInputException e) {
 			errorMsg += e.getMessage();
 		}
 	}
-	
+
 	@When("the user tries to update account with a new address {string}")
 	public void the_user_tries_to_update_account_with_a_new_address(String address) {
 
 		try {
-			
+
 			ApplicationUserController.editAccountAddress(currentLoginUser.getUsername(), address);
 
 		} catch (InvalidInputException e) {
@@ -295,203 +295,203 @@ public void the_number_of_users_shall_be(String string) {
 	public void the_user_tries_to_update_account_with_a_new_full_name(String name) {
 
 		try {
-			
+
 			ApplicationUserController.editAccountName(currentLoginUser.getUsername(), name);
 
 		} catch (InvalidInputException e) {
 			errorMsg += e.getMessage();
 		}
 	}
-	
+
 	@Then("the account shall have username {string}")
 	public void the_account_shall_have_username(String string) {
-	    assertEquals(currentLoginUser.getUsername(), string);
+		assertEquals(currentLoginUser.getUsername(), string);
 	}
-	
+
 	@Then("the account shall have password {string}")
 	public void the_account_shall_have_password(String string) {
-	    assertEquals(currentLoginUser.getPassword(), string);
+		assertEquals(currentLoginUser.getPassword(), string);
 	}
-	
+
 	@Then("the account shall have address {string}")
 	public void the_account_shall_have_address(String string) {
-	    assertEquals(currentLoginUser.getAddress(), string);
+		assertEquals(currentLoginUser.getAddress(), string);
 	}
-	
+
 	@Then("the account shall have full name {string}")
 	public void the_account_shall_have_full_name(String string) {
-	    assertEquals(currentLoginUser.getFullname(), string);
+		assertEquals(currentLoginUser.getFullname(), string);
 	}
 
-@When("the user with username {string} tries to add {string} with price {string}")
-public void the_user_with_username_tries_to_add_with_price(String string, String string2, String string3) {
-    // Write code here that turns the phrase above into concrete actions
-	try{
-		String username = string;
-		String name = string2;
-		double priced = Double.parseDouble(string3);
-		int price = (int) priced;
+	@When("the user with username {string} tries to add {string} with price {string}")
+	public void the_user_with_username_tries_to_add_with_price(String string, String string2, String string3) {
+		// Write code here that turns the phrase above into concrete actions
+		try{
+			String username = string;
+			String name = string2;
+			double priced = Double.parseDouble(string3);
+			int price = (int) priced;
 
-		Item newItem = ItemController.createItem(username, name, price); //use parameters to create new item
+			Item newItem = ItemController.createItem(username, name, price); //use parameters to create new item
 
-		for (ApplicationUser userinsystem: loginUsers){
-			if (userinsystem.getUsername().equals(username)){
-				this.currentLoginUser = userinsystem;
-				break;
+			for (ApplicationUser userinsystem: loginUsers){
+				if (userinsystem.getUsername().equals(username)){
+					this.currentLoginUser = userinsystem;
+					break;
+				}
 			}
-		}
 
-		if (currentLoginUser == null) {
-			errorMsg = "You must log in first";
-		}
-		else if (currentLoginUser.getUsername().equals(username)) {
-			currentLoginUser.addItem(newItem); //add new item to list of items
-		}
-
-	} catch (Exception e){
-		errorMsg += e.getMessage();
-		System.out.println(errorMsg);
-	}
-}
-
-@Then("the {string} will be added successfully to the database")
-public void the_will_be_added_successfully_to_the_database(String string) {
-    // Write code here that turns the phrase above into concrete actions
-	ArrayList<String> itemNames = new ArrayList<String>();
-	for(Item item: currentLoginUser.getItems()){
-		itemNames.add(item.getName()); //adds each name to name list
-	}
-	assertTrue(itemNames.contains(string)); //checks whether itemList has new name
-}
-
-@When("the user with username {string} tries to add a duplicate {string} with price {string}")
-public void the_user_with_username_tries_to_add_a_duplicate_with_price(String string, String string2, String string3) {
-	try{
-		String username = string;
-		String name = string2;
-		Integer price = Integer.parseInt(string3);
-
-		Item newItem = new Item(); //use parameters to create new item
-		newItem.setName(name);
-		newItem.setPrice(price);
-		ApplicationUser user = null;
-		for (ApplicationUser usersinsystem: loginUsers){
-			if (usersinsystem.getUsername().equals(username)){
-				user = usersinsystem;
-				break;
+			if (currentLoginUser == null) {
+				errorMsg = "You must log in first";
 			}
-		}
-		if (user != null){
-			user.addItem(newItem);
-		}
-
-		for(Item item: currentLoginUser.getItems()){
-			if(name.equals(item.getName()) && price == (item.getPrice())){ //if identical name and price are there dont add item
-				throw new Exception();
+			else if (currentLoginUser.getUsername().equals(username)) {
+				currentLoginUser.addItem(newItem); //add new item to list of items
 			}
-		}
-		currentLoginUser.addItem(newItem);
 
-
-	} catch (Exception e){
-		errorMsg += e.getMessage();
-		System.out.println(errorMsg);
-	}
-}
-
-////////////////////////////////////////////////////////////////////
-///////////////////////////  EDIT ITEMS  ///////////////////////////
-////////////////////////////////////////////////////////////////////
-@Given("the following application items exist in the system:")
-public void the_following_application_items_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-	if(allItems == null) {
-		allItems = new ArrayList<Item>();
-	}
-	List<Map<String,String>> existingItems = dataTable.asMaps(String.class,String.class);
-	for (Map<String,String> aItem : existingItems){
-		// create a new user with the provided info if such an user does not already exist in the system
-		String[] sizeArray = aItem.get("availableSizes").split(",");
-		ArrayList<String> sizes = new ArrayList<>();
-		for (String size:sizeArray) sizes.add(size);
-		double price = Double.parseDouble(aItem.get("price"));
-
-		Item newItem = null;
-		try {
-			newItem = ItemController.addItem(aItem.get("name"), price, sizes);
 		} catch (Exception e){
 			errorMsg += e.getMessage();
 			System.out.println(errorMsg);
 		}
-		allItems.add(newItem);
-	 }
-}
+	}
 
-@Given("the user is looking at {string}")
-public void the_user_is_looking_at(String string) {
-    for (Item i: allItems){
-		if (string.equals(i.getName())){
-			currentItem = i;
+	@Then("the {string} will be added successfully to the database")
+	public void the_will_be_added_successfully_to_the_database(String string) {
+		// Write code here that turns the phrase above into concrete actions
+		ArrayList<String> itemNames = new ArrayList<String>();
+		for(Item item: currentLoginUser.getItems()){
+			itemNames.add(item.getName()); //adds each name to name list
+		}
+		assertTrue(itemNames.contains(string)); //checks whether itemList has new name
+	}
+
+	@When("the user with username {string} tries to add a duplicate {string} with price {string}")
+	public void the_user_with_username_tries_to_add_a_duplicate_with_price(String string, String string2, String string3) {
+		try{
+			String username = string;
+			String name = string2;
+			Integer price = Integer.parseInt(string3);
+
+			Item newItem = new Item(); //use parameters to create new item
+			newItem.setName(name);
+			newItem.setPrice(price);
+			ApplicationUser user = null;
+			for (ApplicationUser usersinsystem: loginUsers){
+				if (usersinsystem.getUsername().equals(username)){
+					user = usersinsystem;
+					break;
+				}
+			}
+			if (user != null){
+				user.addItem(newItem);
+			}
+
+			for(Item item: currentLoginUser.getItems()){
+				if(name.equals(item.getName()) && price == (item.getPrice())){ //if identical name and price are there dont add item
+					throw new Exception();
+				}
+			}
+			currentLoginUser.addItem(newItem);
+
+
+		} catch (Exception e){
+			errorMsg += e.getMessage();
+			System.out.println(errorMsg);
 		}
 	}
-}
 
-@When("the user tries to update price to a new price of {string}")
-public void the_user_tries_to_update_price_to_a_new_price_of(String string) {
-	try{
-		Item i = ItemController.updatePrice(currentItem, Double.parseDouble(string));
-		currentItem = i;	//update pointer
-		allItems = rob.getProducts();//update list
-	}
-	catch (Exception e){
-		errorMsg += e.getMessage();
-		System.out.println(errorMsg);
-	}
-    
-}
+	////////////////////////////////////////////////////////////////////
+	///////////////////////////  EDIT ITEMS  ///////////////////////////
+	////////////////////////////////////////////////////////////////////
+	@Given("the following application items exist in the system:")
+	public void the_following_application_items_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
+		if(allItems == null) {
+			allItems = new ArrayList<Item>();
+		}
+		List<Map<String,String>> existingItems = dataTable.asMaps(String.class,String.class);
+		for (Map<String,String> aItem : existingItems){
+			// create a new user with the provided info if such an user does not already exist in the system
+			String[] sizeArray = aItem.get("availableSizes").split(",");
+			ArrayList<String> sizes = new ArrayList<>();
+			for (String size:sizeArray) sizes.add(size);
+			double price = Double.parseDouble(aItem.get("price"));
 
-@Then("the current item shall have price {string}")
-public void the_current_item_shall_have_price(String string) {
-    assertEquals(Double.parseDouble(string),currentItem.getPrice(), 0.00001);
-}
+			Item newItem = null;
+			try {
+				newItem = ItemController.addItem(aItem.get("name"), price, sizes);
+			} catch (Exception e){
+				errorMsg += e.getMessage();
+				System.out.println(errorMsg);
+			}
+			allItems.add(newItem);
+		}
+	}
+
+	@Given("the user is looking at {string}")
+	public void the_user_is_looking_at(String string) {
+		for (Item i: allItems){
+			if (string.equals(i.getName())){
+				currentItem = i;
+			}
+		}
+	}
+
+	@When("the user tries to update price to a new price of {string}")
+	public void the_user_tries_to_update_price_to_a_new_price_of(String string) {
+		try{
+			Item i = ItemController.updatePrice(currentItem, Double.parseDouble(string));
+			currentItem = i;	//update pointer
+			allItems = rob.getProducts();//update list
+		}
+		catch (Exception e){
+			errorMsg += e.getMessage();
+			System.out.println(errorMsg);
+		}
+
+	}
+
+	@Then("the current item shall have price {string}")
+	public void the_current_item_shall_have_price(String string) {
+		assertEquals(Double.parseDouble(string),currentItem.getPrice(), 0.00001);
+	}
 
 
-@Then("the current item shall have size {string}")
-public void the_current_item_shall_have_size(String string) {
+	@Then("the current item shall have size {string}")
+	public void the_current_item_shall_have_size(String string) {
 
-	if (errorMsg.contains("Can't edit null item")) {
-		assertNull(currentItem);
+		if (errorMsg.contains("Can't edit null item")) {
+			assertNull(currentItem);
+		}
+		else assertTrue(currentItem.getAvailableSizes().contains(string) || string.isEmpty());
 	}
-    else assertTrue(currentItem.getAvailableSizes().contains(string) || string.isEmpty());
-}
 
-@When("the user tries to remove size of {string} from the current item")
-public void the_user_tries_to_remove_size_of_from_the_current_item(String string) {
-    try{
-		Item i = ItemController.removeItemSize(currentItem, string);
-		currentItem = i;	//update pointer
-		allItems = rob.getProducts();//update list
+	@When("the user tries to remove size of {string} from the current item")
+	public void the_user_tries_to_remove_size_of_from_the_current_item(String string) {
+		try{
+			Item i = ItemController.removeItemSize(currentItem, string);
+			currentItem = i;	//update pointer
+			allItems = rob.getProducts();//update list
+		}
+		catch (Exception e){
+			errorMsg += e.getMessage();
+			System.out.println(errorMsg);
+		}
 	}
-	catch (Exception e){
-		errorMsg += e.getMessage();
-		System.out.println(errorMsg);
-	}
-}
 
-@When("the user tries to add size of {string} to the current item")
-public void the_user_tries_to_add_size_of_to_the_current_item(String string) {
-	try{
-		System.out.println("items in sys: " + allItems);
-		System.out.println("curr item: "+ currentItem);
-		Item i = ItemController.addItemSize(currentItem, string);
-		if (i != null) currentItem = i;	//update pointer
-		System.out.println("curr item after update: "+ currentItem);
-		allItems = rob.getProducts();//update list
+	@When("the user tries to add size of {string} to the current item")
+	public void the_user_tries_to_add_size_of_to_the_current_item(String string) {
+		try{
+			System.out.println("items in sys: " + allItems);
+			System.out.println("curr item: "+ currentItem);
+			Item i = ItemController.addItemSize(currentItem, string);
+			if (i != null) currentItem = i;	//update pointer
+			System.out.println("curr item after update: "+ currentItem);
+			allItems = rob.getProducts();//update list
+		}
+		catch (Exception e){
+			errorMsg += e.getMessage();
+			System.out.println(errorMsg);
+		}
 	}
-	catch (Exception e){
-		errorMsg += e.getMessage();
-		System.out.println(errorMsg);
-	}
-}
 
 	@Then("the current item shall not have size {string}")
 	public void the_current_item_shall_not_have_size(String string) {
@@ -513,16 +513,16 @@ public void the_user_tries_to_add_size_of_to_the_current_item(String string) {
 			String name = string2;
 			double priced = Double.parseDouble(string3);
 			int price = (int) priced;
-	
+
 			Item newItem = ItemController.createItem(username, name, price); //use parameters to create new item
-	
+
 			for (ApplicationUser userinsystem: loginUsers){
 				if (userinsystem.getUsername().equals(username)){
 					this.currentLoginUser = userinsystem;
 					break;
 				}
 			}
-			
+
 			boolean wasFound = false;
 
 			if (currentLoginUser == null) {
@@ -535,26 +535,26 @@ public void the_user_tries_to_add_size_of_to_the_current_item(String string) {
 						currentLoginUser.removeItem(newItem);; //remove new item to list of items
 					}
 				}
-				
+
 			}
-	
+
 		} catch (Exception e){
 			errorMsg += e.getMessage();
 			System.out.println(errorMsg);
 		}
 	}
 
-@Then("the {string} will be deleted successfully to the database")
-public void the_will_be_deleted_successfully_to_the_database(String string) {
-    // Write code here that turns the phrase above into concrete actions
-	ArrayList<String> itemNames = new ArrayList<String>();
-	for(Item item: currentLoginUser.getItems()){
-		itemNames.add(item.getName()); //adds each name to name list
+	@Then("the {string} will be deleted successfully to the database")
+	public void the_will_be_deleted_successfully_to_the_database(String string) {
+		// Write code here that turns the phrase above into concrete actions
+		ArrayList<String> itemNames = new ArrayList<String>();
+		for(Item item: currentLoginUser.getItems()){
+			itemNames.add(item.getName()); //adds each name to name list
+		}
+		assertTrue(!itemNames.contains(string)); //checks whether itemList has new name
 	}
-	assertTrue(!itemNames.contains(string)); //checks whether itemList has new name
-}
 
-@When("the user with username {string} tries to delete a non existent {string} with price {string}")
+	@When("the user with username {string} tries to delete a non existent {string} with price {string}")
 	public void the_user_with_username_tries_to_delete_a_non_existent_with_price(String string, String string2, String string3) {
 		// Write code here that turns the phrase above into concrete actions
 		try{
@@ -562,16 +562,16 @@ public void the_will_be_deleted_successfully_to_the_database(String string) {
 			String name = string2;
 			double priced = Double.parseDouble(string3);
 			int price = (int) priced;
-	
+
 			Item newItem = ItemController.createItem(username, name, price); //use parameters to create new item
-	
+
 			for (ApplicationUser userinsystem: loginUsers){
 				if (userinsystem.getUsername().equals(username)){
 					this.currentLoginUser = userinsystem;
 					break;
 				}
 			}
-			
+
 			boolean wasFound = false;
 
 			if (currentLoginUser == null) {
@@ -588,7 +588,7 @@ public void the_will_be_deleted_successfully_to_the_database(String string) {
 					errorMsg = "This Item does not exist";
 				}
 			}
-	
+
 		} catch (Exception e){
 			errorMsg += e.getMessage();
 			System.out.println(errorMsg);
@@ -596,43 +596,117 @@ public void the_will_be_deleted_successfully_to_the_database(String string) {
 	}
 
 	@Given("the following reservation assigned to different user:")
-public void the_following_reservation_assigned_to_different_user(io.cucumber.datatable.DataTable dataTable) {
-	if (reservations == null){
-		reservations= new ArrayList<Reservation>();
+	public void the_following_reservation_assigned_to_different_user(io.cucumber.datatable.DataTable dataTable) {
+		if (reservations == null){
+			reservations= new ArrayList<Reservation>();
+		}
+		List<Map<String,String>> existingReservation=dataTable.asMaps(String.class,String.class);
+		for (Map<String,String> aReservation : existingReservation){
+
+			int i= Integer.parseInt(aReservation.get("reservationId"));
+			Long l=new Long(i);
+			ApplicationUser u=new ApplicationUser();
+			u.setUsername(aReservation.get("username"));
+			Reservation newReservation= new Reservation(l,u);
+			reservations.add(newReservation);
+			rob.addReservation(newReservation);
+		}
 	}
-	List<Map<String,String>> existingReservation=dataTable.asMaps(String.class,String.class);
-	for (Map<String,String> aReservation : existingReservation){
 
-		int i= Integer.parseInt(aReservation.get("reservationId"));
-		Long l=new Long(i);
-		ApplicationUser u=new ApplicationUser();
-		u.setUsername(aReservation.get("username"));
-		Reservation newReservation= new Reservation(l,u);
-		reservations.add(newReservation);
-		rob.addReservation(newReservation);
+	@When("the user with username {string} tries to delete the reservation with reservationId {string}")
+	public void the_user_with_username_tries_to_delete_the_reservation_with_reservation_id(String string, String string2) {
+		try{
+			Reservation r=ReservationController.deleteReservation(Integer.parseInt(string2), string);
+			//reservations.remove(r);
+		} catch (Exception e){
+			errorMsg += e.getMessage();
+		}
 	}
-}
 
-@When("the user with username {string} tries to delete the reservation with reservationId {string}")
-public void the_user_with_username_tries_to_delete_the_reservation_with_reservation_id(String string, String string2) {
-    try{
-		Reservation r=ReservationController.deleteReservation(Integer.parseInt(string2), string);
-		//reservations.remove(r);
-	} catch (Exception e){
-		errorMsg += e.getMessage();
+	@Then("the reservation with Id {string} should be successfully deleted")
+	public void the_reservation_with_id_should_be_successfully_deleted(String string) {
+		ReservationController r = new ReservationController();
+		assertNull(r.obtReservation(Integer.parseInt(string)));
 	}
-}
-
-@Then("the reservation with Id {string} should be successfully deleted")
-public void the_reservation_with_id_should_be_successfully_deleted(String string) {
-    ReservationController r = new ReservationController();
-	assertNull(r.obtReservation(Integer.parseInt(string)));
-}
 
 
-// Final
+	/*
+	 * Remove Item from Cart
+	 */
+
+	@Given("the user with username {string} has cart with ID {string} and with the following items:")
+	public void the_user_with_username_has_cart_with_id_and_with_the_following_items(String string, String string2, io.cucumber.datatable.DataTable dataTable) {
+	    // Write code here that turns the phrase above into concrete actions
+		Cart cart = null;
+		try {
+			cart = CartController.createCart(Integer.parseInt(string2));
+		}
+		catch (Exception e) {
+			errorMsg += e.getMessage();
+			System.out.println(errorMsg);
+		}
+
+		List<Map<String,String>> cartItems = dataTable.asMaps(String.class,String.class);
+		for (Map<String,String> cartItem : cartItems){
+			ItemInCart item = new ItemInCart();
+			item.setItemInCartId(Integer.parseInt(cartItem.get("item_id")));
+			item.setQuantity(Integer.parseInt(cartItem.get("quantity")));
+			item.setSize(cartItem.get("size"));
+			for (Item i : allItems) {
+				if (i.getName().equals(cartItem.get("item_name"))) {
+					item.setItem(i);
+					break;
+				}
+			}
+			cart = CartController.addItemToCart(cart, item);
+		}
+		for (ApplicationUser user: loginUsers) {
+			if (user.getUsername().equals(string)) currentLoginUser = user;
+		}
+		currentLoginUser.setCart(cart);
+	}
+
+	@When("user with username {string} removes item with id {string}")
+	public void user_with_username_removes_item_with_id(String string, String string2) {
+		for (ApplicationUser user: loginUsers) {
+			if (user.getUsername().equals(string)) currentLoginUser = user;
+		}
+		ItemInCart item = null;
+		for (ItemInCart i: currentLoginUser.getCart().getCartItems()) {
+			if (i.getItemInCartId() == Integer.parseInt(string2)) item = i;
+		}
+	    try {
+	    	CartController.removeItemFromCart(currentLoginUser.getCart(), item);
+	    } catch(Exception e) {
+	    	errorMsg = e.getMessage();
+	    }
+	}
+
+	@Then("the item with id {string} will not appear in the cart")
+	public void the_item_with_id_will_not_appear_in_the_cart(String string) {
+	    for (ItemInCart i : currentLoginUser.getCart().getCartItems()) {
+	    	assertTrue(i.getItemInCartId() != Integer.parseInt(string));
+	    }
+	}
+
+	@Then("the cart size will be {string}")
+	public void the_cart_size_will_be(String string) {
+		assertTrue(currentLoginUser.getCart().getCartItems().size() == Integer.parseInt(string));
+	}
+
+	@Then("no item will be removed")
+	public void no_item_will_be_removed() {
+		assertTrue(currentLoginUser.getCart().getCartItems().size() == 3);
+	}
+
+	@Then("an error {string} should appear")
+	public void an_error_should_appear(String string) {
+		assertTrue(errorMsg.contains(string));
+	}
+
+	// Final
 	@After
-	 public void tearDown() {
+	public void tearDown() {
 		errorMsg = "";
 		rob.delete();
 	}
