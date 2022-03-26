@@ -37,6 +37,9 @@
                 <router-link to ="/item">
                     <button class="buttonStyle">My Listed Items</button>
                 </router-link>
+                <router-link to ="/reservation">
+                    <button class="buttonStyle">My Reservations</button>
+                </router-link>
            </div>
 
         </section>

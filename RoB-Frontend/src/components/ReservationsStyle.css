@@ -1,0 +1,48 @@
+/* background*/
+body{   
+    height:100vh;
+    justify-content: left;
+    background: linear-gradient(200deg,#72afd3,#96fbc4);
+}
+
+.reservation p{
+    font-size: 60px;
+    font-weight: 800;
+}
+.reservation {
+    margin: 5% 5%;
+    padding: 30px 50px;
+    width: 90%;
+    justify-content: left;
+}
+
+
+.reservation .info table, tr, th, td {
+    width: 350px;
+    border: rgba(255, 255, 255, 0.356);
+    background-color: rgba(255, 255, 255, 0.103);
+    border-style: solid;
+    border-width: 3px;
+    padding: 8px;
+    font-size: 17px;
+}
+
+
+.reservation .buttonStyle {
+    display: block;
+    padding: 10px 5px;
+    margin: 23px 15px;
+    margin-left: 0px;
+    width: 100px;
+    border:none;
+    height:45px;
+    background-color: rgba(32, 168, 178, 0.568);
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;   
+    width: 200px;
+}
+
+.reservation .reservation_buttons{
+    padding-top: 40px;
+}

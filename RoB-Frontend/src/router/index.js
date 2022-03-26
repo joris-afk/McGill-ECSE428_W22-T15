@@ -5,6 +5,7 @@ import Profile from '@/components/Profile'
 import EditAccount from '@/components/EditAccount'
 import SignUp from '@/components/SignUp'
 import Item from '@/components/Item'
+import Reservation from '@/components/Reservations'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/item',
       name: 'Item',
       component: Item
+    },
+    {
+      path: '/reservation',
+      name: 'reservation',
+      component: Reservation
     }
   ]
 })
