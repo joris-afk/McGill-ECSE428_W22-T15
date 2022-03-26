@@ -29,6 +29,8 @@ public class CartController {
 	private CartService cartService;
 	@Autowired
 	private ItemInCartService itemInCartService;
+	@Autowired
+	private ItemService itemService;
 
 	@PostMapping(value = { "/cart/{cartId}", "/cart/{cartId}/" })
 	public CartDto createCartDto(@PathVariable("cartId") Integer cartId) throws IllegalArgumentException {
@@ -40,16 +42,18 @@ public class CartController {
 
 	@PutMapping(value = { "/cart/{cartId}/add", "/cart/{cartId}/" })
 	public CartDto addItemToCartDto(@PathVariable("cartId") Integer cartId,
-			@RequestParam(name = "itemInCartId") Integer itemInCartId) throws IllegalArgumentException {
-		Cart cart = cartService.getCartByCartId(itemInCartId);
+			@RequestParam(name = "itemName") String itemName,
+			@RequestParam(name = "quantity") Integer quantity,
+			@RequestParam(name = "size") String size) throws IllegalArgumentException {
+		Cart cart = cartService.getCartByCartId(cartId);
 		if (cart == null) {
 			throw new IllegalArgumentException("This cart does not exist.");
 		}
-		ItemInCart item = itemInCartService.getItemInCart(itemInCartId);
-		if (item == null || item.getItem() == null || item.getItem().getName().equals(null)) {
+		Item item = itemService.getItemByName(itemName);
+		if (item == null) {
 			throw new IllegalArgumentException("This item does not exist.");
 		}
-		cart = cartService.addItemToCart(cart, item);
+		cart = cartService.addNewItemToCart(cart, item, quantity, size);
 		return convertToDto(cart);
 	}
 	
@@ -82,6 +86,28 @@ public class CartController {
 		aCart.setCartId(cartId);
 		aCart.setCartItems(new ArrayList<ItemInCart>());
 		return aCart;
+	}
+
+	public static Cart addItemToCart(Cart cart, Item codelessItem, String size, int quantity) throws IllegalArgumentException {
+		if (cart == null) {
+			throw new IllegalArgumentException("This cart does not exist.");
+		}
+		if (codelessItem == null ) {
+			throw new IllegalArgumentException("This item does not exist.");
+		}
+		if (quantity<1){
+			throw new IllegalArgumentException("You must order at least one of the product");
+		}
+		boolean invalidSize = true;
+		for (String sizes:codelessItem.getAvailableSizes()){
+			if (sizes.equals(size)) invalidSize = false;
+		}
+		if (invalidSize){
+			throw new IllegalArgumentException("Unavailable size for this product");
+		}
+
+		cart.addItemToCart(codelessItem, quantity, size);
+		return cart;
 	}
 
 	public static Cart addItemToCart(Cart cart, ItemInCart itemInCart) throws IllegalArgumentException {

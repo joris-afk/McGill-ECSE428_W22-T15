@@ -72,6 +72,21 @@ public class Cart {
 		itemInCart.setItem(item);
 		itemInCart.setQuantity(quantity);
 		itemInCart.setSize(size);
+
+		//get random id for iic
+		Random rand=new Random();
+		int int_random=rand.nextInt(3000);
+		Rob rob=RobApplication.getRob();
+		List<Integer> iicID=new ArrayList<Integer>();
+		for (ItemInCart aIIC: rob.getIICs()) {
+			iicID.add(aIIC.getItemInCartId());
+		}
+
+		while (iicID.contains(int_random)){
+			int_random=rand.nextInt(3000);
+		}
+		itemInCart.setItemInCartId(int_random);
+
 		this.cartItems.add(itemInCart);
 	}
 	
