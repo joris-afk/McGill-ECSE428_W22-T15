@@ -15,12 +15,22 @@ Background:
 
   ######################################################################
   Scenario: Add Item Successfully
-    When user with username "User1" adds item with id "001" to their cart
-    Then the item with id "001" will appear in the cart
+    When user with username "User1" adds "6" item with name "hat" of size "small" to their cart
+    Then the item with name "hat" will appear in the cart
     
 
   ######################################################################
-  Scenario: Add Item Failed
-    When user with username "User1" add item with id "010"
-    Then no item will be removed
-    And an error "Item does not appear in cart" should appear
+  Scenario: Add Item Failed -- Item does not exist
+    When user with username "User1" adds "6" item with name "trash" of size "small" to their cart
+    Then the item with name "trash" will not appear in the cart
+    And an error "This item does not exist." should appear
+
+  Scenario: Add Item Failed -- Size does not exist
+    When user with username "User1" adds "7" item with name "toy" of size "medium" to their cart
+    Then the item with name "toy" will not appear in the cart
+    And an error "Unavailable size for this product" should appear
+
+  Scenario: Add Item Failed -- Non-Positive quantity
+    When user with username "User1" adds "7" item with name "toy" of size "medium" to their cart
+    Then the item with name "toy" will not appear in the cart
+    And an error "You must order at least one of the product" should appear

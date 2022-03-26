@@ -11,6 +11,7 @@ public class Rob {
 	private List<Cart> carts;
 	private ArrayList<Reservation> reservations;
 	private List<Purchase> purchases;
+	private List<ItemInCart> itemsInCart;
 	
     public Rob() {
     	this.currentLoggedInUsers = new ArrayList<ApplicationUser>();
@@ -122,4 +123,18 @@ public class Rob {
 		this.reservations.add(newReservation);
 	}
 	
+
+	public List<ItemInCart> getIICs(){
+		return this.itemsInCart;
+	}
+
+	public void addIIC(ItemInCart aIIC){
+		this.itemsInCart.add(aIIC);
+	}
+
+	public void removeIIC(ItemInCart aIIC){
+		this.itemsInCart.remove(aIIC);
+	}
+
+
 }

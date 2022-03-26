@@ -2,6 +2,9 @@ package ca.mcgill.ecse428.RentOrBuy.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.math.*;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +21,9 @@ public class CartService {
 	
 	@Autowired
 	private CartRepository cartRepository;
+
+	@Autowired
+	private ItemInCartRepository IICRepository;
 	
 	@Transactional
 	public Cart createCart(int cartId, List<ItemInCart> cartItems) {
@@ -33,6 +39,35 @@ public class CartService {
 		cartRepository.save(cart);
 		return cart;
 	}
+
+	@Transactional
+	public Cart addNewItemToCart(Cart cart, Item item, int quantity, String size){
+		ItemInCart IIC = null;
+
+		if (quantity<1){
+			throw new IllegalArgumentException("You must order at least one of the product");
+		}
+		boolean invalidSize = true;
+		for (String sizes:item.getAvailableSizes()){
+			if (sizes.equals(size)) invalidSize = false;
+		}
+		if (invalidSize){
+			throw new IllegalArgumentException("Unavailable size for this product");
+		}
+		IIC.setItem(item);
+		IIC.setQuantity(quantity);
+		IIC.setSize(size);
+
+		//randomly assign a IIC-ID
+		Random rand=new Random();
+		int potentialID=rand.nextInt(3000);
+		while(IICRepository.findItemInCartByItemInCartId(potentialID)!=null){
+			potentialID=rand.nextInt(3000);
+		}
+		IIC.setItemInCartId(potentialID);
+		IICRepository.save(IIC);
+		return addItemToCart(cart, IIC);
+	}
 	
 	@Transactional
 	public Cart addItemToCart(Cart cart, ItemInCart item) {
@@ -45,6 +80,7 @@ public class CartService {
 		return cart;
 	}
 	
+	@Transactional
 	public Cart getCartByCartId(Integer cartId){
 		return cartRepository.findCartByCartId(cartId);
 	}

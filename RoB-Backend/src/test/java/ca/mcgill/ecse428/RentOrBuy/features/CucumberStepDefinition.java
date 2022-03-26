@@ -704,6 +704,65 @@ public class CucumberStepDefinition {
 		assertTrue(errorMsg.contains(string));
 	}
 
+	/*
+	 * Add Item to Cart
+	 */
+
+	@Given("the user with username {string} has cart with ID {string}")
+	public void the_user_with_username_has_cart_with_id(String string, String string2) {
+    	Cart cart = null;
+		try {
+			cart = CartController.createCart(Integer.parseInt(string2));
+		}
+		catch (Exception e) {
+			errorMsg += e.getMessage();
+			System.out.println(errorMsg);
+		}
+
+		for (ApplicationUser user: loginUsers) {
+			if (user.getUsername().equals(string)) currentLoginUser = user;
+		}
+
+		currentLoginUser.setCart(cart);
+	}
+
+	@When("user with username {string} adds {string} item with name {string} of size {string} to their cart")
+	public void user_with_username_adds_item_with_name_of_size_to_their_cart(String string, 
+	String string2, String string3, String string4) {
+    	for (ApplicationUser user: loginUsers) {
+			if (user.getUsername().equals(string)) currentLoginUser = user;
+		}
+
+		Item targetItem = null;
+		for (Item searchItem: allItems){
+			if (searchItem.getName().equals(string3)) targetItem = searchItem;
+		}
+		try{
+			CartController.addItemToCart(currentLoginUser.getCart(), targetItem, string4, Integer.parseInt(string2));
+		}
+		catch(Exception e){
+			errorMsg = e.getMessage();
+		}
+	}
+
+	@Then("the item with name {string} will appear in the cart")
+	public void the_item_with_name_will_appear_in_the_cart(String string) {
+		boolean existsInCart = false;
+    	for (ItemInCart iic: currentLoginUser.getCart().getCartItems()){
+			if (iic.getItem().getName().equals(string)) existsInCart = true;
+		}
+		assertTrue(existsInCart);
+	}
+
+	@Then("the item with name {string} will not appear in the cart")
+	public void the_item_with_name_will_not_appear_in_the_cart(String string) {
+	    boolean existsInCart = false;
+    	for (ItemInCart iic: currentLoginUser.getCart().getCartItems()){
+			if (iic.getItem().getName().equals(string)) existsInCart = true;
+		}
+		assertFalse(existsInCart);
+	}
+
 	// Final
 	@After
 	public void tearDown() {
