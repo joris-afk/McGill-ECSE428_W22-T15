@@ -70,11 +70,13 @@ public class CartService {
 	@Transactional
 	public Cart addItemToCart(Cart cart, ItemInCart item) {
 		cart.addItemToCart(item);
+		cartRepository.save(cart);
 		return cart;
 	}
 	@Transactional
 	public Cart removeItemFromCart(Cart cart, ItemInCart item) {
 		cart.removeItemFromCart(item);
+		cartRepository.save(cart);
 		return cart;
 	}
 	

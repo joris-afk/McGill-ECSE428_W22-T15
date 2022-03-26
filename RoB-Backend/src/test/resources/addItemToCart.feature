@@ -18,7 +18,6 @@ Background:
     When user with username "User1" adds "6" item with name "hat" of size "small" to their cart
     Then the item with name "hat" will appear in the cart
     
-
   ######################################################################
   Scenario: Add Item Failed -- Item does not exist
     When user with username "User1" adds "6" item with name "trash" of size "small" to their cart
@@ -31,6 +30,6 @@ Background:
     And an error "Unavailable size for this product" should appear
 
   Scenario: Add Item Failed -- Non-Positive quantity
-    When user with username "User1" adds "7" item with name "toy" of size "medium" to their cart
+    When user with username "User1" adds "-7" item with name "toy" of size "medium" to their cart
     Then the item with name "toy" will not appear in the cart
     And an error "You must order at least one of the product" should appear

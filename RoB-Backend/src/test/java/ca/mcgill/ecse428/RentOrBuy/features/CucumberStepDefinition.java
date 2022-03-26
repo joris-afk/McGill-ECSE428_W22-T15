@@ -738,7 +738,7 @@ public class CucumberStepDefinition {
 			if (searchItem.getName().equals(string3)) targetItem = searchItem;
 		}
 		try{
-			CartController.addItemToCart(currentLoginUser.getCart(), targetItem, string4, Integer.parseInt(string2));
+			currentLoginUser.setCart(CartController.addItemToCart(currentLoginUser.getCart(), targetItem, string4, Integer.parseInt(string2)));
 		}
 		catch(Exception e){
 			errorMsg = e.getMessage();
