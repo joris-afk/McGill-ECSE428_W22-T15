@@ -2,9 +2,7 @@ package ca.mcgill.ecse428.RentOrBuy.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
-import java.math.*;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +40,7 @@ public class CartService {
 
 	@Transactional
 	public Cart addNewItemToCart(Cart cart, Item item, int quantity, String size){
-		ItemInCart IIC = null;
+		ItemInCart IIC = new ItemInCart();
 
 		if (quantity<1){
 			throw new IllegalArgumentException("You must order at least one of the product");
