@@ -44,7 +44,7 @@
                     <button class="buttonStyle">My Cart</button>
                 </router-link>
                 <router-link to ="/itemlist">
-                    <button class="buttonStyle">Shopping</button>
+                    <button class="buttonStyle">Available Items</button>
                 </router-link>
            </div>
 

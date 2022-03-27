@@ -37,13 +37,15 @@ export default{
         return{
             cartOwner:sessionStorage.getItem('currentUsername'),
             cart:'',
+            orderId:'',
             errorCart:'',
             response:[]
         }
     },
 
     created: function(){
-        AXIOS.get('/applicationUsers/'.concat(cartOwner))
+        var owner = sessionStorage.getItem('currentUsername')
+        AXIOS.get('/applicationUsers/'.concat(owner))
         .then(response => {
             this.cart = response.data.cart
         })

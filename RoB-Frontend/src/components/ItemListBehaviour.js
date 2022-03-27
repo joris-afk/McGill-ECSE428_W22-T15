@@ -36,6 +36,8 @@ export default{
     data(){
         return{
             products:[],
+            requiredQuantity:'',
+            reservationId:'',
             errorProducts:'',
             response:[]
         }

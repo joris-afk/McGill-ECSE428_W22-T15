@@ -3,17 +3,17 @@
     <div class="cart">
         <h2>My cart</h2>
 
-        <div class="items" v-for="itemInCart in cart" :key="item.itemInCartId">
+        <div class="items" v-for="itemInCart in cart.cartItems" :key="itemInCart.itemInCartId">
             <div class="card">
                 <table class="tablestyle">
                     <td class="tdstyle">
                         <tr class="trstyle">
                             <th class="thstyle">Item Name</th>
-                            <td class="tdstyle">{{itemInCart.item.name}}</td>
+                            <td class="tdstyle">{{itemInCart.items.name}}</td>
                         </tr>
                         <tr class="trstyle">
                             <th class="thstyle">Item Price</th>
-                            <td class="tdstyle">{{itemInCart.item.price}}</td>
+                            <td class="tdstyle">{{itemInCart.items.price}}</td>
                         </tr>
                         <tr class="trstyle">
                             <th class="thstyle">quantity</th>
