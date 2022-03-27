@@ -764,6 +764,66 @@ public class CucumberStepDefinition {
 		assertFalse(existsInCart);
 	}
 
+
+	/*
+	*
+	Purchase Item
+	*
+	*/
+	@When("user with username {string} purchases {string} item with name {string} of size {string} from their cart")
+	public void user_with_username_purchases_item_with_name_of_size_from_their_cart(String string, 
+	String string2, String string3, String string4) {
+    	for (ApplicationUser user: loginUsers) {
+			if (user.getUsername().equals(string)) currentLoginUser = user;
+		}
+
+		Item targetItem = null;
+		for (Item searchItem: allItems){
+			if (searchItem.getName().equals(string3)) targetItem = searchItem;
+		}
+		try{
+			currentLoginUser.setCart(CartController.addItemToCart(currentLoginUser.getCart(), targetItem, string4, Integer.parseInt(string2)));
+			Purchase p = new Purchase(currentLoginUser.getCart());
+			currentLoginUser.addPurchase(p);
+		}
+		catch(Exception e){
+			errorMsg = e.getMessage();
+		}
+	}
+
+	@Then("the item with name {} will be added to purchase history")
+	public void the_item_with_name_will_be_added_to_purchase_history(String string){
+		boolean existsInPurchases = false;
+    	for (Purchase p: currentLoginUser.getPurchases()){
+			for(ItemInCart i: p.getCart().getCartItems()){
+				if(i.getItem().getName().equals(string)){
+					existsInPurchases = true;
+				}
+			}
+		}
+		assertTrue(existsInPurchases);
+	}
+
+
+	// Reserve Item
+
+	@When("the user with username {} tries to reserve {} number of {} with reservationId {} ")
+	public void the_user_with_username_tries_to_reserve_number_of_with_reservation_id(String string, String string2,String string3,String string4) {
+		try{
+			ReservationController re=new ReservationController();
+			re.createReservation(Integer.parseInt(string4), string, Integer.parseInt(string3), string2);
+			//reservations.remove(r);
+		} catch (Exception e){
+			errorMsg += e.getMessage();
+		}
+	}
+
+	@Then("Then the reservation with Id {} should be successfully added")
+	public void the_reservation_with_id_should_be_successfully_added(String string) {
+		ReservationController r = new ReservationController();
+		assertNotNull(r.obtReservation(Integer.parseInt(string)));
+	}
+
 	// Final
 	@After
 	public void tearDown() {
