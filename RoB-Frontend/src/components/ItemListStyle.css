@@ -1,0 +1,71 @@
+/* background*/
+body{   
+    height:100vh;
+    justify-content: left;
+    background: linear-gradient(200deg,#72afd3,#96fbc4);
+}
+
+.itemlists .card{
+    background-color: rgba(245, 243, 243, 0.151);
+    border-radius: 15px;
+    margin: 15px 30px;
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.itemlists .card table, tr, td{
+    width: 100%;
+    border: rgba(255, 255, 255, 0.356);
+    background-color: rgba(255, 255, 255, 0.103);
+    border-style: solid;
+    border-width: 3px;
+    padding: 8px;
+    font-size: 17px;
+}
+
+.thstyle, .tdstyle{
+    width: 25%;
+}
+
+#section1{
+    width: 50%;
+}
+
+#section2{
+    width: 25%;
+}
+
+input{
+    height: 40px;
+    width: 100%;
+    border-radius: 3px;
+    text-indent: 15px;
+    outline: none;
+    border:none;
+    margin-bottom: 10px;
+}
+
+button{
+    display: block;
+    padding: 5px 5px;
+    margin-left: 0px;
+    width: 100%;
+    border:none;
+    height:40px;
+    background-color: rgba(32, 168, 178, 0.568);
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;   
+}
+
+.buttonStyle {
+    margin-top: 40px;
+    height: 50px;
+    width: 200px;
+    left: 50%;
+    position: absolute;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}

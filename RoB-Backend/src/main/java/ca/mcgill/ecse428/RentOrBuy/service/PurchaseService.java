@@ -50,11 +50,8 @@ public class PurchaseService {
 //        purchase.setBuyer(buyer);
         purchase.setCart(cart);
         purchaseRepository.save(purchase);
-        // save changes to application user database and cart database
-        List<Purchase> purs = buyer.getPurchases();
-        purs.add(purchase);
-        buyer.setPurchases(purs);        
-//        buyer.addPurchase(purchase);        
+        // save changes to application user database and cart database      
+        buyer.addPurchase(purchase);        
         cart.setCartItems(new ArrayList<ItemInCart>());
         buyer.setCart(cart);
         auRepository.save(buyer);

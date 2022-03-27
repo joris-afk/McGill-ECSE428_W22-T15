@@ -1,0 +1,39 @@
+/* background*/
+body{   
+    height:100vh;
+    justify-content: left;
+    background: linear-gradient(200deg,#72afd3,#96fbc4);
+}
+
+.cart input{
+    height: 40px;
+    width: 200px;
+    border-radius: 3px;
+    text-indent: 15px;
+    outline: none;
+    border:none;
+    margin-bottom: 40px;
+}
+
+.cart .buttons {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.cart .buttons .buttonStyle {
+    display: block;
+    padding: 10px 5px;
+    margin: 23px 15px;
+    margin-left: 0px;
+    width: 100px;
+    border:none;
+    height:45px;
+    background-color: rgba(32, 168, 178, 0.568);
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;   
+    width: 200px;
+}
