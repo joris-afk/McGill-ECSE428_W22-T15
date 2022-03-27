@@ -24,13 +24,17 @@
                             <td class="tdstyle">{{itemInCart.size}}</td>
                         </tr>
                     </td>
-                    <td class="tdstyle">
-                        <input type="text" v-model="orderId" placeholder="order/purchase id">
-                        <td><button @click="purchaseItemsInCart(orderId)">Reserve</button></td>
-                    </td>
-
                 </table>
             </div>
+        </div>
+        <div>
+            <input type="text" v-model="orderId" placeholder="order/purchase id">
+        </div>
+        <div class="buttons">
+            <button class="buttonStyle" @click="purchaseItemsInCart(orderId)">Place Order</button>
+            <router-link to ="/profile">
+                <button class="buttonStyle">Back to Profile</button>
+            </router-link>
         </div>
 
     </div>

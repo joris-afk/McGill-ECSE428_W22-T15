@@ -5,34 +5,36 @@
 
         <div class="items" v-for="item in products" :key="item.name">
             <div class="card">
-                <table class="tablestyle">
-                    <td class="tdstyle">
-                        <tr class="trstyle">
+                <table>
+                    <td id="section1">
+                        <tr>
                             <th class="thstyle">Item Name</th>
                             <td class="tdstyle">{{item.name}}</td>
                         </tr>
-                        <tr class="trstyle">
+                        <tr>
                             <th class="thstyle">Item Price</th>
                             <td class="tdstyle">{{item.price}}</td>
                         </tr>
-                        <tr class="trstyle">
+                        <tr>
                             <th class="thstyle">Available Sizes</th>
                             <td class="tdstyle">{{item.availableSizes}}</td>
                         </tr>
                     </td>
-                    <td class="tdstyle">
+                    <td id="section2">
                         <input type="text" v-model="requiredQuantity" placeholder="required quantity">
                         <input type="text" v-model="reservationId" placeholder="reservation id">
-                        <td><button @click="reserveItem(reservationId, requiredQuantity, item.name)">Reserve</button></td>
+                        <button @click="reserveItem(reservationId, requiredQuantity, item.name)">Reserve</button>
                     </td>
                     <!-- button for add item to cart but not functioning yet -->
-                    <td class="tdstyle">
-                            <td><button> Add To Cart</button></td>            
+                    <td id="section2">
+                        <button>Add To Cart</button>          
                     </td>
-
                 </table>
             </div>
         </div>
+        <router-link to ="/profile">
+            <button class="buttonStyle">Back to Profile</button>
+        </router-link>
     </div>
 </template>
 
