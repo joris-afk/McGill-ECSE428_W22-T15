@@ -1,6 +1,10 @@
 package ca.mcgill.ecse428.RentOrBuy.dto;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import ca.mcgill.ecse428.RentOrBuy.model.Purchase;
+import ca.mcgill.ecse428.RentOrBuy.model.Reservation;
 
 public class ApplicationUserDto{
 
@@ -10,17 +14,22 @@ public class ApplicationUserDto{
 	private String address;
 	private CartDto cart;
 	private List<ItemDto> items;
+    private List<ReservationDto> myReservations;
+	private List<PurchaseDto> purchases;
 
     public ApplicationUserDto() {}
 
     public ApplicationUserDto(String username, String password, 
-        String fullname, String address, CartDto cart, List<ItemDto> items){
+        String fullname, String address, CartDto cart, List<ItemDto> items,
+        List<ReservationDto> myReservations, List<PurchaseDto> purchases){
             this.username=username;
             this.password=password;
             this.fullname=fullname;
             this.address=address;
             this.cart=cart;
             this.items=items;
+            this.myReservations = myReservations;
+            this.purchases = purchases;
     }
 
     public String getUsername(){
@@ -45,5 +54,13 @@ public class ApplicationUserDto{
 
     public CartDto getCart() {
 		return cart;
+	}
+    
+	public List<ReservationDto> getReservations(){
+		return myReservations;
+	}
+	
+	public List<PurchaseDto> getPurchases(){
+		return purchases;
 	}
 }

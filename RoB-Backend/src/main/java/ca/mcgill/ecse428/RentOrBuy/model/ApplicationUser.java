@@ -26,6 +26,12 @@ public class ApplicationUser {
 		if (this.items == null) {
 			this.items = new ArrayList<Item>();
 		}
+		if (this.myReservations == null) {
+			this.myReservations = new ArrayList<Reservation>();
+		}
+		if(this.purchases == null) {
+			this.purchases = new ArrayList<Purchase>();
+		}
 		//rob.addCurrentExistingUser(this);
 	}
 	
@@ -36,6 +42,12 @@ public class ApplicationUser {
 		
 		if (this.items == null) {
 			this.items = new ArrayList<Item>();
+		}
+		if (this.myReservations == null) {
+			this.myReservations = new ArrayList<Reservation>();
+		}
+		if(this.purchases == null) {
+			this.purchases = new ArrayList<Purchase>();
 		}
 		//rob.addCurrentExistingUser(this);
 	}
@@ -48,6 +60,12 @@ public class ApplicationUser {
 		
 		if (this.items == null) {
 			this.items = new ArrayList<Item>();
+		}
+		if (this.myReservations == null) {
+			this.myReservations = new ArrayList<Reservation>();
+		}
+		if(this.purchases == null) {
+			this.purchases = new ArrayList<Purchase>();
 		}
 		//if(rob == null){
 		//rob = new Rob();
@@ -139,6 +157,9 @@ public class ApplicationUser {
 
 	@OneToMany
 	public List<Purchase> getPurchases(){
+		if(this.purchases == null){
+			this.purchases = new ArrayList<Purchase>();
+		}
 		return this.purchases;
 	}
 

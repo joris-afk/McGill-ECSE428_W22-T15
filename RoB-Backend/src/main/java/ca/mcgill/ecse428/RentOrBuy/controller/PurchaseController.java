@@ -29,23 +29,23 @@ public class PurchaseController {
     @Autowired
     private CartService cartService;
 
-    @PostMapping(value = {"/purchase/{orderId}","/purchase/{orderId}/"})
+    @PostMapping(value = {"/purchases/{orderId}","/purchases/{orderId}/"})
     public PurchaseDto createPurchase(@PathVariable("orderId") String orderId, 
         @RequestParam(name = "cartId") Integer cartId,
         @RequestParam(name = "username") String username) throws IllegalArgumentException{
         
             ApplicationUser aUser = applicationUserService.getApplicationUserByUsername(username);
             Cart aCart = cartService.getCartByCartId(cartId);
-            Purchase purchase = purchaseService.createPurchase(aUser, aCart);
+            Purchase purchase = purchaseService.createPurchase(orderId, aUser, aCart);
             return convertToDto(purchase);
     }
 
-    @GetMapping(value = {"/purchase/{orderId}","/purchase/{orderId}/"})
+    @GetMapping(value = {"/purchases/{orderId}","/purchases/{orderId}/"})
     public PurchaseDto getPurchaseByOrderId(@PathVariable("orderId") String orderId) throws IllegalArgumentException{
         return convertToDto(purchaseService.getPurchaseByOrderId(orderId));
     }
 
-    @GetMapping(value = {"/purchase","/purchase/"})
+    @GetMapping(value = {"/purchases","/purchases/"})
     public List<PurchaseDto> getAllPurchase() throws IllegalArgumentException{
         List<Purchase> ps = purchaseService.getAllPurchase();
         List<PurchaseDto> psDto = new ArrayList<PurchaseDto>();
@@ -55,19 +55,20 @@ public class PurchaseController {
         return psDto;
     }
 
-    @DeleteMapping(value = {"/purchase/{orderId}","/purchase/{orderId}/"})
-    public void deletePurchase(@PathVariable("orderId") String orderId)throws IllegalArgumentException{
+    @DeleteMapping(value = {"/purchases/{orderId}","/purchases/{orderId}/"})
+    public void deletePurchase(@PathVariable("orderId") String orderId, 
+    		@RequestParam(name = "username")String username)throws IllegalArgumentException{
         Purchase p = purchaseService.getPurchaseByOrderId(orderId);
-        purchaseService.deletePurchase(p);
+        purchaseService.deletePurchase(p,username);
     }
 
     public PurchaseDto convertToDto(Purchase purchase){
         if(purchase == null){
             throw new IllegalArgumentException("Cannot convert null Purchase to PurchaseDto");
         }
-        ApplicationUserDto applicationUserDto = convertToDto(purchase.getBuyer());
+//        ApplicationUserDto applicationUserDto = convertToDto(purchase.getBuyer());
         CartDto cartDto = convertToDto(purchase.getCart());
-        PurchaseDto purchaseDto = new PurchaseDto(purchase.getOrderId(), applicationUserDto, cartDto);
+        PurchaseDto purchaseDto = new PurchaseDto(purchase.getOrderId(), cartDto);
         return purchaseDto;
     }
 
@@ -77,27 +78,45 @@ public class PurchaseController {
             throw new IllegalArgumentException("There is no such User");
         }
 		
-		if (applicationUser.getCart() == null && applicationUser.getItems() == null) {
+		if (applicationUser.getCart() == null && applicationUser.getItems() == null
+				&& applicationUser.getReservations() == null && applicationUser.getPurchases() == null) {
 			
 			ApplicationUserDto applicationUserDto = new ApplicationUserDto(applicationUser.getUsername(), applicationUser.getPassword(),
 					applicationUser.getFullname(), applicationUser.getAddress(),
-					null, null);
+					null, null, null, null);
 			
 			return applicationUserDto;
 		}
-	
+				
 		CartDto cartDto = convertToDto(applicationUser.getCart());
-		ArrayList<ItemDto> itemDto = new ArrayList<ItemDto>();
-        for(Item item : applicationUser.getItems()){
-            itemDto.add(convertToDto(item));
-        }
-		
+		List<ItemDto> itemDto = new ArrayList<ItemDto>();
+		for(Item i : applicationUser.getItems()) {
+			itemDto.add(convertToDto(i));
+		}
+		List<ReservationDto> resDto = new ArrayList<ReservationDto>();
+		for(Reservation r : applicationUser.getReservations()) {
+			resDto.add(convertToDto(r));
+		}
+		List<PurchaseDto> purDto = new ArrayList<PurchaseDto>();
+		for(Purchase p : applicationUser.getPurchases()) {
+			purDto.add(convertToDto(p));
+		}
+	
 		ApplicationUserDto applicationUserDto = new ApplicationUserDto(applicationUser.getUsername(), applicationUser.getPassword(),
 				applicationUser.getFullname(), applicationUser.getAddress(),
-				cartDto, itemDto);
-		
+				cartDto, itemDto, resDto, purDto);
 		return applicationUserDto;
 	}
+    
+    private ReservationDto convertToDto(Reservation aReservation){
+        if (aReservation == null){
+            throw new IllegalArgumentException("this resevation doesn't exist");
+        }
+
+        ReservationDto aReservationDto = new ReservationDto(aReservation.getReservationId(),
+        convertToDto(aReservation.getUser()),convertToDto(aReservation.getItem()),  aReservation.getQuantity());
+        return aReservationDto;
+    }
 
     private CartDto convertToDto(Cart cart) {
 		

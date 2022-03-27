@@ -4,13 +4,13 @@ public class PurchaseDto {
 
     private String orderId;
     private CartDto cart;
-    private ApplicationUserDto buyer;
+//    private ApplicationUserDto buyer;
     
     //constructors
     public PurchaseDto() {}
-    public PurchaseDto(String orderId, ApplicationUserDto buyer, CartDto cart){
+    public PurchaseDto(String orderId,CartDto cart){
         this.orderId = orderId;
-        this.buyer = buyer;
+//        this.buyer = buyer;
         this.cart = cart;
     }
 
@@ -22,7 +22,7 @@ public class PurchaseDto {
         return this.cart;    
     }
 
-    public ApplicationUserDto getBuyer(){
-        return this.buyer;
-    }
+//    public ApplicationUserDto getBuyer(){
+//        return this.buyer;
+//    }
 }

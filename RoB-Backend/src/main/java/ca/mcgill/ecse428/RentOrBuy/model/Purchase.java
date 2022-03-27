@@ -9,13 +9,13 @@ public class Purchase {
 
     private String orderId;
     private Cart cart;
-    private ApplicationUser buyer;
+//    private ApplicationUser buyer;
 
     //constructors
     public Purchase() {}
-    public Purchase(ApplicationUser buyer, Cart cart){
-        this.buyer = buyer;
-        buyer.addPurchase(this);
+    public Purchase(Cart cart){
+//        this.buyer = buyer;
+//        buyer.addPurchase(this);
         this.cart = cart;
     }
 
@@ -37,12 +37,12 @@ public class Purchase {
         this.cart = newCart;
     }
 
-    @OneToOne
-    public ApplicationUser getBuyer(){
-        return this.buyer;
-    }
-
-    public void setBuyer(ApplicationUser newBuyer){
-        this.buyer = newBuyer;
-    }
+//    @OneToOne
+//    public ApplicationUser getBuyer(){
+//        return this.buyer;
+//    }
+//
+//    public void setBuyer(ApplicationUser newBuyer){
+//        this.buyer = newBuyer;
+//    }
 }

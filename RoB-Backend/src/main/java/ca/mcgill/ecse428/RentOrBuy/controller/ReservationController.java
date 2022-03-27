@@ -91,22 +91,30 @@ public class ReservationController {
             throw new IllegalArgumentException("There is no such User");
         }
 		
-		if (applicationUser.getCart() == null && applicationUser.getItems() == null) {
+		if (applicationUser.getCart() == null && applicationUser.getItems() == null
+				&& applicationUser.getReservations() == null && applicationUser.getPurchases() == null) {
 			
 			ApplicationUserDto applicationUserDto = new ApplicationUserDto(applicationUser.getUsername(), applicationUser.getPassword(),
 					applicationUser.getFullname(), applicationUser.getAddress(),
-					null, null);
+					null, null, null, null);
 			
 			return applicationUserDto;
 		}
-		
-		
+				
 		CartDto cartDto = convertToDto(applicationUser.getCart());
 		List<ItemDto> itemDto = createItemDtosForAppUser(applicationUser.getItems());
-		
+		List<ReservationDto> resDto = new ArrayList<ReservationDto>();
+		for(Reservation r : applicationUser.getReservations()) {
+			resDto.add(convertToDto(r));
+		}
+		List<PurchaseDto> purDto = new ArrayList<PurchaseDto>();
+		for(Purchase p : applicationUser.getPurchases()) {
+			purDto.add(convertToDto(p));
+		}
+	
 		ApplicationUserDto applicationUserDto = new ApplicationUserDto(applicationUser.getUsername(), applicationUser.getPassword(),
 				applicationUser.getFullname(), applicationUser.getAddress(),
-				cartDto, itemDto);
+				cartDto, itemDto, resDto, purDto);
 		
 		return applicationUserDto;
 	}
@@ -181,6 +189,18 @@ public class ReservationController {
         convertToDto(aReservation.getUser()),convertToDto(aReservation.getItem()),  aReservation.getQuantity());
         return aReservationDto;
     }
+    
+    public PurchaseDto convertToDto(Purchase purchase){
+        if(purchase == null){
+            throw new IllegalArgumentException("Cannot convert null Purchase to PurchaseDto");
+        }
+//        ApplicationUserDto applicationUserDto = convertToDto(purchase.getBuyer());
+        CartDto cartDto = convertToDto(purchase.getCart());
+        PurchaseDto purchaseDto = new PurchaseDto(purchase.getOrderId(), cartDto);
+        return purchaseDto;
+    }
+    
+    
 
 
 	//For testing the cucumber stuff

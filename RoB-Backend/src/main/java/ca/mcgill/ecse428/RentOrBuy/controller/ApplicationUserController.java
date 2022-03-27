@@ -45,7 +45,8 @@ public class ApplicationUserController {
 			@RequestParam(name = "address") String address)
 		throws IllegalArgumentException {
 		
-		ApplicationUser applicationUser = applicationUserService.createApplicationUser(username, password, fullname, address, null, null);
+		ApplicationUser applicationUser = applicationUserService.createApplicationUser(username, password, fullname, address, 
+				null, null, new ArrayList<Reservation>(), new ArrayList<Purchase>());
 		return convertToDto(applicationUser);
 	}
 	
@@ -335,22 +336,30 @@ public class ApplicationUserController {
             throw new IllegalArgumentException("There is no such User");
         }
 		
-		if (applicationUser.getCart() == null && applicationUser.getItems() == null) {
+		if (applicationUser.getCart() == null && applicationUser.getItems() == null
+				&& applicationUser.getReservations() == null && applicationUser.getPurchases() == null) {
 			
 			ApplicationUserDto applicationUserDto = new ApplicationUserDto(applicationUser.getUsername(), applicationUser.getPassword(),
 					applicationUser.getFullname(), applicationUser.getAddress(),
-					null, null);
+					null, null, null, null);
 			
 			return applicationUserDto;
 		}
-		
-		
+				
 		CartDto cartDto = convertToDto(applicationUser.getCart());
 		List<ItemDto> itemDto = createItemDtosForAppUser(applicationUser.getItems());
-		
+		List<ReservationDto> resDto = new ArrayList<ReservationDto>();
+		for(Reservation r : applicationUser.getReservations()) {
+			resDto.add(convertToDto(r));
+		}
+		List<PurchaseDto> purDto = new ArrayList<PurchaseDto>();
+		for(Purchase p : applicationUser.getPurchases()) {
+			purDto.add(convertToDto(p));
+		}
+	
 		ApplicationUserDto applicationUserDto = new ApplicationUserDto(applicationUser.getUsername(), applicationUser.getPassword(),
 				applicationUser.getFullname(), applicationUser.getAddress(),
-				cartDto, itemDto);
+				cartDto, itemDto, resDto, purDto);
 		
 		return applicationUserDto;
 	}
@@ -392,6 +401,26 @@ public class ApplicationUserController {
 		ItemInCartDto itemInCartDto = new ItemInCartDto(itemDto, itemInCart.getQuantity(), itemInCart.getSize(), itemInCart.getItemInCartId());
 		return itemInCartDto;
 	}
+	
+    public PurchaseDto convertToDto(Purchase purchase){
+        if(purchase == null){
+            throw new IllegalArgumentException("Cannot convert null Purchase to PurchaseDto");
+        }
+//        ApplicationUserDto applicationUserDto = convertToDto(purchase.getBuyer());
+        CartDto cartDto = convertToDto(purchase.getCart());
+        PurchaseDto purchaseDto = new PurchaseDto(purchase.getOrderId(), cartDto);
+        return purchaseDto;
+    }
+    
+    private ReservationDto convertToDto(Reservation aReservation){
+        if (aReservation == null){
+            throw new IllegalArgumentException("this resevation doesn't exist");
+        }
+
+        ReservationDto aReservationDto = new ReservationDto(aReservation.getReservationId(),
+        convertToDto(aReservation.getUser()),convertToDto(aReservation.getItem()),  aReservation.getQuantity());
+        return aReservationDto;
+    }
 	
 	/*
 	 * convert to dto lists
