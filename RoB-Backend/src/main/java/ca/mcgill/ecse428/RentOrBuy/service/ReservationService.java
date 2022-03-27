@@ -64,10 +64,10 @@ public class ReservationService {
     }
 
     @Transactional
-    public void deleteReservation(Reservation reservation,String user){
-        ApplicationUser auser=applicationuserRepository.findApplicationUserByUsername(user);
-        auser.getReservations().remove(reservation);
-        applicationuserRepository.save(auser);
+    public void deleteReservation(Reservation reservation,ApplicationUser user){
+        
+        user.getReservations().remove(reservation);
+        applicationuserRepository.save(user);
         reservationRepository.delete(reservation);
     }
 

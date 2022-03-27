@@ -14,7 +14,7 @@
                     <td class="tdstyle">{{reservation.item.name}}</td>
                     <td class="tdstyle">{{reservation.quantity}}</td>
                     <td class="tdstyle">
-                        <button @click="removeReservation(reservation.reservationId,loginUsername)">Delete</button>
+                        <button @click="removeReservation(reservation.reservationId)">Delete</button>
                     </td>
                 </tr>
 

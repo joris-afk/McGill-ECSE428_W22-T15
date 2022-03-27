@@ -58,20 +58,15 @@ export default {
 
         // move to the end when backend is connected
         // pass data to edit account page
-        sessionStorage.setItem("currentUsername", this.loginUsername); 
+        //sessionStorage.setItem("currentUsername", this.loginUsername); 
     },
   
     methods: {
 
       removeReservation: function(reservationid){
-        var vm=this
-        
-        AXIOS.delete('/reservations/'.concat(reservationid),{},
-        {params:{
-            user: vm.loginUsername
-        }})
+        var vm=this        
+        AXIOS.delete('/reservations/'.concat(reservationid),{},{})
         .then(response => {
-          console.log(vm.loginUsername)
           this.myreservations.map(x => x.reservationId).remove(reservationid)
  
         }).catch(e => {
@@ -80,7 +75,7 @@ export default {
             this.errorReservation = errorMsg
         })
 
-       // location.reload();
+        location.reload();
       }
     }
 

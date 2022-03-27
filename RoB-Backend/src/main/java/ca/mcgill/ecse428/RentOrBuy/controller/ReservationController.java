@@ -75,11 +75,15 @@ public class ReservationController {
      * Remove an reservation from database
      */    
     @DeleteMapping(value = { "/reservations/{reservationId}", "/reservations/{reservationId}/" })
-	public void deleteReservation(@PathVariable("reservationId") int reservationId,
-	@RequestParam("user") String applicationUser) throws IllegalArgumentException {
+	public void deleteReservation(@PathVariable("reservationId") int reservationId) throws IllegalArgumentException {
 		Reservation aReservation = reservationService.getReservationByReservationId(reservationId);
-		
-        reservationService.deleteReservation(aReservation,applicationUser);
+		ApplicationUser a=new ApplicationUser();
+		for (ApplicationUser u : AUserService.getAllApplicationUsers()){
+			if (u.getReservations().contains(aReservation)){
+				a=u;
+			}
+		}
+        reservationService.deleteReservation(aReservation,a);
 	}
 
 
