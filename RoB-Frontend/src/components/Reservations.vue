@@ -9,12 +9,12 @@
                     <th class="thstyle">Item</th>
                     <th class="thstyle">Quantity</th>
                 </tr>
-                <tr class="trstyle" v-for = "reservation in myreservations" :key="reservation">
+                <tr class="trstyle" v-for = "reservation in myreservations" :key="reservation.reservationId">
                     <td class="tdstyle">{{reservation.reservationId}}</td>
                     <td class="tdstyle">{{reservation.item.name}}</td>
                     <td class="tdstyle">{{reservation.quantity}}</td>
                     <td class="tdstyle">
-                        <button @click="removeReservation(reservation.reservationId)">Delete</button>
+                        <button @click="removeReservation(reservation.reservationId,loginUsername)">Delete</button>
                     </td>
                 </tr>
 

@@ -151,6 +151,10 @@ public class ApplicationUser {
 		this.myReservations=reservations;
 	}
 
+	public void addReservation(Reservation areservation){
+		this.myReservations.add(areservation);
+	}
+
 	public void removeReservation(Reservation reservation){
 		this.myReservations.remove(reservation);
 	}

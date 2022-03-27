@@ -32,7 +32,7 @@ var AXIOS = axios.create({
 
 export default {
     name: 'reservation',
-    
+
     data(){
       return{ 
         // get data from login page or edit account info page
@@ -40,15 +40,17 @@ export default {
         reservationId: "",
         myreservations:[],
         quantity:"",
-        errorReservation:""
+        errorReservation:"",
+        user:""
       }
     },
 
     created: function() {
+
         AXIOS.get('/applicationUsers/'.concat(this.loginUsername))
         .then(response => {
-            this.myreservations = response.data.myReservations
-            console.log(response.data.fullname)
+            this.myreservations = response.data.reservations
+          
         })
         .catch(e => {
             this.errorProfile = e
@@ -58,19 +60,27 @@ export default {
         // pass data to edit account page
         sessionStorage.setItem("currentUsername", this.loginUsername); 
     },
-
+  
     methods: {
+
       removeReservation: function(reservationid){
-        AXIOS.delete('/reservations/'.concat(reservationid),{},{}
-        ).then(response => {
-            this.myreservations.map(x => x.reservationId).remove(reservationid)
+        var vm=this
+        
+        AXIOS.delete('/reservations/'.concat(reservationid),{},
+        {params:{
+            user: vm.loginUsername
+        }})
+        .then(response => {
+          console.log(vm.loginUsername)
+          this.myreservations.map(x => x.reservationId).remove(reservationid)
+ 
         }).catch(e => {
             var errorMsg = e.response.data.message
             console.log(errorMsg)
-            this.errorItem = errorMsg
+            this.errorReservation = errorMsg
         })
 
-        location.reload();
+       // location.reload();
       }
     }
 

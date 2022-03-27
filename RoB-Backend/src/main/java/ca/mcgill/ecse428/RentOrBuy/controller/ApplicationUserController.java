@@ -417,8 +417,7 @@ public class ApplicationUserController {
             throw new IllegalArgumentException("this resevation doesn't exist");
         }
 
-        ReservationDto aReservationDto = new ReservationDto(aReservation.getReservationId(),
-        convertToDto(aReservation.getUser()),convertToDto(aReservation.getItem()),  aReservation.getQuantity());
+        ReservationDto aReservationDto = new ReservationDto(aReservation.getReservationId(),convertToDto(aReservation.getItem()),  aReservation.getQuantity());
         return aReservationDto;
     }
 	

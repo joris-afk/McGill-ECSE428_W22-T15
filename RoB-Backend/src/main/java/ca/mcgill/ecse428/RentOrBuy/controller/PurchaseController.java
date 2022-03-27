@@ -114,7 +114,7 @@ public class PurchaseController {
         }
 
         ReservationDto aReservationDto = new ReservationDto(aReservation.getReservationId(),
-        convertToDto(aReservation.getUser()),convertToDto(aReservation.getItem()),  aReservation.getQuantity());
+        convertToDto(aReservation.getItem()),  aReservation.getQuantity());
         return aReservationDto;
     }
 

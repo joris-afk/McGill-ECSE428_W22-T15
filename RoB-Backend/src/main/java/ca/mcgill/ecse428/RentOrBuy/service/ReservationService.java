@@ -18,6 +18,9 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    @Autowired
+    private ApplicationUserRepository applicationuserRepository;
+
     @Transactional
     public Reservation createReservation(Item item, ApplicationUser user, int quantity, long reservationId){
         if (item == null){
@@ -41,9 +44,11 @@ public class ReservationService {
         Reservation aReservation = new Reservation();
         aReservation.setItem(item);
         aReservation.setQuantity(quantity);
-        aReservation.setUser(user);
+        //aReservation.setUser(user);
         aReservation.setReservationId(reservationId);
+        user.getReservations().add(aReservation);
         reservationRepository.save(aReservation);
+        applicationuserRepository.save(user);
         return aReservation;
     }
 
@@ -59,7 +64,10 @@ public class ReservationService {
     }
 
     @Transactional
-    public void deleteReservation(Reservation reservation){
+    public void deleteReservation(Reservation reservation,String user){
+        ApplicationUser auser=applicationuserRepository.findApplicationUserByUsername(user);
+        auser.getReservations().remove(reservation);
+        applicationuserRepository.save(auser);
         reservationRepository.delete(reservation);
     }
 

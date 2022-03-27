@@ -75,9 +75,11 @@ public class ReservationController {
      * Remove an reservation from database
      */    
     @DeleteMapping(value = { "/reservations/{reservationId}", "/reservations/{reservationId}/" })
-	public void deleteReservation(@PathVariable("reservationId") int reservationId) throws IllegalArgumentException {
+	public void deleteReservation(@PathVariable("reservationId") int reservationId,
+	@RequestParam("user") String applicationUser) throws IllegalArgumentException {
 		Reservation aReservation = reservationService.getReservationByReservationId(reservationId);
-        reservationService.deleteReservation(aReservation);
+		
+        reservationService.deleteReservation(aReservation,applicationUser);
 	}
 
 
@@ -186,7 +188,7 @@ public class ReservationController {
         }
 
         ReservationDto aReservationDto = new ReservationDto(aReservation.getReservationId(),
-        convertToDto(aReservation.getUser()),convertToDto(aReservation.getItem()),  aReservation.getQuantity());
+        convertToDto(aReservation.getItem()),  aReservation.getQuantity());
         return aReservationDto;
     }
     
@@ -232,7 +234,7 @@ public class ReservationController {
 		addedReservation.setItem(item);
 		addedReservation.setQuantity(quantity);
 		addedReservation.setReservationId(reservationId);
-		addedReservation.setUser(user);
+		//addedReservation.setUser(user);
 
 		rob.addReservation(addedReservation);
 
@@ -266,9 +268,9 @@ public class ReservationController {
 		if (deleteTarget == null){
 			throw new IllegalArgumentException("reservation does not exist");
 		}
-		if (!deleteTarget.getUser().getUsername().equals(username)){
-			throw new IllegalArgumentException("You can only delete your reservations");
-		}
+		// if (!deleteTarget.getUser().getUsername().equals(username)){
+		// 	throw new IllegalArgumentException("You can only delete your reservations");
+		// }
 		rob.getReservations().remove(deleteTarget);
 
 		return deleteTarget;

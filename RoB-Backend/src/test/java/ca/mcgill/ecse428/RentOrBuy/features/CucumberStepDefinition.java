@@ -607,7 +607,7 @@ public class CucumberStepDefinition {
 			Long l=new Long(i);
 			ApplicationUser u=new ApplicationUser();
 			u.setUsername(aReservation.get("username"));
-			Reservation newReservation= new Reservation(l,u);
+			Reservation newReservation= new Reservation(l);
 			reservations.add(newReservation);
 			rob.addReservation(newReservation);
 		}
@@ -616,7 +616,8 @@ public class CucumberStepDefinition {
 	@When("the user with username {string} tries to delete the reservation with reservationId {string}")
 	public void the_user_with_username_tries_to_delete_the_reservation_with_reservation_id(String string, String string2) {
 		try{
-			Reservation r=ReservationController.deleteReservation(Integer.parseInt(string2), string);
+			ReservationController re=new ReservationController();
+			re.deleteReservation(Integer.parseInt(string2), string);
 			//reservations.remove(r);
 		} catch (Exception e){
 			errorMsg += e.getMessage();

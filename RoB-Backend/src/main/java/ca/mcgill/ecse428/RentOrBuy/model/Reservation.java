@@ -13,26 +13,26 @@ import javax.persistence.Entity;
 public class Reservation {
     private Item item;
     private int quantity;
-    private ApplicationUser user;
+    //private ApplicationUser user;
     private long reservationId;
 
     public Reservation(){}
 
-    public Reservation(Item item, ApplicationUser user){
+    public Reservation(Item item){
         this.item=item;
-        this.user=user;
+        //this.user=user;
         this.quantity=1;
     }
 
-    public Reservation(Item item, ApplicationUser user, int quantity){
+    public Reservation(Item item, int quantity){
         this.item=item;
-        this.user=user;
+        //this.user=user;
         this.quantity=quantity;
     }
 
-    public Reservation(Long reservationId, ApplicationUser user){
+    public Reservation(Long reservationId){
         this.reservationId=reservationId;
-        this.user=user;
+        //this.user=user;
     }
 
     @Id
@@ -53,14 +53,14 @@ public class Reservation {
         this.item=item;
     }
 
-    @OneToOne(cascade = {CascadeType.ALL})
-    public ApplicationUser getUser(){
-        return this.user;
-    }
+    // @OneToOne(cascade = {CascadeType.ALL})
+    // public ApplicationUser getUser(){
+    //     return this.user;
+    // }
 
-    public void setUser(ApplicationUser user){
-        this.user=user;
-    }
+    // public void setUser(ApplicationUser user){
+    //     this.user=user;
+    // }
 
     public int getQuantity(){
         return this.quantity;
