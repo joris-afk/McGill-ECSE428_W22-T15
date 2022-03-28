@@ -17,13 +17,13 @@ public class Item {
 	private double price;
 	private List<String> availableSizes;
 	private boolean rentable; //if true then the item is exclusive for rent
-	private boolean status;	// if true, the item cannot be gotten by anyone elses
+	private boolean rentStatus;	// if true, the item cannot be gotten by anyone elses
 
 	
 	public Item() {
 		availableSizes = new ArrayList<String>();
 		rentable = false;
-		status = false;
+		rentStatus = false;
 	}
 
 	public Item(String name, double price, List<String> availableSizes){
@@ -31,7 +31,7 @@ public class Item {
 		this.price=price;
 		this.availableSizes=availableSizes;
 		rentable = false;
-		status = false;
+		rentStatus = false;
 	}
 	
 	public double getPrice() {
@@ -79,15 +79,15 @@ public class Item {
 		rentable = forRent;
 	}
 
-	public void setStatus(boolean SOR){
-		status = SOR;
+	public void setRentStatus(boolean SOR){
+		rentStatus = SOR;
 	}
 	
 	public boolean getRentable(){
 		return rentable;
 	}
 
-	public boolean getStatus(){
-		return status;
+	public boolean getRentStatus(){
+		return rentStatus;
 	}
 }

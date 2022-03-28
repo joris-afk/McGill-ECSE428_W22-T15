@@ -109,7 +109,7 @@ public class ItemController {
             throw new IllegalArgumentException("There is no such item");
         }
 		
-		ItemDto itemDto = new ItemDto(item.getName(), item.getPrice(), item.getAvailableSizes(), item.getRentable(), item.getStatus());
+		ItemDto itemDto = new ItemDto(item.getName(), item.getPrice(), item.getAvailableSizes(), item.getRentable(), item.getRentStatus());
         
 		return itemDto;
 	}
