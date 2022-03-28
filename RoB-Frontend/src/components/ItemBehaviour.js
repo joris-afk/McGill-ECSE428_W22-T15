@@ -71,8 +71,6 @@ export default{
     methods: {
         createItem: function(newName,newPrice,newAvailableSizes){
 
-            var Username = sessionStorage.getItem('currentUsername'); 
-
             AXIOS.post('/items/'.concat(newName),{},
             {params:{
                 price:newPrice,
@@ -86,18 +84,20 @@ export default{
                 var errorMsg = e.response.data.message
                 console.log(errorMsg)
                 this.errorItem = errorMsg
-            }).then(
-                AXIOS.put('/applicationUsers/'.concat(Username),{},
-                {params:{
-                    item:newName
-                }})
-            ).then(
+            })
+
+            //var Username = sessionStorage.getItem('currentUsername');
+
+            AXIOS.put('/applicationUsers/'.concat(Username),{},
+            {params:{
+                item:newName
+            }}).then(response => {
                 this.newName=''
-            ).catch(e => {
+            }).catch(e => {
                 var errorMsg = e.response.data.message
                 console.log(errorMsg)
                 this.errorItem = errorMsg
-             })
+            })
 
             location.reload();
         },
@@ -117,7 +117,7 @@ export default{
                 var errorMsg = e.response.data.message
                 console.log(errorMsg)
                 this.errorItem = errorMsg
-            })
+            });
 
             location.reload();
         },
@@ -137,7 +137,7 @@ export default{
                 var errorMsg = e.response.data.message
                 console.log(errorMsg)
                 this.errorItem = errorMsg
-            })
+            });
 
             location.reload();
         },
@@ -157,12 +157,12 @@ export default{
                 var errorMsg = e.response.data.message
                 console.log(errorMsg)
                 this.errorItem = errorMsg
-            })
+            });
 
             location.reload();
         },
         deleteItem: function(oldName){
-            console.log(oldName);
+            var vm=this
             AXIOS.delete('/items/'.concat(oldName),{},{}
             ).then(response => {
                 this.userItems.map(x => x.name).remove(oldName)

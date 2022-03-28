@@ -40,10 +40,10 @@ public class CartController {
 		return convertToDto(aCart);
 	}
 
-	@PutMapping(value = { "/cart/{cartId}/add", "/cart/{cartId}/" })
+	@PutMapping(value = { "/cart/add/{cartId}", "/cart/add/{cartId}/" })
 	public CartDto addItemToCartDto(@PathVariable("cartId") Integer cartId,
 			@RequestParam(name = "itemName") String itemName,
-			@RequestParam(name = "quantity") Integer quantity,
+			@RequestParam(name = "price") double price,
 			@RequestParam(name = "size") String size) throws IllegalArgumentException {
 		Cart cart = cartService.getCartByCartId(cartId);
 		if (cart == null) {
@@ -53,7 +53,7 @@ public class CartController {
 		if (item == null) {
 			throw new IllegalArgumentException("This item does not exist.");
 		}
-		cart = cartService.addNewItemToCart(cart, item, quantity, size);
+		cart = cartService.addNewItemToCart(cart, item, 1, size);
 		return convertToDto(cart);
 	}
 	

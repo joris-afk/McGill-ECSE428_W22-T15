@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { response } from 'express'
 
 
 var config = require('../../config')
@@ -39,7 +40,9 @@ export default{
             requiredQuantity:'',
             reservationId:'',
             errorProducts:'',
-            response:[]
+            response:[],
+            username: sessionStorage.getItem('currentUsername'),
+            appUser: ''
         }
     },
 
@@ -50,6 +53,14 @@ export default{
         })
         .catch(e => {
             this.errorProducts = e
+        })
+
+        AXIOS.get('/applicationUsers/'.concat(this.username))
+        .then(response => {
+            this.appUser = response.data
+        })
+        .catch(e => {
+            this.errorProfile = e
         })
     },
 
@@ -63,6 +74,18 @@ export default{
             }}).catch(e => {
                 console.log(e.response.data.message)
             })
+        },
+
+        addToCart: function(itemName, itemPrice, itemSizes){
+          AXIOS.put('/cart/add/'.concat(this.appUser.cart.cartId),{},
+          {params:{
+              itemName: itemName,
+              price: itemPrice,
+              size: itemSizes,
+          }})
+          .catch(e => {
+              console.log(e.response.data.message)
+          })
         }
 
 

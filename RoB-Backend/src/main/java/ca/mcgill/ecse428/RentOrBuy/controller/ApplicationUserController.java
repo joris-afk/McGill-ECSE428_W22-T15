@@ -428,14 +428,15 @@ public class ApplicationUserController {
 	private Item convertToDomainObject(String iDto) {
 		
 		List<Item> allItems = applicationUserService.getAllItems();
+		Item returnItem = null;
 		
 			for (Item item : allItems) {
 				if (item.getName().equals(iDto)) {
-					return item;
+					returnItem = item;
 				}
 			}
 		
-		return null;
+		return returnItem;
 	}
 	
 	private List<ItemInCartDto> createItemInCartDtosForCart(List<ItemInCart> itemsInCart) {

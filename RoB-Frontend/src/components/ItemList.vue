@@ -25,15 +25,17 @@
                         <input type="text" v-model="reservationId" placeholder="reservation id">
                         <button @click="reserveItem(reservationId, requiredQuantity, item.name)">Reserve</button>
                     </td>
-                    <!-- button for add item to cart but not functioning yet -->
                     <td id="section2">
-                        <button>Add To Cart</button>          
+                        <button @click="addToCart(item.name, item.price, item.availableSizes)">Add To Cart</button>          
                     </td>
                 </table>
             </div>
         </div>
         <router-link to ="/profile">
             <button class="buttonStyle">Back to Profile</button>
+        </router-link>
+        <router-link to ="/cart">
+            <button class="buttonStyle">View Cart</button>
         </router-link>
     </div>
 </template>

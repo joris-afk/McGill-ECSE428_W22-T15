@@ -21,6 +21,9 @@ public class ItemService {
 	@Autowired
 	private ApplicationUserRepository applicationUserRepository;
 	
+	@Autowired
+	private ItemInCartRepository itemInCartRepository;
+	
 	@Transactional
 	public Item createItem(String name, double price, List<String> availableSizes) {
 		
@@ -181,11 +184,20 @@ public class ItemService {
 					if (userItem.getName().equals(aItem.getName())) {
 						aUser.getItems().remove(userItem);
 						applicationUserRepository.save(aUser);
-						if (itemRepository.findItemByName(aItem.getName()) == null) {
-							return null;
-						}
+						break;
 					}
 				}
+			}
+		}
+		
+		for (ItemInCart aItemInCart : itemInCartRepository.findAll()) {
+			if (aItemInCart.getItem() != null) {
+				if (aItemInCart.getItem().getName().equals(aItem.getName())) {
+						aItemInCart.setItem(null);
+						//itemInCartRepository.delete(aItemInCart);
+						break;
+				}
+				
 			}
 		}
 		
