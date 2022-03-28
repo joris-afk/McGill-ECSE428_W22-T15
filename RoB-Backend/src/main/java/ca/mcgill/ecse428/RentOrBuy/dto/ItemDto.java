@@ -22,12 +22,13 @@ public class ItemDto {
 		soldOrRented = false;
     }
 
-	public ItemDto(String name, double price, List<String> availableSizes, boolean rentable){
+	public ItemDto(String name, double price, List<String> availableSizes, boolean rentable, boolean status){
 		this.name=name;
 		this.price=price;
 		this.availableSizes=availableSizes;
 		this.rentable = rentable;
-		soldOrRented = false;
+		soldOrRented = rentable;
+		soldOrRented = status;
 	}
 
     public double getPrice() {
