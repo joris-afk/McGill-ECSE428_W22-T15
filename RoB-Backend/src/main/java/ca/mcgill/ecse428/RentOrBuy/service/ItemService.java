@@ -205,4 +205,21 @@ public class ItemService {
 		aItem = null;
 		return aItem;
 	}
+
+	@Transactional
+	public Item toggleRentable(Item aItem){
+		aItem.setRentable(!aItem.getRentable());
+		itemRepository.save(aItem);
+		return aItem;
+	}
+
+	@Transactional
+	public Item toggleRentStatus(Item aItem){
+		if (!aItem.getRentable()){
+			throw new IllegalArgumentException("This item cannot be rented");
+		}
+		aItem.setStatus(aItem.getStatus());	
+		itemRepository.save(aItem);
+		return aItem;
+	}
 }
