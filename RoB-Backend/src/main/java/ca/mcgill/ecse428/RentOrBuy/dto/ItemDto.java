@@ -1,5 +1,6 @@
 package ca.mcgill.ecse428.RentOrBuy.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDto {
@@ -9,12 +10,16 @@ public class ItemDto {
 	private boolean rentable; //if true then the item is exclusive for rent
 	private boolean soldOrRented;	// if true, the item cannot be gotten by anyone elses
 
-    public ItemDto(){}
+    public ItemDto(){
+		availableSizes = new ArrayList<String>();
+	}
 
     public ItemDto(String name, double price, List<String> availableSizes){
         this.name=name;
         this.price=price;
         this.availableSizes=availableSizes;
+		rentable = false;
+		soldOrRented = false;
     }
 
 	public ItemDto(String name, double price, List<String> availableSizes, boolean rentable){

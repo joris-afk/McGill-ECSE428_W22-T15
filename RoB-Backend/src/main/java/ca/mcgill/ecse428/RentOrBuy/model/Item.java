@@ -22,6 +22,7 @@ public class Item {
 	
 	public Item() {
 		availableSizes = new ArrayList<String>();
+		rentable = false;
 		soldOrRented = false;
 	}
 
@@ -29,13 +30,7 @@ public class Item {
 		this.name=name;
 		this.price=price;
 		this.availableSizes=availableSizes;
-	}
-
-	public Item(String name, double price, List<String> availableSizes, boolean rentable){
-		this.name=name;
-		this.price=price;
-		this.availableSizes=availableSizes;
-		this.rentable = rentable;
+		rentable = false;
 		soldOrRented = false;
 	}
 	
