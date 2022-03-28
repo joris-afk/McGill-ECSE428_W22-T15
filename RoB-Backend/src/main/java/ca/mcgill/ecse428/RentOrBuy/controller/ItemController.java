@@ -94,6 +94,13 @@ public class ItemController {
                     }
                     return convertToDto(aItem);
     }
+
+    @PutMapping(value = { "/items/{name}", "/items/{name}/" })
+    public ItemDto toggleItemRentable(@PathVariable("name") String name){
+        Item aItem = itemService.getItemByName(name);
+        itemService.toggleRentable(aItem);
+        return convertToDto(aItem);
+    }
         
     //Utility method
     private ItemDto convertToDto(Item item) {
