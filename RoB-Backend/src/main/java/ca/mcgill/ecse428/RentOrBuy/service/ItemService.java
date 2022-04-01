@@ -174,6 +174,25 @@ public class ItemService {
 	public List<Item> getAllItems(){
 		return (List<Item>) itemRepository.findAll();
 	}
+	
+	@Transactional
+	public List<Item> searchItem(String keyword) {
+		if (keyword == null || keyword.length() == 0) {
+			throw new IllegalArgumentException("Please enter a keyword");
+		}
+		List<Item> allItems = (List<Item>) itemRepository.findAll();
+		List<Item> matchedItems = new ArrayList<Item>();
+		for (Item item : allItems) {
+			if (item.getName().contains(keyword)) matchedItems.add(item);
+			for (String size : item.getAvailableSizes()) {
+				if (size.equals(keyword)) {
+					matchedItems.add(item);
+					break;
+				}
+			}
+		}
+		return matchedItems;
+	}
 
 	@Transactional
 	public Item deleteItem(Item aItem){

@@ -26,6 +26,7 @@ public class CucumberStepDefinition {
 	private String errorMsg;
 	private int totalUsers;
 	private List<Reservation> reservations;
+	private List<Item> queriedItems;
 
 
 	// Background
@@ -823,6 +824,47 @@ public class CucumberStepDefinition {
 		ReservationController r = new ReservationController();
 		assertNotNull(r.obtReservation(Integer.parseInt(string)));
 	}
+	
+	/*
+	 * Search for item
+	 */
+	
+	@When("the user with username {string} searches with keyword {string}")
+	public void the_user_with_username_searches_with_keyword(String string, String string2) {
+		List<Item> matchedItems = new ArrayList<Item>();
+		try {
+			matchedItems = ItemController.searchItems(string2);
+		} catch (InvalidInputException e) {
+			errorMsg = e.getMessage();
+		}
+		queriedItems = matchedItems;
+	}
+
+	@Then("the following items will be returned:")
+	public void the_following_items_will_be_returned(io.cucumber.datatable.DataTable dataTable) {
+
+		List<Map<String,String>> itemsReturned = dataTable.asMaps(String.class,String.class);
+		boolean eachItemHasMatch;
+		if (itemsReturned.size() == 0 && queriedItems.isEmpty()) eachItemHasMatch=true;
+		else eachItemHasMatch = false;
+		for (Map<String,String> itemReturned : itemsReturned){
+			for (Item item : queriedItems) {
+				if (item.getName().equals(itemReturned.get("name")) && //too lazy to check all attributes
+						item.getPrice() == (Double.parseDouble(itemReturned.get("price")))) {
+					eachItemHasMatch = true;
+					break;
+				}
+			}
+			assertTrue(eachItemHasMatch);
+		}
+	    assertEquals(itemsReturned.size(), queriedItems.size());
+	}
+
+	@Then("no items shall be returned")
+	public void no_items_shall_be_returned() {
+	    assertTrue(queriedItems.isEmpty());
+	}
+
 
 	// Final
 	@After

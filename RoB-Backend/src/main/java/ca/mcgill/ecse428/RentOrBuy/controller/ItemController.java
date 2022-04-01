@@ -67,6 +67,26 @@ public class ItemController {
 		}
 		return itemDtos;
 	}
+    
+    
+    /**
+     * 
+     * @param keyword
+     * @throws IllegalArgumentException
+     * Search for an item
+     */
+     
+    @GetMapping(value = { "/items/search/{keyword}", "/items/search/{keyword}/" })
+    public List<ItemDto> searchItem(@PathVariable("keyword") String keyword) throws IllegalArgumentException{
+    	List<ItemDto> itemDtos = new ArrayList<>();
+    	List<Item> matchedItems = new ArrayList<Item>();
+    	itemService.searchItem(keyword);
+		for (Item item : matchedItems) {
+			itemDtos.add(convertToDto(item));
+		}
+		return itemDtos;
+    }
+    
 	
     /* 
      * Remove an item from database
@@ -250,4 +270,25 @@ public class ItemController {
 
         return currItem;
 	}
+    
+    public static List<Item> searchItems(String keyword) throws InvalidInputException{
+		Rob rob = RobApplication.getRob(); 
+
+    	if (keyword == null || keyword.length() == 0) {
+			throw new InvalidInputException("Please enter a keyword");
+		}
+		List<Item> allItems = rob.getProducts();
+		List<Item> matchedItems = new ArrayList<Item>();
+		for (Item item : allItems) {
+			if (item.getName().contains(keyword)) matchedItems.add(item);
+			for (String size : item.getAvailableSizes()) {
+				if (size.equals(keyword)) {
+					matchedItems.add(item);
+					break;
+				}
+			}
+		}
+		if (matchedItems.isEmpty()) throw new InvalidInputException("No items match your search");
+		return matchedItems;
+    }
 }
