@@ -2,6 +2,9 @@ package ca.mcgill.ecse428.RentOrBuy.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.Arrays;
+
 import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -19,7 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TestItemInCartPersistence {
-    /*
+    
     @Autowired
 	private ItemInCartRepository IICrepository;
 	
@@ -35,11 +38,10 @@ public class TestItemInCartPersistence {
     @Test
 	@Transactional
 	public void testPersistAndLoadIIC() {
-
+        clearDataBase();
         ItemInCart aIIC = new ItemInCart();
 
-        Item item = new Item();
-        item.setName("American flag");
+        Item item = new Item("American flag",7.11,Arrays.asList("small"), false, false);
         itemRepository.save(item);
         
 	    int quantity = 420;
@@ -64,5 +66,5 @@ public class TestItemInCartPersistence {
         assertEquals(size, aIIC.getSize());
         assertEquals(itemInCartId, aIIC.getItemInCartId());
     }
-    */
+    
 }

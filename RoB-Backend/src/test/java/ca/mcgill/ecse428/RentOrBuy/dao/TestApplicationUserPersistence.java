@@ -3,6 +3,7 @@ package ca.mcgill.ecse428.RentOrBuy.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -22,7 +23,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TestApplicationUserPersistence {
-    /*
+    
     @Autowired
 	private ApplicationUserRepository AUrepository;
 	
@@ -42,6 +43,7 @@ public class TestApplicationUserPersistence {
     @Test
 	@Transactional
 	public void testPersistAndLoadAU() {
+        clearDataBase();
         ApplicationUser aAppUser = new ApplicationUser();
 
         String username = "Terminator";
@@ -55,12 +57,9 @@ public class TestApplicationUserPersistence {
         cartRepository.save(cart);
 
 	    List<Item> items = new ArrayList<Item>();
-        Item i1 = new Item();
-        i1.setName("flippers");
-        Item i2 = new Item();
-        i2.setName("gloves");
-        Item i3 = new Item();
-        i3.setName("gerbil (illegal)");
+        Item i1 = new Item("flippers",39.50,Arrays.asList("small","medium"), false, false);
+        Item i2 = new Item("gun",34.50,Arrays.asList("large"), false, false);
+        Item i3 = new Item("girbil",28.50,Arrays.asList("universal"), false, false);
         items.add(i1);
         items.add(i2);
         items.add(i3);
@@ -92,5 +91,5 @@ public class TestApplicationUserPersistence {
             assertEquals(items.get(i).getName(), aAppUser.getItems().get(i).getName());
         }
     }
-    */
+    
 }

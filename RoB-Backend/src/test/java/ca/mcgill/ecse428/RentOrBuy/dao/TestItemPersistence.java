@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ca.mcgill.ecse428.RentOrBuy.model.Item;
+import ca.mcgill.ecse428.RentOrBuy.model.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,12 +29,16 @@ public class TestItemPersistence {
 
     @Autowired
 	private ItemInCartRepository IICrepository;
+
+    @Autowired
+    private CartRepository cartRepository;
 	
 	@AfterEach
 	public void clearDataBase() {
         AUrepository.deleteAll();
         IICrepository.deleteAll();
         itemrepository.deleteAll();
+        cartRepository.deleteAll();
 	}
 
     @Test
@@ -42,6 +46,7 @@ public class TestItemPersistence {
 	public void testPersistAndLoadItem() {
         clearDataBase();
         Item aItem = new Item();
+        ApplicationUser aUser = new ApplicationUser("Donald", "Trump");
 
         String name = "Garden Hose";
         double price = 39.50;
@@ -50,15 +55,16 @@ public class TestItemPersistence {
         aItem.setName(name);
         aItem.setPrice(price);
         aItem.setAvailableSizes(availableSizes);
-
+        aItem.setRentable(true);
+        aItem.setRented(true);
+        
+        aUser.addItem(aItem);
         itemrepository.save(aItem);
-
-
+        
         aItem = null; //clear variable
 
         //clearDataBase();
         aItem = itemrepository.findItemByName(name);
-
 
         assertNotNull(aItem);
         assertEquals(name, aItem.getName());
