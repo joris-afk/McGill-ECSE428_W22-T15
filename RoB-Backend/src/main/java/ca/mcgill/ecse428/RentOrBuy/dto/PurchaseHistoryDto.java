@@ -10,7 +10,7 @@ public class PurchaseHistoryDto {
 
 
     public PurchaseHistoryDto(){
-        purchases = null;
+        purchases = new ArrayList<PurchaseDto>();
     }
 
     public PurchaseHistoryDto(String historyOwner, List<PurchaseDto> purchases){

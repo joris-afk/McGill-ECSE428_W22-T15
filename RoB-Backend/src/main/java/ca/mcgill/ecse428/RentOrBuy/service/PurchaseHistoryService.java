@@ -59,6 +59,15 @@ public class PurchaseHistoryService {
 	}
 
     @Transactional
+    public PurchaseHistory deleteHistory(PurchaseHistory aPH){
+        PHRepository.delete(aPH);
+        for(Purchase p: aPH.getPurchases()){
+            purchaseRepository.delete(p);
+        }
+        return null;
+    }
+
+    @Transactional
 	public PurchaseHistory getPurchaseHistoryByHistoryOwner(String historyOwner){
 		return PHRepository.findPurchaseHistoryByHistoryOwner(historyOwner);
 	}

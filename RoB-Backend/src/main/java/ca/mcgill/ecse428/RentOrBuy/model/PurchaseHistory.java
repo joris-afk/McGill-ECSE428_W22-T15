@@ -9,6 +9,7 @@ import org.checkerframework.checker.units.qual.A;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class PurchaseHistory {
     private String historyOwner;
     private List<Purchase> purchases;

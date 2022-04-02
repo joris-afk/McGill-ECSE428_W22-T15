@@ -42,9 +42,8 @@ public class PurchaseHistoryController {
     @DeleteMapping(value = { "/purchaseHistory/{historyOwner}", "/purchaseHistory/{historyOwner}/" })
     public void deletePurchaseHistory(@PathVariable("historyOwner") String historyOwner) 
     throws IllegalArgumentException {
-
-        PurchaseHistory p = purchaseHistoryService.getPurchaseHistoryByHistoryOwner(historyOwner);
-        
+        purchaseHistoryService.deleteHistory(
+        purchaseHistoryService.getPurchaseHistoryByHistoryOwner(historyOwner));
     }
 
 
