@@ -13,9 +13,9 @@ public class PurchaseHistoryDto {
         purchases = null;
     }
 
-    public PurchaseHistoryDto(String historyOwner){
+    public PurchaseHistoryDto(String historyOwner, List<PurchaseDto> purchases){
         this.historyOwner=historyOwner;
-        purchases = new ArrayList<PurchaseDto>();
+        this.purchases = purchases;
     }
 
     public String getHistoryOwner(){

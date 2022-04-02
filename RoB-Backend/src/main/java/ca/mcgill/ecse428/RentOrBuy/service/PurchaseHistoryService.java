@@ -51,8 +51,9 @@ public class PurchaseHistoryService {
 
     //Not exactly a normal thing to remove but just in case
     @Transactional
-    public PurchaseHistory removeItemFromCart(PurchaseHistory PH, Purchase purchase) {
+    public PurchaseHistory removeItemFromHistory(PurchaseHistory PH, Purchase purchase) {
 		PH.removePurchase(purchase);
+        purchaseRepository.delete(purchase);
 		PHRepository.save(PH);
 		return PH;
 	}
