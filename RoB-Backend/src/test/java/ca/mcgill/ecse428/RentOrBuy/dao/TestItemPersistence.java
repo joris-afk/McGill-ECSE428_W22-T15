@@ -20,7 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TestItemPersistence {
-
+    /*
     @Autowired
 	private ItemRepository itemrepository;
 	
@@ -57,4 +57,6 @@ public class TestItemPersistence {
         assertEquals(price, aItem.getPrice());
         assertEquals(availableSizes, aItem.getAvailableSizes());
     }
+
+    */
 }
