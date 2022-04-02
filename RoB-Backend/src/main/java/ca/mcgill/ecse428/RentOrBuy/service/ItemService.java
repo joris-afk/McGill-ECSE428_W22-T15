@@ -218,7 +218,7 @@ public class ItemService {
 		if (!aItem.getRentable()){
 			throw new IllegalArgumentException("This item cannot be rented");
 		}
-		aItem.setRentStatus(aItem.getRentStatus());	
+		aItem.setRented(aItem.getRented());	
 		itemRepository.save(aItem);
 		return aItem;
 	}

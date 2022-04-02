@@ -34,7 +34,7 @@ public class TestCartPersistance {
     @Test
 	@Transactional
 	public void testPersistAndLoadCart() {
-
+        
         Cart aCart = new Cart();
 
         List<ItemInCart> items = new ArrayList<>();
@@ -47,6 +47,7 @@ public class TestCartPersistance {
 
         aCart = null;
 
+        //clearDataBase();
         aCart = cartrepository.findCartByCartId(cartID);
 
         assertNotNull(aCart);

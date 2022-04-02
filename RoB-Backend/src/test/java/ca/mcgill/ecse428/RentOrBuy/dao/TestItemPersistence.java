@@ -32,6 +32,7 @@ public class TestItemPersistence {
     @Test
 	@Transactional
 	public void testPersistAndLoadItem() {
+
         Item aItem = new Item();
 
         String name = "Garden Hose";
@@ -47,6 +48,7 @@ public class TestItemPersistence {
 
         aItem = null; //clear variable
 
+        //clearDataBase();
         aItem = itemrepository.findItemByName(name);
 
 

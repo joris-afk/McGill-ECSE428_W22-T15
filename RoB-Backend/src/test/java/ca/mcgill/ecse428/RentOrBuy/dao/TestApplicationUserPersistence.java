@@ -22,7 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TestApplicationUserPersistence {
-    /*
+    
     @Autowired
 	private ApplicationUserRepository AUrepository;
 	
@@ -42,7 +42,6 @@ public class TestApplicationUserPersistence {
     @Test
 	@Transactional
 	public void testPersistAndLoadAU() {
-
         ApplicationUser aAppUser = new ApplicationUser();
 
         String username = "Terminator";
@@ -79,6 +78,7 @@ public class TestApplicationUserPersistence {
 
         aAppUser = null;
 
+        //clearDataBase();
         aAppUser = AUrepository.findApplicationUserByUsername(username);
 
         assertNotNull(aAppUser);
@@ -92,5 +92,5 @@ public class TestApplicationUserPersistence {
             assertEquals(items.get(i).getName(), aAppUser.getItems().get(i).getName());
         }
     }
-    */
+    
 }

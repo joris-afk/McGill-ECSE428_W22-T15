@@ -55,6 +55,7 @@ public class TestItemInCartPersistence {
 
         aIIC = null;
 
+        //clearDataBase();
         aIIC = IICrepository.findItemInCartByItemInCartId(itemInCartId);
 
         assertNotNull(aIIC);

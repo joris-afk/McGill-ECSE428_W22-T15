@@ -95,13 +95,15 @@ public class ItemController {
                     return convertToDto(aItem);
     }
 
+    /*
     @PutMapping(value = { "/items/{name}", "/items/{name}/" })
     public ItemDto toggleItemRentable(@PathVariable("name") String name){
         Item aItem = itemService.getItemByName(name);
         itemService.toggleRentable(aItem);
         return convertToDto(aItem);
     }
-        
+    */
+      
     //Utility method
     private ItemDto convertToDto(Item item) {
 		
@@ -109,7 +111,7 @@ public class ItemController {
             throw new IllegalArgumentException("There is no such item");
         }
 		
-		ItemDto itemDto = new ItemDto(item.getName(), item.getPrice(), item.getAvailableSizes(), item.getRentable(), item.getRentStatus());
+		ItemDto itemDto = new ItemDto(item.getName(), item.getPrice(), item.getAvailableSizes(), item.getRentable(), item.getRented());
         
 		return itemDto;
 	}

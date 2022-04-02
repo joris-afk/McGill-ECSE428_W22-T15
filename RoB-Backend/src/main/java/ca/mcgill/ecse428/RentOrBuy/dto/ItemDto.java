@@ -8,29 +8,28 @@ public class ItemDto {
 	private double price;
 	private List<String> availableSizes;
 	private boolean rentable; //if true then the item is exclusive for rent
-	private boolean rentStatus;	// if true, the item cannot be gotten by anyone elses
+	private boolean rented;	// if true, the item cannot be gotten by anyone elses
 
     public ItemDto(){
 		availableSizes = new ArrayList<String>();
-		rentable = false;
-		rentStatus = false;
+		//rentable = false;
+		//rented = false;
 	}
 
     public ItemDto(String name, double price, List<String> availableSizes){
         this.name=name;
         this.price=price;
         this.availableSizes=availableSizes;
-		rentable = false;
-		rentStatus = false;
+		//this.rentable = false;
+		//this.rented = false;
     }
 
-	public ItemDto(String name, double price, List<String> availableSizes, boolean rentable, boolean rentStatus){
+	public ItemDto(String name, double price, List<String> availableSizes, boolean rentable, boolean rented){
 		this.name=name;
 		this.price=price;
 		this.availableSizes=availableSizes;
-		this.rentable = rentable;
-		this.rentable = rentable;
-		this.rentStatus = rentStatus;
+		//this.rentable = rentable;
+		//this.rented = rented;
 	}
 
     public double getPrice() {
@@ -45,11 +44,13 @@ public class ItemDto {
 		return availableSizes;
 	}
 
+	/*
 	public boolean getRentable(){
 		return rentable;
 	}
 
-	public boolean getRentStatus(){
-		return rentStatus;
+	public boolean getRented(){
+		return rented;
 	}
+	*/
 }
