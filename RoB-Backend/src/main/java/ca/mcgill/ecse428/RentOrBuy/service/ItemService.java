@@ -233,7 +233,7 @@ public class ItemService {
 	}
 
 	@Transactional
-	public Item toggleRentStatus(Item aItem){
+	public Item toggleRented(Item aItem){
 		if (!aItem.getRentable()){
 			throw new IllegalArgumentException("This item cannot be rented");
 		}

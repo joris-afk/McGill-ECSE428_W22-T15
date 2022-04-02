@@ -20,19 +20,27 @@ import org.springframework.boot.test.context.SpringBootTest;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TestItemPersistence {
-    /*
+    
     @Autowired
 	private ItemRepository itemrepository;
+
+    @Autowired
+	private ApplicationUserRepository AUrepository;
+
+    @Autowired
+	private ItemInCartRepository IICrepository;
 	
 	@AfterEach
 	public void clearDataBase() {
-		itemrepository.deleteAll();
+        AUrepository.deleteAll();
+        IICrepository.deleteAll();
+        itemrepository.deleteAll();
 	}
 
     @Test
 	@Transactional
 	public void testPersistAndLoadItem() {
-
+        clearDataBase();
         Item aItem = new Item();
 
         String name = "Garden Hose";
@@ -58,5 +66,5 @@ public class TestItemPersistence {
         assertEquals(availableSizes, aItem.getAvailableSizes());
     }
 
-    */
+    
 }

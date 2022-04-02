@@ -39,6 +39,13 @@ public class PurchaseHistoryController {
         return convertToDto(aPH);
     }
 
+    @GetMapping(value = { "/purchaseHistory/{historyOwner}", "/purchaseHistory/{historyOwner}/" })
+    public PurchaseHistoryDto getPurchaseHistory(@PathVariable("historyOwner") String historyOwner) 
+    throws IllegalArgumentException {
+        PurchaseHistory aPH = purchaseHistoryService.getPurchaseHistoryByHistoryOwner(historyOwner);
+        return convertToDto(aPH);
+    }
+
     @DeleteMapping(value = { "/purchaseHistory/{historyOwner}", "/purchaseHistory/{historyOwner}/" })
     public void deletePurchaseHistory(@PathVariable("historyOwner") String historyOwner) 
     throws IllegalArgumentException {
