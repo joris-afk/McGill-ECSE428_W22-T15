@@ -28,17 +28,7 @@ import ca.mcgill.ecse428.RentOrBuy.dto.*;
 public class PurchaseHistoryController {
     
     @Autowired
-    private PurchaseService purchaseService;
-
-    @Autowired
     private PurchaseHistoryService purchaseHistoryService;
-
-    @Autowired
-    private ApplicationUserService applicationUserService;
-    
-    @Autowired
-    private CartService cartService;
-
 
     //assume that new purchase histories are created blank
     @PostMapping(value = { "/purchaseHistory/{historyOwner}", "/purchaseHistory/{historyOwner}/" })
