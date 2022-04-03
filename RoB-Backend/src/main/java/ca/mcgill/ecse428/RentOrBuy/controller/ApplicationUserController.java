@@ -112,6 +112,17 @@ public class ApplicationUserController {
 			rob.getExistingUsers().remove(aApplicationUser);
 		}
 	}
+	
+	@GetMapping(value = { "/applicationUsers/search/{keyword}", "/applicationUsers/search/{keyword}/" })
+    	public List<ApplicationUserDto> searchUser(@PathVariable("keyword") String keyword) throws IllegalArgumentException{
+		List<ApplicationUserDto> applicationUserDtos = new ArrayList<>();
+		List<ApplicationUser> matchedUsers = new ArrayList<ApplicationUser>();
+		applicationUserService.searchUser(keyword);
+		for (ApplicationUser applicationUser : matchedUsers) {
+			applicationUserDtos.add(convertToDto(applicationUser));
+		}
+		return applicationUserDtos;
+	 }
 
 	/*
 	 * Calling RESTful service endpoints
@@ -325,7 +336,20 @@ public class ApplicationUserController {
 		return u;
 	}
 
+	public static List<ApplicationUser> searchApplicationUsers(String keyword) throws InvalidInputException{
+		Rob rob = RobApplication.getRob(); 
 
+    		if (keyword == null || keyword.length() == 0) {
+			throw new InvalidInputException("Please enter a keyword");
+		}
+		List<ApplicationUser> allUsers = rob.getCurrentLoggedInUsers();
+		List<ApplicationUser> matchedApplicationUsers = new ArrayList<ApplicationUser>();
+		for (ApplicationUser user : allUsers) {
+			if (user.getUsername().contains(keyword)) matchedApplicationUsers.add(user);
+		}
+		if (matchedApplicationUsers.isEmpty()) throw new InvalidInputException("No items match your search");
+		return matchedApplicationUsers;
+    	}
 
 	
 	
