@@ -76,7 +76,7 @@ public class ItemController {
     public List<ItemDto> searchItem(@PathVariable("keyword") String keyword) throws IllegalArgumentException{
     	List<ItemDto> itemDtos = new ArrayList<>();
     	List<Item> matchedItems = new ArrayList<Item>();
-    	itemService.searchItem(keyword);
+    	matchedItems = itemService.searchItem(keyword);
 		for (Item item : matchedItems) {
 			itemDtos.add(convertToDto(item));
 		}
