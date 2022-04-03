@@ -13,9 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ca.mcgill.ecse428.RentOrBuy.model.ApplicationUser;
-import ca.mcgill.ecse428.RentOrBuy.model.Cart;
-import ca.mcgill.ecse428.RentOrBuy.model.Item;
+import ca.mcgill.ecse428.RentOrBuy.model.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,11 +31,15 @@ public class TestApplicationUserPersistence {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private PurchaseHistoryRepository PHRepository;
+
 	@AfterEach
 	public void clearDataBase() {
 		AUrepository.deleteAll();
         cartRepository.deleteAll();
         itemRepository.deleteAll();
+        PHRepository.deleteAll();
 	}
 
     @Test
@@ -65,6 +67,9 @@ public class TestApplicationUserPersistence {
         items.add(i3);
         itemRepository.saveAll(items);
 
+        PurchaseHistory ph = new PurchaseHistory(username+"'s history");
+        PHRepository.save(ph);
+
 
         aAppUser.setUsername(username);
         aAppUser.setPassword(password);
@@ -72,6 +77,7 @@ public class TestApplicationUserPersistence {
         aAppUser.setAddress(address);
         aAppUser.setCart(cart);
         aAppUser.setItems(items);
+        aAppUser.setPurchases(ph);
 
         AUrepository.save(aAppUser);
 

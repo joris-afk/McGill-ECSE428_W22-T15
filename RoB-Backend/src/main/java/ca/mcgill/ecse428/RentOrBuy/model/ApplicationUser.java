@@ -43,7 +43,7 @@ public class ApplicationUser {
 		if (this.myReservations == null) {
 			this.myReservations = new ArrayList<Reservation>();
 		}
-		this.purchases = new PurchaseHistory(username+"'s purchases");
+		this.purchases = new PurchaseHistory(username+"'s history");
 		//rob.addCurrentExistingUser(this);
 	}
 	
@@ -59,7 +59,7 @@ public class ApplicationUser {
 		if (this.myReservations == null) {
 			this.myReservations = new ArrayList<Reservation>();
 		}
-		this.purchases = new PurchaseHistory(username+"'s purchases");
+		this.purchases = new PurchaseHistory(username+"'s history");
 		//if(rob == null){
 		//rob = new Rob();
 		//}
@@ -155,7 +155,7 @@ public class ApplicationUser {
 	@OneToOne
 	public PurchaseHistory getPurchases(){
 		if(this.purchases == null){
-			this.purchases = new PurchaseHistory(username+"'s purchases");
+			this.purchases = new PurchaseHistory(username+"'s history");
 		}
 		return this.purchases;
 	}
