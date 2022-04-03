@@ -42,7 +42,8 @@ export default{
             errorProducts:'',
             response:[],
             username: sessionStorage.getItem('currentUsername'),
-            appUser: ''
+            appUser: '',
+            searchBar: ''
         }
     },
 
@@ -88,9 +89,17 @@ export default{
           .catch(e => {
               console.log(e.response.data.message)
           })
+        },
+
+        searchForItem: function(keyWord){
+          AXIOS.get('/items/search/'.concat(keyWord))
+          .then(response => {
+            this.products = response.data
+          })
+          .catch(e => {
+            this.errorProfile = e
+          })
         }
-
-
 
     }
 

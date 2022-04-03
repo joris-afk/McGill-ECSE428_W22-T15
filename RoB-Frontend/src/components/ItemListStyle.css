@@ -27,6 +27,14 @@ body{
     font-size: 17px;
 }
 
+.itemlists .search {
+    display: inline-block;
+}
+
+.itemlists .search .testsearch button {
+    float: left;
+}
+
 .thstyle, .tdstyle{
     width: 25%;
 }

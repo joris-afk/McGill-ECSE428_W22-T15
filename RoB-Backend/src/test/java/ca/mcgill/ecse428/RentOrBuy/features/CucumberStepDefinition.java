@@ -25,6 +25,7 @@ public class CucumberStepDefinition {
 	private int totalUsers;
 	private List<Reservation> reservations;
 	private List<Item> queriedItems;
+	private List<Purchase> purchasedItems;
 
 
 	// Background
@@ -886,8 +887,7 @@ public class CucumberStepDefinition {
 	public void no_items_shall_be_returned() {
 	    assertTrue(queriedItems.isEmpty());
 	}
-
-
+	
 	// purchase item
 	@Given("the user {string} has the following ItemInCart in his cart:")
 	public void the_user_has_the_following_item_in_cart_in_his_cart(String string, io.cucumber.datatable.DataTable dataTable) {
@@ -948,6 +948,85 @@ public class CucumberStepDefinition {
 		assertTrue(!foundPurchase);
 	}
 
+
+	/*
+	 * View purchase history
+	 */
+
+	@Given("the user with username {string} purchases a {string}")
+	public void the_user_purchases_a_item(String username, String item) {
+		
+		for (ApplicationUser user: loginUsers) {
+			if (user.getUsername().equals(username)) currentLoginUser = user;
+		}
+
+		Item targetItem = null;
+		
+		for (Item searchItem: allItems){
+			if (searchItem.getName().equals(item)) targetItem = searchItem;
+		}
+		
+		try {
+			currentLoginUser.setCart(CartController.addItemToCart(currentLoginUser.getCart(), targetItem, targetItem.getName(), (int) targetItem.getPrice()));
+			Purchase p = new Purchase(currentLoginUser.getCart());
+			currentLoginUser.addPurchase(p);
+			PurchaseHistory purchaseHistory = new PurchaseHistory(username);
+			purchaseHistory.addPurchase(p);
+		}
+		
+		catch(Exception e){
+			errorMsg = e.getMessage();
+		}
+	}
+	
+	@When("the user tries to view purchase history")
+	public void view_purchase_history() {
+		try {
+			purchasedItems = PurchaseHistoryController.getAPurchaseHistory(currentLoginUser.getUsername()).getPurchases();
+		}
+		catch (Exception e){
+			errorMsg = e.getMessage();
+		}
+	}
+	
+	@Then("the number of items in the history should be {string}")
+	public void number_of_purchased_items_should_be(String number) {
+		assertEquals(purchasedItems.size(), Integer.parseInt(number));
+	}
+	
+	@When("the user with username {string} searches for username {string}")
+	public void the_user_with_username_searches_for_username(String string, String string2) {
+		List<ApplicationUser> matchedApplicationUsers = new ArrayList<ApplicationUser>();
+		try {
+			matchedApplicationUsers = ApplicationUserController.searchApplicationUsers(string2);
+		} catch (InvalidInputException e) {
+			errorMsg = e.getMessage();
+		}
+		queriedUsers = matchedApplicationUsers;
+	}
+
+	@Then("the following user will be returned:")
+	public void the_following_user_will_be_returned(io.cucumber.datatable.DataTable dataTable) {
+		List<Map<String,String>> usersReturned = dataTable.asMaps(String.class,String.class);
+		boolean eachUserHasMatch;
+		if (usersReturned.size() == 0 && queriedUsers.isEmpty()) eachUserHasMatch=true;
+		else eachUserHasMatch = false;
+		for (Map<String,String> userReturned : usersReturned){
+			for (ApplicationUser user : queriedUsers) {
+				if (user.getUsername().equals(userReturned.get("name"))) {
+					eachUserHasMatch = true;
+					break;
+				}
+			}
+			assertTrue(eachUserHasMatch);
+		}
+		assertEquals(usersReturned.size(), queriedItems.size());
+	}
+
+	@Then("no users shall be returned")
+	public void no_users_shall_be_returned() {
+		assertTrue(queriedUsers.isEmpty());
+	}
 
 	// Final
 	@After

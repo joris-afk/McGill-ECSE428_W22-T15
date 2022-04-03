@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse428.RentOrBuy.model.*;
 import ca.mcgill.ecse428.RentOrBuy.service.*;
+import ca.mcgill.ecse428.RentOrBuy.RobApplication;
 import ca.mcgill.ecse428.RentOrBuy.dto.*;
 
 @CrossOrigin(origins = "*")
@@ -158,4 +159,111 @@ public class PurchaseHistoryController {
 		ItemDto itemDto = new ItemDto(item.getName(), item.getPrice(), item.getAvailableSizes());
 		return itemDto;
 	}
+    
+    // For testing cucumber
+    
+    public static PurchaseHistory createAPurchaseHistory(String owner) {
+    	
+    	Rob rob = RobApplication.getRob();
+    	
+    	if (owner == null) {
+            throw new IllegalArgumentException("Please specify a history owner");
+    	}
+    	
+    	ApplicationUser existingUser = null;
+    	
+    	for (ApplicationUser user : rob.getExistingUsers()) {
+    		if (user.getUsername().equals(owner)) {
+    			existingUser = user;
+    		}
+    	}
+    	
+    	if (existingUser == null) {
+    		throw new IllegalArgumentException("Please specify an existing history owner");
+    	}
+    	
+    	PurchaseHistory newPurchaseHistory = new PurchaseHistory();
+    	newPurchaseHistory.setHistoryOwner(owner);
+    	rob.addPurchaseHistory(newPurchaseHistory);
+		return newPurchaseHistory;
+    }
+    
+    public static PurchaseHistory addAPurchaseHistory(String owner, Purchase purchase) {
+    	
+    	Rob rob = RobApplication.getRob();
+    	
+    	if (owner == null) {
+            throw new IllegalArgumentException("Please specify a history owner");
+    	}
+    	
+    	ApplicationUser existingUser = null;
+    	
+    	for (ApplicationUser user : rob.getExistingUsers()) {
+    		if (user.getUsername().equals(owner)) {
+    			existingUser = user;
+    		}
+    	}
+    	
+    	if (existingUser == null) {
+    		throw new IllegalArgumentException("Please specify an existing history owner");
+    	}
+    	
+    	Purchase existingPurchase = null;
+    	
+		for (Purchase aPurchase : rob.getPurchases()){
+			if (aPurchase.getOrderId() == purchase.getOrderId()){
+				existingPurchase = aPurchase;
+			}
+		}
+    	
+		if (existingPurchase == null) {
+			throw new IllegalArgumentException("Please specify an existing puchase");
+		}
+		
+		PurchaseHistory existingPurchaseHist = null;
+		
+		for (PurchaseHistory purchaseHist : rob.getPurchaseHistories()) {
+			if (purchaseHist.getHistoryOwner().equals(owner)) {
+				existingPurchaseHist = purchaseHist;
+			}
+		}
+		
+		existingPurchaseHist.addPurchase(purchase);
+		return existingPurchaseHist;
+    }
+    
+    public static PurchaseHistory getAPurchaseHistory(String owner) {
+    	
+    	Rob rob = RobApplication.getRob();
+    	
+    	if (owner == null) {
+            throw new IllegalArgumentException("Please specify a history owner");
+    	}
+    	
+    	ApplicationUser existingUser = null;
+    	
+    	for (ApplicationUser user : rob.getExistingUsers()) {
+    		if (user.getUsername().equals(owner)) {
+    			existingUser = user;
+    		}
+    	}
+    	
+    	if (existingUser == null) {
+    		throw new IllegalArgumentException("Please specify an existing history owner");
+    	}
+		
+		PurchaseHistory existingPurchaseHist = null;
+		
+		for (PurchaseHistory purchaseHist : rob.getPurchaseHistories()) {
+			if (purchaseHist.getHistoryOwner().equals(owner)) {
+				existingPurchaseHist = purchaseHist;
+			}
+		}
+		
+		if (existingPurchaseHist == null) {
+    		throw new IllegalArgumentException("No purchases have been made");
+    	}
+		
+		return existingPurchaseHist;
+    }
 }
