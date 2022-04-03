@@ -70,6 +70,19 @@ public class ApplicationUserService {
 	}
 	
 	@Transactional
+	public List<ApplicationUser> searchUser(String keyword) {
+		if (keyword == null || keyword.length() == 0) {
+			throw new IllegalArgumentException("Please enter a keyword");
+		}
+		List<ApplicationUser> allApplicationUser = (List<ApplicationUser>) applicationUserRepository.findAll();
+		List<ApplicationUser> matchedApplicationUser = new ArrayList<ApplicationUser>();
+		for (ApplicationUser user : allApplicationUser) {
+			if (user.getUsername().contains(keyword)) matchedApplicationUser.add(user);
+		}
+		return matchedApplicationUser;
+	}
+	
+	@Transactional
 	public ApplicationUser deleteApplicationUser(ApplicationUser aApplicationUser) {
 		applicationUserRepository.delete(aApplicationUser);
 		aApplicationUser  = null;
