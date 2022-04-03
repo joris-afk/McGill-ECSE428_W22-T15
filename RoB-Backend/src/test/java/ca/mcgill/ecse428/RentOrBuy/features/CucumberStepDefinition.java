@@ -816,7 +816,7 @@ public class CucumberStepDefinition {
 		}
 	}
 
-	@Then("the item with name {} will be added to purchase history")
+	@Then("the item with name {string} will be added to purchase history")
 	public void the_item_with_name_will_be_added_to_purchase_history(String string){
 		boolean existsInPurchases = false;
     	for (Purchase p: currentLoginUser.getPurchases().getPurchases()){
@@ -832,7 +832,7 @@ public class CucumberStepDefinition {
 
 	// Reserve Item
 
-	@When("the user with username {} tries to reserve {} number of {} with reservationId {} ")
+	@When("the user with username {string} tries to reserve {string} number of {string} with reservationId {string}")
 	public void the_user_with_username_tries_to_reserve_number_of_with_reservation_id(String string, String string2,String string3,String string4) {
 		try{
 			ReservationController re=new ReservationController();
@@ -843,7 +843,7 @@ public class CucumberStepDefinition {
 		}
 	}
 
-	@Then("Then the reservation with Id {} should be successfully added")
+	@Then("the reservation with Id {string} should be successfully added")
 	public void the_reservation_with_id_should_be_successfully_added(String string) {
 		ReservationController r = new ReservationController();
 		assertNotNull(r.obtReservation(Integer.parseInt(string)));
