@@ -20,7 +20,7 @@ public class ApplicationUser {
 	private Cart cart;
 	private List<Item> items;
 	private List<Reservation> myReservations;
-	private List<Purchase> purchases;
+	private PurchaseHistory purchases;
 
 	public ApplicationUser() {
 		if (this.items == null) {
@@ -28,9 +28,6 @@ public class ApplicationUser {
 		}
 		if (this.myReservations == null) {
 			this.myReservations = new ArrayList<Reservation>();
-		}
-		if(this.purchases == null) {
-			this.purchases = new ArrayList<Purchase>();
 		}
 		//rob.addCurrentExistingUser(this);
 	}
@@ -46,9 +43,7 @@ public class ApplicationUser {
 		if (this.myReservations == null) {
 			this.myReservations = new ArrayList<Reservation>();
 		}
-		if(this.purchases == null) {
-			this.purchases = new ArrayList<Purchase>();
-		}
+		this.purchases = new PurchaseHistory(username+"'s purchases");
 		//rob.addCurrentExistingUser(this);
 	}
 	
@@ -64,9 +59,7 @@ public class ApplicationUser {
 		if (this.myReservations == null) {
 			this.myReservations = new ArrayList<Reservation>();
 		}
-		if(this.purchases == null) {
-			this.purchases = new ArrayList<Purchase>();
-		}
+		this.purchases = new PurchaseHistory(username+"'s purchases");
 		//if(rob == null){
 		//rob = new Rob();
 		//}
@@ -159,23 +152,23 @@ public class ApplicationUser {
 		this.myReservations.remove(reservation);
 	}
 
-	@OneToMany
-	public List<Purchase> getPurchases(){
+	@OneToOne
+	public PurchaseHistory getPurchases(){
 		if(this.purchases == null){
-			this.purchases = new ArrayList<Purchase>();
+			this.purchases = new PurchaseHistory(username+"'s purchases");
 		}
 		return this.purchases;
 	}
 
 	public void addPurchase(Purchase newPurchase){
-		this.purchases.add(newPurchase);
+		this.purchases.addPurchase(newPurchase);
 	}
 
 	public void removePurchase(Purchase purchase){
-		this.purchases.remove(purchase);
+		this.purchases.removePurchase(purchase);
 	}
 
-	public void setPurchases(List<Purchase> newPurchases){
+	public void setPurchases(PurchaseHistory newPurchases){
 		this.purchases = newPurchases;
 	}
 

@@ -98,13 +98,13 @@ public class PurchaseController {
 			resDto.add(convertToDto(r));
 		}
 		List<PurchaseDto> purDto = new ArrayList<PurchaseDto>();
-		for(Purchase p : applicationUser.getPurchases()) {
+		for(Purchase p : applicationUser.getPurchases().getPurchases()) {
 			purDto.add(convertToDto(p));
 		}
 	
 		ApplicationUserDto applicationUserDto = new ApplicationUserDto(applicationUser.getUsername(), applicationUser.getPassword(),
 				applicationUser.getFullname(), applicationUser.getAddress(),
-				cartDto, itemDto, resDto, purDto);
+				cartDto, itemDto, resDto, new PurchaseHistoryDto( applicationUser.getUsername()+"'s history",purDto));
 		return applicationUserDto;
 	}
     
