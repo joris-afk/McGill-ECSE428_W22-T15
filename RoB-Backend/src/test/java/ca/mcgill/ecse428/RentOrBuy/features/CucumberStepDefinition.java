@@ -914,7 +914,6 @@ public class CucumberStepDefinition {
 	}
 	
 	private Purchase purchase;
-	private List<ApplicationUser> queriedUsers;
 	
 	@Then("the purchase with order id {string} shall be made")
 	public void the_purchase_with_order_id_shall_be_made(String string) {
