@@ -125,6 +125,9 @@ public class Rob {
 	
 
 	public List<ItemInCart> getIICs(){
+		if (this.itemsInCart==null){
+			this.itemsInCart=new ArrayList<ItemInCart>();
+		}
 		return this.itemsInCart;
 	}
 

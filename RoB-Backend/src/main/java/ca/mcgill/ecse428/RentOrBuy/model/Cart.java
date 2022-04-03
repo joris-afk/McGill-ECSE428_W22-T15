@@ -74,6 +74,9 @@ public class Cart {
 		Random rand=new Random();
 		int int_random=rand.nextInt(3000);
 		Rob rob=RobApplication.getRob();
+		if (rob.getIICs()==null){
+			
+		}
 		List<Integer> iicID=new ArrayList<Integer>();
 		for (ItemInCart aIIC: rob.getIICs()) {
 			iicID.add(aIIC.getItemInCartId());

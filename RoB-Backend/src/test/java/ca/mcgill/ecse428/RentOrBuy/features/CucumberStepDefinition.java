@@ -604,9 +604,17 @@ public class CucumberStepDefinition {
 
 			int i= Integer.parseInt(aReservation.get("reservationId"));
 			Long l=new Long(i);
-			ApplicationUser u=new ApplicationUser();
-			u.setUsername(aReservation.get("username"));
+			String username = aReservation.get("username");
+			ApplicationUser u=null;
+			for (ApplicationUser au:rob.getExistingUsers()){
+				if (username.equals(au.getUsername())){
+					u=au;
+					break;
+				}
+			}
+			
 			Reservation newReservation= new Reservation(l);
+			u.addReservation(newReservation);
 			reservations.add(newReservation);
 			rob.addReservation(newReservation);
 		}
@@ -615,18 +623,24 @@ public class CucumberStepDefinition {
 	@When("the user with username {string} tries to delete the reservation with reservationId {string}")
 	public void the_user_with_username_tries_to_delete_the_reservation_with_reservation_id(String string, String string2) {
 		try{
-			ReservationController re=new ReservationController();
-			re.deleteReservation(Integer.parseInt(string2), string);
+			ReservationController.deleteReservation(Long.parseLong(string2), string);
 			//reservations.remove(r);
 		} catch (Exception e){
+			System.out.println(e);
 			errorMsg += e.getMessage();
 		}
 	}
 
 	@Then("the reservation with Id {string} should be successfully deleted")
 	public void the_reservation_with_id_should_be_successfully_deleted(String string) {
-		ReservationController r = new ReservationController();
-		assertNull(r.obtReservation(Integer.parseInt(string)));
+		boolean exists = false;
+		for (Reservation r:rob.getReservations()){
+			if (r.getReservationId()==Long.parseLong(string)){
+				exists = true;
+				break;
+			}
+		}
+		assertFalse(exists);
 	}
 
 
@@ -735,12 +749,21 @@ public class CucumberStepDefinition {
 
 		Item targetItem = null;
 		for (Item searchItem: allItems){
-			if (searchItem.getName().equals(string3)) targetItem = searchItem;
+			if (searchItem.getName().equals(string3)) {
+				targetItem = searchItem;
+				//System.out.println("item found");
+			}
 		}
+
+		//if (targetItem == null) {System.out.println("item not found");;}
 		try{
+			if (currentLoginUser.getCart()==null){
+				currentLoginUser.setCart(new Cart());
+			}
 			currentLoginUser.setCart(CartController.addItemToCart(currentLoginUser.getCart(), targetItem, string4, Integer.parseInt(string2)));
 		}
 		catch(Exception e){
+			//System.out.println(e);
 			errorMsg = e.getMessage();
 		}
 	}
@@ -749,6 +772,7 @@ public class CucumberStepDefinition {
 	public void the_item_with_name_will_appear_in_the_cart(String string) {
 		boolean existsInCart = false;
     	for (ItemInCart iic: currentLoginUser.getCart().getCartItems()){
+			System.out.println(iic.getItem().getName());
 			if (iic.getItem().getName().equals(string)) existsInCart = true;
 		}
 		assertTrue(existsInCart);

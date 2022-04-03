@@ -263,13 +263,29 @@ public class ReservationController {
 			}
 		}
 
+		ApplicationUser deleter = null;
+		for (ApplicationUser aUser:rob.getExistingUsers()){
+			if (username.equals(aUser.getUsername())){
+				deleter=aUser;
+			}
+		}
+
 		if (deleteTarget == null){
 			throw new IllegalArgumentException("reservation does not exist");
 		}
-		// if (!deleteTarget.getUser().getUsername().equals(username)){
-		// 	throw new IllegalArgumentException("You can only delete your reservations");
-		// }
+
+		boolean notfound = true;
+		//check for reservation
+		for (Reservation res:deleter.getReservations()){
+			if (res.getReservationId()==ReservationId){
+				notfound = false;
+			}
+		}
+		if (notfound){
+			throw new IllegalArgumentException("You can only delete your reservations");
+		}
 		rob.getReservations().remove(deleteTarget);
+		deleter.getReservations().remove(deleteTarget);
 
 		return deleteTarget;
 		
