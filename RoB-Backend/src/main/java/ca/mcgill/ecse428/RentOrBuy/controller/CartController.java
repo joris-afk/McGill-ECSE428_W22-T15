@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import antlr.collections.List;
 import ca.mcgill.ecse428.RentOrBuy.dto.CartDto;
 import ca.mcgill.ecse428.RentOrBuy.dto.ItemDto;
 import ca.mcgill.ecse428.RentOrBuy.dto.ItemInCartDto;

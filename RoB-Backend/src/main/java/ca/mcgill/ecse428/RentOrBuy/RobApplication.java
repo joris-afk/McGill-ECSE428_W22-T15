@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ca.mcgill.ecse428.RentOrBuy.model.ApplicationUser;
 import ca.mcgill.ecse428.RentOrBuy.model.Rob;
 
 @RestController

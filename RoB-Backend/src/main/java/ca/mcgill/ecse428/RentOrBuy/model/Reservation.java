@@ -1,9 +1,6 @@
 package ca.mcgill.ecse428.RentOrBuy.model;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import java.util.ArrayList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;

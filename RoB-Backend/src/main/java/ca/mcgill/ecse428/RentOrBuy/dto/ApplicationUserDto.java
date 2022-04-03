@@ -1,10 +1,7 @@
 package ca.mcgill.ecse428.RentOrBuy.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import ca.mcgill.ecse428.RentOrBuy.model.Purchase;
-import ca.mcgill.ecse428.RentOrBuy.model.Reservation;
 
 public class ApplicationUserDto{
 

@@ -2,25 +2,17 @@ package ca.mcgill.ecse428.RentOrBuy.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse428.RentOrBuy.model.*;
 import ca.mcgill.ecse428.RentOrBuy.service.*;
-import ca.mcgill.ecse428.RentOrBuy.InvalidInputException;
-import ca.mcgill.ecse428.RentOrBuy.RobApplication;
 import ca.mcgill.ecse428.RentOrBuy.dto.*;
 
 @CrossOrigin(origins = "*")
@@ -60,7 +52,7 @@ public class PurchaseHistoryController {
             throw new IllegalArgumentException("There is no history");
         }
 
-        List<PurchaseDto> purchaseList = new ArrayList();
+        List<PurchaseDto> purchaseList = new ArrayList<PurchaseDto>();
         for (Purchase p:purchaseHistory.getPurchases()){
             purchaseList.add(convertToDto(p));
         }

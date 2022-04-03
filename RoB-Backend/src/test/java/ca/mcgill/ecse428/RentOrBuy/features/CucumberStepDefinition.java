@@ -2,8 +2,6 @@ package ca.mcgill.ecse428.RentOrBuy.features;
 
 import java.util.*;
 
-import org.apache.catalina.core.ApplicationFilterRegistration;
-import org.mockito.internal.stubbing.answers.ThrowsException;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
