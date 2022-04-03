@@ -26,6 +26,7 @@ public class CucumberStepDefinition {
 	private List<Reservation> reservations;
 	private List<Item> queriedItems;
 	private List<Purchase> purchasedItems;
+	private List<ApplicationUser> queriedUsers;
 
 
 	// Background
@@ -913,7 +914,6 @@ public class CucumberStepDefinition {
 	}
 	
 	private Purchase purchase;
-	private List<ApplicationUser> queriedUsers;
 	
 	@Then("the purchase with order id {string} shall be made")
 	public void the_purchase_with_order_id_shall_be_made(String string) {
@@ -1026,7 +1026,7 @@ public class CucumberStepDefinition {
 			}
 			assertTrue(eachUserHasMatch);
 		}
-		assertEquals(usersReturned.size(), queriedItems.size());
+		assertEquals(usersReturned.size(), queriedUsers.size());
 	}
 
 	@Then("no users shall be returned")
