@@ -12,6 +12,7 @@ public class Rob {
 	private ArrayList<Reservation> reservations;
 	private List<Purchase> purchases;
 	private List<ItemInCart> itemsInCart;
+	private List<PurchaseHistory> purchaseHistories;
 	
     public Rob() {
     	this.currentLoggedInUsers = new ArrayList<ApplicationUser>();
@@ -20,8 +21,21 @@ public class Rob {
     	this.carts = new ArrayList<Cart>();
 		this.reservations = new ArrayList<Reservation>();
 		this.purchases = new ArrayList<Purchase>();
+		this.purchaseHistories = new ArrayList<PurchaseHistory>();
     }
 
+    public List<PurchaseHistory> getPurchaseHistories(){
+		return this.purchaseHistories;
+	}
+
+	public void addPurchaseHistory(PurchaseHistory aPurchaseHistory){
+		this.purchaseHistories.add(aPurchaseHistory);
+	}
+
+	public void removeAPurchaseHistory(PurchaseHistory aPurchaseHistory){
+		this.purchaseHistories.remove(aPurchaseHistory);
+	}
+	
     public List<Cart> getCarts(){
     	if (carts==null) {
     		carts=new ArrayList<Cart>();
