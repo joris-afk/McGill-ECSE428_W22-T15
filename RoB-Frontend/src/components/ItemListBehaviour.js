@@ -64,13 +64,15 @@ export default{
         })
     },
 
-    method:{
+    methods:{
+
         reserveItem: function(reservationId, quantity, itemName){
+
             AXIOS.post('/reservations/'.concat(reservationId),{},
             {params:{
-                username:sessionStorage.getItem('currentUsername'),
+                user:this.username,
                 quantity:quantity,
-                itemName:itemName
+                item:itemName
             }}).catch(e => {
                 console.log(e.response.data.message)
             })
