@@ -968,14 +968,16 @@ public class CucumberStepDefinition {
 		}
 		
 		try {
-			currentLoginUser.setCart(CartController.addItemToCart(currentLoginUser.getCart(), targetItem, targetItem.getName(), (int) targetItem.getPrice()));
+			currentLoginUser.setCart(CartController.addItemToCart(currentLoginUser.getCart(), targetItem, targetItem.getAvailableSizes().get(0), (int) targetItem.getPrice()));
 			Purchase p = new Purchase(currentLoginUser.getCart());
 			currentLoginUser.addPurchase(p);
-			PurchaseHistory purchaseHistory = new PurchaseHistory(username);
-			purchaseHistory.addPurchase(p);
+			rob.addPurchaseHistory(currentLoginUser.getPurchases());
+			//PurchaseHistory purchaseHistory = new PurchaseHistory(username);
+			//purchaseHistory.addPurchase(p);
 		}
 		
 		catch(Exception e){
+			System.out.println(e);
 			errorMsg = e.getMessage();
 		}
 	}
@@ -983,9 +985,12 @@ public class CucumberStepDefinition {
 	@When("the user tries to view purchase history")
 	public void view_purchase_history() {
 		try {
+			System.out.println(currentLoginUser.getPurchases().getHistoryOwner());
+			System.out.println(currentLoginUser.getPurchases().getPurchases().size());
 			purchasedItems = PurchaseHistoryController.getAPurchaseHistory(currentLoginUser.getUsername()).getPurchases();
 		}
 		catch (Exception e){
+			System.out.println(e);
 			errorMsg = e.getMessage();
 		}
 	}

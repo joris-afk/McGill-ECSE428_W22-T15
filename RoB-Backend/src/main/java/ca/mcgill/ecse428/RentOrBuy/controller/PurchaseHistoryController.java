@@ -252,15 +252,17 @@ public class PurchaseHistoryController {
     		throw new IllegalArgumentException("Please specify an existing history owner");
     	}
 		
-		PurchaseHistory existingPurchaseHist = null;
-		
+		PurchaseHistory existingPurchaseHist = existingUser.getPurchases();
+		/*
 		for (PurchaseHistory purchaseHist : rob.getPurchaseHistories()) {
-			if (purchaseHist.getHistoryOwner().equals(owner)) {
+			if (purchaseHist.getHistoryOwner().equals(owner+"'s history")) {
 				existingPurchaseHist = purchaseHist;
+				
+				System.out.println(purchaseHist.getPurchases().size());
 			}
 		}
-		
-		if (existingPurchaseHist == null) {
+		*/
+		if (existingPurchaseHist == null || existingPurchaseHist.getPurchases().size()==0) {
     		throw new IllegalArgumentException("No purchases have been made");
     	}
 		

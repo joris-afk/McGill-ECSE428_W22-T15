@@ -165,6 +165,9 @@ public class ApplicationUser {
 	}
 
 	public void addPurchase(Purchase newPurchase){
+		if(this.purchases == null){
+			this.purchases = new PurchaseHistory(username+"'s history");
+		}
 		this.purchases.addPurchase(newPurchase);
 	}
 
