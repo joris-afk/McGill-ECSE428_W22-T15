@@ -31,12 +31,15 @@
                 </table>
             </div>
         </div>
-        <router-link to ="/profile">
-            <button class="buttonStyle">Back to Profile</button>
-        </router-link>
-        <router-link to ="/cart">
-            <button class="buttonStyle">View Cart</button>
-        </router-link>
+
+        <div class="buttons">
+            <router-link to ="/profile">
+                <button class="buttonStyle">Back to Profile</button>
+            </router-link>
+            <router-link to ="/cart">
+                <button class="buttonStyle">View Cart</button>
+            </router-link>
+        </div>
     </div>
 </template>
 
