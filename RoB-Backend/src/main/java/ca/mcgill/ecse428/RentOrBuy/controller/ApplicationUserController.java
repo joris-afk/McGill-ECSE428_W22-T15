@@ -342,10 +342,13 @@ public class ApplicationUserController {
     		if (keyword == null || keyword.length() == 0) {
 			throw new InvalidInputException("Please enter a keyword");
 		}
-		List<ApplicationUser> allUsers = rob.getCurrentLoggedInUsers();
+		List<ApplicationUser> allUsers = rob.getExistingUsers();
 		List<ApplicationUser> matchedApplicationUsers = new ArrayList<ApplicationUser>();
 		for (ApplicationUser user : allUsers) {
-			if (user.getUsername().contains(keyword)) matchedApplicationUsers.add(user);
+			if (user.getUsername().contains(keyword)) {
+				matchedApplicationUsers.add(user);
+				System.out.println(user.getUsername());
+			}
 		}
 		if (matchedApplicationUsers.isEmpty()) throw new InvalidInputException("No items match your search");
 		return matchedApplicationUsers;

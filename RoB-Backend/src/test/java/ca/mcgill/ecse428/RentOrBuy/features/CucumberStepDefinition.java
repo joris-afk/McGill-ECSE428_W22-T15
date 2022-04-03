@@ -1000,6 +1000,8 @@ public class CucumberStepDefinition {
 		assertEquals(purchasedItems.size(), Integer.parseInt(number));
 	}
 	
+	//Search user
+
 	@When("the user with username {string} searches for username {string}")
 	public void the_user_with_username_searches_for_username(String string, String string2) {
 		List<ApplicationUser> matchedApplicationUsers = new ArrayList<ApplicationUser>();
@@ -1019,7 +1021,7 @@ public class CucumberStepDefinition {
 		else eachUserHasMatch = false;
 		for (Map<String,String> userReturned : usersReturned){
 			for (ApplicationUser user : queriedUsers) {
-				if (user.getUsername().equals(userReturned.get("name"))) {
+				if (user.getUsername().equals(userReturned.get("username"))) {
 					eachUserHasMatch = true;
 					break;
 				}
