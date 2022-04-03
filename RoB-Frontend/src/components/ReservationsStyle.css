@@ -1,7 +1,9 @@
 /* background*/
 body{   
     height:100vh;
-    justify-content: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: linear-gradient(200deg,#72afd3,#96fbc4);
 }
 
