@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse428.RentOrBuy.dao.ApplicationUserRepository;
 import ca.mcgill.ecse428.RentOrBuy.dao.CartRepository;
+import ca.mcgill.ecse428.RentOrBuy.dao.PurchaseHistoryRepository;
 import ca.mcgill.ecse428.RentOrBuy.dao.PurchaseRepository;
 import ca.mcgill.ecse428.RentOrBuy.model.ApplicationUser;
 import ca.mcgill.ecse428.RentOrBuy.model.Cart;
@@ -26,6 +27,9 @@ public class PurchaseService {
     
     @Autowired 
     private CartRepository cartRepository;
+
+    @Autowired
+    private PurchaseHistoryRepository pHRepository;
 
     @Transactional
     public Purchase createPurchase(String orderId, ApplicationUser buyer, Cart cart){
@@ -54,6 +58,7 @@ public class PurchaseService {
         buyer.addPurchase(purchase);        
         cart.setCartItems(new ArrayList<ItemInCart>());
         buyer.setCart(cart);
+        pHRepository.save(buyer.getPurchases());
         auRepository.save(buyer);
         cartRepository.save(cart);
         return purchase;

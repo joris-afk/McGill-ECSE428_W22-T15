@@ -45,9 +45,9 @@ public class ApplicationUserController {
 		throws IllegalArgumentException {
 		
 		purchaseHistoryService.createPurchaseHistory(username+"'s history", null);
-		
+
 		PurchaseHistory newHistory = purchaseHistoryService.getPurchaseHistoryByHistoryOwner(username+"'s history");
-		
+	
 		ApplicationUser applicationUser = applicationUserService.createApplicationUser(username, password, fullname, address, 
 				null, null, new ArrayList<Reservation>(), newHistory);
 		return convertToDto(applicationUser);

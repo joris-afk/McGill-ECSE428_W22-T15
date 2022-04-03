@@ -1,7 +1,9 @@
 /* background*/
 body{   
     height:100vh;
-    justify-content: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: linear-gradient(200deg,#72afd3,#96fbc4);
 }
 
@@ -68,12 +70,18 @@ button{
     cursor: pointer;   
 }
 
-.buttonStyle {
-    margin-top: 40px;
-    height: 50px;
-    width: 200px;
+.buttons {
+    margin-top: 30px;
     left: 50%;
     position: absolute;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    display: flex;
+}
+
+.buttonStyle {
+    margin: 10px 10px;
+    height: 50px;
+    width: 200px;
+    
 }
