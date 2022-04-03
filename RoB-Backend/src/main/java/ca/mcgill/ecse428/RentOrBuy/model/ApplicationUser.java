@@ -132,6 +132,10 @@ public class ApplicationUser {
 		this.cart = cart;
 	}
 
+	public void addToCart(ItemInCart iic){
+		getCart().addItemToCart(iic);
+	}
+
 	@OneToMany
 	public List<Reservation> getReservations(){
 		if (myReservations==null){

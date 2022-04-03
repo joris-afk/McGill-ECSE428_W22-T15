@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ca.mcgill.ecse428.RentOrBuy.InvalidInputException;
+import ca.mcgill.ecse428.RentOrBuy.RobApplication;
 import ca.mcgill.ecse428.RentOrBuy.dto.*;
 import ca.mcgill.ecse428.RentOrBuy.model.*;
 import ca.mcgill.ecse428.RentOrBuy.service.*;
@@ -158,5 +160,39 @@ public class PurchaseController {
 		ItemDto itemDto = new ItemDto(item.getName(), item.getPrice(), item.getAvailableSizes());
 		return itemDto;
 	}
+
+
+
+    // cucumber functions
+    public static Purchase purchaseItemInCarts(String purchaseId, ApplicationUser appUser, Integer cartId) throws InvalidInputException{
+        System.out.println(cartId);
+        System.out.println(appUser.getCart().getCartId());
+    	if(purchaseId==null){
+            throw new InvalidInputException("purchaseId cannot be null");
+        }
+        if(appUser == null){
+            throw new InvalidInputException("Have to specify user for puchase");
+        }
+        if(cartId == null){
+            throw new InvalidInputException("Have to specify cartId for purchase");
+        }
+        if(appUser.getCart().getCartItems().size()==0){
+            throw new InvalidInputException("cannot purchase empty cart");
+        }
+        if(cartId != appUser.getCart().getCartId()){
+            throw new InvalidInputException("cannot purchase other user's cart");
+        }
+        List<Purchase> purchases = RobApplication.getRob().getPurchases();
+        for(Purchase p: purchases){
+            if(p.getOrderId().equals(purchaseId)) {
+                throw new InvalidInputException("duplicate purchaseId");
+            }
+        }
+
+        Purchase newp = new Purchase(appUser.getCart());
+        newp.setOrderId(purchaseId);
+        RobApplication.getRob().addPurchase(newp);
+        return newp;
+    }
 }
 

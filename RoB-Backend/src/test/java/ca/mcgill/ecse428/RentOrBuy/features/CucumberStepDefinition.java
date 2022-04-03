@@ -888,6 +888,67 @@ public class CucumberStepDefinition {
 	}
 
 
+	// purchase item
+	@Given("the user {string} has the following ItemInCart in his cart:")
+	public void the_user_has_the_following_item_in_cart_in_his_cart(String string, io.cucumber.datatable.DataTable dataTable) {
+		for(ApplicationUser appUser : RobApplication.getRob().getExistingUsers()){
+			if(appUser.getUsername().equals(string)) currentLoginUser = appUser;
+		}
+		
+		List<Map<String,String>> iics = dataTable.asMaps(String.class,String.class);
+		for (Map<String,String> iic : iics){
+			Integer id = Integer.valueOf(iic.get("itemInCartId"));
+			int quantity = Integer.valueOf(iic.get("quantity"));
+			Item item = null;
+			String itemName = iic.get("itemName");
+			for(Item i: allItems){
+				if(itemName.equals(i.getName())){
+					item = i;
+					break;
+				}
+			}
+			ItemInCart newIIC = new ItemInCart(id, item, quantity, iic.get("size"));
+			currentLoginUser.addToCart(newIIC);
+		}
+	}
+	
+	private Purchase purchase;
+	
+	@Then("the purchase with order id {string} shall be made")
+	public void the_purchase_with_order_id_shall_be_made(String string) {
+		boolean foundPurchase = false;
+		for(Purchase p : RobApplication.getRob().getPurchases()){
+			if(string.equals(p.getOrderId())) foundPurchase = true;
+		}
+		assertTrue(foundPurchase);
+	}
+
+	@When("the user {string} tries to purchase items in {string} cart with order id {string}")
+	public void the_user_tries_to_purchase_items_in_cart_with_order_id(String string, String string2, String string3) {
+		ApplicationUser cartOwner = null;
+		for(ApplicationUser appUser : RobApplication.getRob().getExistingUsers()){
+			if(appUser.getUsername().equals(string)) currentLoginUser = appUser;
+			if(appUser.getUsername().equals(string2)) cartOwner = appUser;
+		}
+		try {
+			this.purchase = PurchaseController.purchaseItemInCarts(string3, currentLoginUser, cartOwner.getCart().getCartId());
+		} catch (InvalidInputException e) {
+			errorMsg += e.getMessage();
+		}
+	}
+	
+
+	
+	@Then("the purchase with order id {string} shall not be made")
+	public void the_purchase_with_order_id_shall_not_be_made(String string) {
+		boolean foundPurchase = false;
+		for(Purchase p : RobApplication.getRob().getPurchases()){
+			if(string.equals(p.getOrderId())) foundPurchase = true;
+		}
+		assertTrue(!foundPurchase);
+	}
+
+
 	// Final
 	@After
 	public void tearDown() {
