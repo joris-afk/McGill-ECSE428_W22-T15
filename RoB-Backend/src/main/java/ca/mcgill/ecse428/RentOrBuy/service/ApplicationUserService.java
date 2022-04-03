@@ -24,7 +24,7 @@ public class ApplicationUserService {
 
 	@Transactional
 	public ApplicationUser createApplicationUser(String username, String password, String fullname, 
-			String address, Cart cart, List<Item> items, List<Reservation> myReservations, List<Purchase> purchases) {
+			String address, Cart cart, List<Item> items, List<Reservation> myReservations, PurchaseHistory purchases) {
 		ApplicationUser newApplicationUser = null;
 
 		if(fullname == null || fullname.equals("")) {

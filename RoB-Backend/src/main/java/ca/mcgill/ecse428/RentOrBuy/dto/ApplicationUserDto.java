@@ -15,13 +15,13 @@ public class ApplicationUserDto{
 	private CartDto cart;
 	private List<ItemDto> items;
     private List<ReservationDto> myReservations;
-	private List<PurchaseDto> purchases;
+	private PurchaseHistoryDto purchases;
 
     public ApplicationUserDto() {}
 
     public ApplicationUserDto(String username, String password, 
         String fullname, String address, CartDto cart, List<ItemDto> items,
-        List<ReservationDto> myReservations, List<PurchaseDto> purchases){
+        List<ReservationDto> myReservations, PurchaseHistoryDto purchases){
             this.username=username;
             this.password=password;
             this.fullname=fullname;
@@ -60,7 +60,7 @@ public class ApplicationUserDto{
 		return myReservations;
 	}
 	
-	public List<PurchaseDto> getPurchases(){
+	public PurchaseHistoryDto getPurchases(){
 		return purchases;
 	}
 }

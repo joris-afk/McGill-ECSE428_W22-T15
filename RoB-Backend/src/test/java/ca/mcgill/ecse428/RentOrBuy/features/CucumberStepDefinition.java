@@ -795,7 +795,7 @@ public class CucumberStepDefinition {
 	@Then("the item with name {} will be added to purchase history")
 	public void the_item_with_name_will_be_added_to_purchase_history(String string){
 		boolean existsInPurchases = false;
-    	for (Purchase p: currentLoginUser.getPurchases()){
+    	for (Purchase p: currentLoginUser.getPurchases().getPurchases()){
 			for(ItemInCart i: p.getCart().getCartItems()){
 				if(i.getItem().getName().equals(string)){
 					existsInPurchases = true;
