@@ -26,6 +26,7 @@ public class CucumberStepDefinition {
 	private List<Reservation> reservations;
 	private List<Item> queriedItems;
 	private List<Purchase> purchasedItems;
+	private List<ApplicationUser> queriedUsers;
 
 
 	// Background
@@ -1021,7 +1022,7 @@ public class CucumberStepDefinition {
 			}
 			assertTrue(eachUserHasMatch);
 		}
-		assertEquals(usersReturned.size(), queriedItems.size());
+		assertEquals(usersReturned.size(), queriedUsers.size());
 	}
 
 	@Then("no users shall be returned")
