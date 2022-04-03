@@ -12,6 +12,13 @@ public class ItemInCart {
 	private Integer itemInCartId;
 	
 	public ItemInCart() {}
+
+	public ItemInCart(Integer itemInCartId, Item item, int quantity, String size) {
+		this.itemInCartId = itemInCartId;
+		this.item = item;
+		this.quantity = quantity;
+		this.size = size;
+	}
 	
 	@OneToOne
 	public Item getItem() {

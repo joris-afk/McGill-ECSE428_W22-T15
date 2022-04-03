@@ -1,5 +1,5 @@
 Feature: Edit item details as an applicarion user
-  As an application user, I want to purchase items on my account to receive them at home.
+  As an application user, I want to purchase items in my cart.
 
 Background:  
   Given a Rob application exists
@@ -11,29 +11,32 @@ Background:
     | name              | price | availableSizes |
     | couch from Alice  | 10.50 | universal      |
     | couch from Bob    | 15.75 | small          |
+  Given the user "User1" has the following ItemInCart in his cart:
+    | itemInCartId  | quantity  | size      | itemName        | 
+    | 2000          | 2         | universal | couch from Alice|
+    | 3001          | 1         | small     | couch from Bob  |
 
 ##########################################################################
 
-Scenario: purchase item successfully
+Scenario: purchase items in cart successfully
    Given the user is logged in to an account with username "User1"
-   Given the user is looking at "couch from Alice"
-   When the user tries to purchase a "couch from Alice"
-   Then the current item shall be purchased
+   When the user "User1" tries to purchase items in "User1" cart with order id "s001"
+   Then the purchase with order id "s001" shall be made
    
 ##########################################################################
 
-Scenario Outline: purchase item failed
-   Given the user is logged in to an account with username "User1"
-   Given the user is looking at "<Item>"
-   When the user tries to purchase a "<NewPrice>" with insufficient funds
-   Then an error message "<error>" shall be raised
+Scenario: purchase empty cart
+   Given the user is logged in to an account with username "User2"
+   When the user "User2" tries to purchase items in "User2" cart with order id "s002"
+   Then an error message "cannot purchase empty cart" shall be raised
+   Then the purchase with order id "s002" shall not be made
    
 ##########################################################################
 
-Scenario: purchase a non existing item
+Scenario: purchase items from other users' cart
    Given the user is logged in to an account with username "User1"
-   Given the user is looking at "<Item>"
-   When the user tries to purchase a "<Item>" that does not exist
-   Then an error message "<error>" shall be raised
+   When the user "User2" tries to purchase items in "User1" cart with order id "s003"
+   Then an error message "cannot purchase other user's cart" shall be raised
+   Then the purchase with order id "s003" shall not be made
 
    
